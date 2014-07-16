@@ -150,24 +150,25 @@ var BHTree = (function() {
         for (i = 0; i < nodeList.length; i++)
             deleteNode(nodeList[i]);
 
-        var max = -1e20;
-        var min = -max;
+        var max = new Float64Array(3);
+        VSET(max, particles[0]);
+        var min = new Float64Array(3);
+        VSET(min, particles[0]);
         
-        for (i = 0; i < particles.length; i++) {
-            max = Math.max(max, particles[i][X], particles[i][Y], particles[i][Z]);
-            min = Math.min(min, particles[i][X], particles[i][Y], particles[i][Z]);            
+        for (i = 1; i < particles.length; i++) {
+            VMIN(min, min, particles[i]);
+            VMAX(max, max, particles[i]);
         }
-        LOG([min, max]);
-
+        
         tree = makeNode();
         nodeList = [tree];
-        
-        var secWidth = 0.;
-        
-        tree.width = max - min + 2.*secWidth;
-        min -= secWidth;
-        VSET3(tree.min, min, min, min);
-        
+        var width = Math.max(max[X]-min[X], max[Y]-min[Y], max[Z]-min[Z]);
+
+        tree.min[X] = 0.5*(max[X]-min[X]) - 0.5*width + min[X];
+        tree.min[Y] = 0.5*(max[Y]-min[Y]) - 0.5*width + min[Y];
+        tree.min[Z] = 0.5*(max[Z]-min[Z]) - 0.5*width + min[Z];
+        tree.width = width;
+
         tree.parent = null;
 
         for (i = 0; i < particles.length; i++) {

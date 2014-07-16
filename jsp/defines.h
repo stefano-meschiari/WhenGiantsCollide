@@ -27,6 +27,12 @@
 #define VADD(y, x1, x2) { y[X] = x1[X]+x2[X]; y[Y] = x1[Y]+x2[Y]; y[Z] = x1[Z]+x2[Z]; }
 #define VMUL(y, a) { y[X] *= a; y[Y] *= a; y[Z] *= a; }
 
+#define VMIN(v, v1, v2) { v[X] = Math.min(v1[X], v2[X]); v[Y] = Math.min(v1[Y], v2[Y]); v[Z] = Math.min(v1[Z], v2[Z]);}
+#define VMAX(v, v1, v2) { v[X] = Math.max(v1[X], v2[X]); v[Y] = Math.max(v1[Y], v2[Y]); v[Z] = Math.max(v1[Z], v2[Z]);}
+
+
+
+
 #define INTERSECT(ax, AX, bx, BX) ((ax) <= (BX) && (AX) >= (bx))
 #define NODEINTERSECTS(n, w, p, d) (INTERSECT(n[X], n[X]+w, p[X]-d, p[X]+d) && INTERSECT(n[Y], n[Y]+w, p[Y]-d, p[Y]+d) && INTERSECT(n[Z], n[Z]+w, p[Z]-d, p[Z]+d))
     
