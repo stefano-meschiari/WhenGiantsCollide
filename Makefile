@@ -3,10 +3,15 @@ UGLIFYJS=uglifyjs -m -c -o
 MODE=PROD
 CPP=cpp -nostdinc -undef -D$(MODE) -P -ansi -traditional-cpp -imacros js/defines.h
 
-test: algo-prod.js
-	$(NODE) js/algo-test.js
+tree-test: jsc/bhtree.js jsc/system.js
+	$(NODE) jsc/bhtree-test.js
 
-algo-prod.js: js/algo.js js/defines.h
-	$(CPP) js/algo.js js/algo-prod.js
+jsc/system.js: js/system.js
+	$(CPP) js/system.js jsc/system.js
+
+jsc/bhtree.js: js/bhtree.js
+	$(CPP) js/bhtree.js jsc/bhtree.js
+
+
 
 
