@@ -1,24 +1,59 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-  <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.6.0/underscore-min.js"></script>
-  <script type="text/javascript" src="js/bhtree_c.js"></script>
-  <script type="text/javascript" src="js/draw2DTree.js"></script>
-</head>
+  <head>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/bootstrap-theme.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">    
+    <title></title>
+  </head>
 
-<body>
+  <body>
+    
+    <div class="container">
+      <h4>Interactive Barnes-Hut Tree</h4>
+      <p class="text-muted">Click on the surface to add new points.</p>
+      <button id="add" class="btn btn-default">Add random points</button>
+      <button id="clear" class="btn btn-default">Clear</button>
+      <button id="toggleTree" class="btn btn-default">Toggle tree drawing</button>
 
-  <canvas width="400" height="400" id="surface">
-  </canvas>
-  
-  <script type="text/javascript">
-   var drawer = TreeDemo2D();
-   var canvas = document.getElementById("surface");
-   
-   $(document).ready(function() {
-     drawer.init(canvas, 10);
-   });
-  </script>
-</body>
+      <div style="margin-top:30px">
+        <canvas width="400" height="400" id="surface" style="border:1px solid black">
+        </canvas>
+      </div>
+    </div>
+
+
+    
+    <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.6.0/underscore-min.js"></script>
+    <script type="text/javascript" src="js/vendor/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/bhtree_c.js"></script>
+    <script type="text/javascript" src="js/draw2DTree.js"></script>
+
+    <script type="text/javascript">
+     var drawing = TreeDemo2D();
+     var canvas = document.getElementById("surface");
+     
+     $(document).ready(function() {
+       drawing.init(canvas, 25);
+     });
+
+     $(canvas).click(function(e) {
+       var offset = $(this).offset();
+       drawing.add(e.pageX-offset.left, e.pageY-offset.top, 0);
+     });
+
+     $("#add").click(function() {
+       drawing.addRandom(25);
+     });
+
+     $("#clear").click(function() {
+       drawing.clear();
+     });
+
+     $("#toggleTree").click(function() {
+       drawing.toggleDrawTree();
+     });
+    </script>
+  </body>
 </html>
