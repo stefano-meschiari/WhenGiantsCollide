@@ -1,3 +1,9 @@
+
+
+
+
+
+
 var BHTree = (function() {
     var nodeCache = [];
     var nodeList = [];
@@ -17,7 +23,7 @@ var BHTree = (function() {
                 bodyIndex:-1,
                 parent:null,
                 type:EMPTY,
-                descendants:new Array(NSUB),
+                descendants:new Array(8),
                 min:new Float64Array(3),
                 width:0,
                 com: new Float64Array(3),
@@ -34,25 +40,25 @@ var BHTree = (function() {
         }
     };
 
-    for (var j = 0; j < CACHE_LENGTH; j++)
+    for (var j = 0; j < 10000; j++)
         nodeCache.push(createNode());
     
     function deleteNode(node) {
         node.type = EMPTY;
         node.mass = 0.;
         node.particleCount = 0;
-        VSET3(node.com, 0, 0, 0);
+        { node.com[0]= 0; node.com[1]= 0; node.com[2]= 0; };
         nodeCache.push(node);
     };
 
     function divide(node) {
-        var mx = node.min[X];
-        var my = node.min[Y];
-        var mz = node.min[Z];
+        var mx = node.min[0];
+        var my = node.min[1];
+        var mz = node.min[2];
         var w = node.width;
         
-        ASSERT(isFinite(mx), "A coordinate is not finite.");
-        ASSERT(isFinite(w), "A coordinate is not finite.");
+        {};
+        {};
 
         var i = 0;
         
@@ -60,7 +66,7 @@ var BHTree = (function() {
             for (var y = 0; y <= 1; y++)
                 for (var z = 0; z <= 1; z++) {
                     var n = makeNode();
-                    VSET3(n.min, mx + 0.5 * x * w, my + 0.5 * y * w, mz + 0.5 * z * w);
+                    { n.min[0]= mx + 0.5 * x * w; n.min[1]= my + 0.5 * y * w; n.min[2]= mz + 0.5 * z * w; };
                     n.width = 0.5*w;
                     n.parent = node;
                     nodeList.push(n);
@@ -68,12 +74,12 @@ var BHTree = (function() {
                     i++;
                 }
 
-        ASSERT(node.descendants.length == NSUB, "Wrong number of descendants.");        
+        {};        
     }
     
     function addParticle(particle, pIndex, node) {
         var i;
-        LOG("Trying to add particle ", pIndex);
+        {};
         
         // Node is empty, accept a particle
         if (node.type == EMPTY) {
@@ -81,23 +87,23 @@ var BHTree = (function() {
             node.body = particle;
             node.bodyIndex = pIndex;
             
-            LOG("Node empty, accept particle ", pIndex);
+            {};
         } else if (node.type == PARTICLE) {
             node.type = NODE;
             
-            LOG("Node not empty, subdivide node");
+            {};
             divide(node);
         };
 
-        node.mass += particle[MASS];
+        node.mass += particle[6];
         node.particleCount += 1;
-        VADD(node.com, node.com, particle);
-        VMUL(node.com, (node.particleCount-1)/node.particleCount);
+        { node.com[0] =  node.com[0]+ particle[0]; node.com[1] =  node.com[1]+ particle[1]; node.com[2] =  node.com[2]+ particle[2]; };
+        { node.com[0] *=  (node.particleCount-1)/node.particleCount; node.com[1] *=  (node.particleCount-1)/node.particleCount; node.com[2] *=  (node.particleCount-1)/node.particleCount; };
         
         if (node.type == NODE) {
             for (i = 0; i < node.descendants.length; i++)
-                if (CONTAINS(particle, node.descendants[i].min, node.descendants[i].width)) {
-                    LOG("Adding ", pIndex, " to descendant ", i);
+                if ((((particle[0] >=  node.descendants[i].min[0]) && (particle[0] <=  node.descendants[i].min[0]+ node.descendants[i].width)) && ((particle[1] >=  node.descendants[i].min[1]) && (particle[1] <=  node.descendants[i].min[1]+ node.descendants[i].width)) && ((particle[2] >=  node.descendants[i].min[2]) && (particle[2] <=  node.descendants[i].min[2]+ node.descendants[i].width)))) {
+                    {};
                     
                     addParticle(particle, pIndex, node.descendants[i]);
                     break;
@@ -118,14 +124,17 @@ var BHTree = (function() {
     var force;
     
     bhtree.init = function(particles) {
-        indices = new Int32Array(particles.length);
-        distances = new Float64Array(particles.length);
-        force = new Float64Array(NPHYS * particles.length);
         
         bhtree.update(particles);
     };
 
-    bhtree.update = function(particles) {        
+    bhtree.update = function(particles) {
+        if (indices == null || particles.length != indices.length) {
+            indices = new Int32Array(particles.length);
+            distances = new Float64Array(particles.length);
+            force = new Float64Array(3 * particles.length);
+        }
+        
         var i;
         for (i = 0; i < nodeList.length; i++)
             deleteNode(nodeList[i]);
@@ -134,15 +143,15 @@ var BHTree = (function() {
         var min = -max;
         
         for (i = 0; i < particles.length; i++) {
-            max = Math.max(max, particles[i][X], particles[i][Y], particles[i][Z]);
-            min = Math.min(min, particles[i][X], particles[i][Y], particles[i][Z]);            
+            max = Math.max(max, particles[i][0], particles[i][1], particles[i][2]);
+            min = Math.min(min, particles[i][0], particles[i][1], particles[i][2]);            
         }
-        LOG([min, max]);
+        {};
 
         tree = makeNode();
         nodeList = [tree];
 
-        VSET3(tree.min, min, min, min);
+        { tree.min[0]= min; tree.min[1]= min; tree.min[2]= min; };
         tree.width = max-min;
         
         tree.parent = null;
@@ -150,7 +159,7 @@ var BHTree = (function() {
         for (i = 0; i < particles.length; i++) {
             addParticle(particles[i], i, tree);
         }
-        LOG(nodeList.length);
+        {};
 
         treeWalker = new Array(nodeList.length);
     };
@@ -171,17 +180,17 @@ var BHTree = (function() {
             if (n.type == EMPTY) {
                 continue;
             } else {
-                var dist2 = D2(particle, n.body);
+                var dist2 = (((particle[0]- n.body[0])*(particle[0]- n.body[0])) + ((particle[1]- n.body[1])*(particle[1]- n.body[1])) + ((particle[2] -  n.body[2])*(particle[2] -  n.body[2])));
                 if (dist2 < d2) {
                     distances[idx] = Math.sqrt(dist2);
                     indices[idx] = n.bodyIndex;
                     idx++;
                 }
                 if (n.type == NODE) {
-                    for (i = 0; i < NSUB; i++) {
+                    for (i = 0; i < 8; i++) {
                         var min = n.descendants[i].min;
                         var w = n.descendants[i].width;
-                        if (NODEINTERSECTS(min, w, particle, d)) {
+                        if ((((min[0]) <= ( particle[0]+ d) && (min[0]+ w) >= ( particle[0]- d)) && ((min[1]) <= ( particle[1]+ d) && (min[1]+ w) >= ( particle[1]- d)) && ((min[2]) <= ( particle[2]+ d) && (min[2]+ w) >= ( particle[2]- d)))) {
                             treeWalker[treeWalker_length] = n.descendants[i];
                             treeWalker_length++;
                         }
@@ -193,26 +202,8 @@ var BHTree = (function() {
         return [idx, indices, distances];
     };
 
-    /*
-    bhtree.forceAndNeighbors = function(particles) {
-        
-        for (var i = 0; i < particles.length; i++) {
-            var f = force.subarray(i * NPHYS, (i+1)*NPHYS);
+    
 
-            var treeWalker_length = 1;
-            treeWalker[0] = tree;
-
-            while (treeWalker_length > 0) {
-                treeWalker_length--;
-                var n = treeWalker[treeWalker_length];
-                var width2 = SQR(n.width);
-                var d2 = 
-                
-            }
-            
-        }
-    };
-    */
 
     bhtree.bruteForce = function(particles) {
         
@@ -224,6 +215,10 @@ var BHTree = (function() {
 
     bhtree.size = function() {
         return nodeList.length;
+    };
+
+    bhtree.flat = function() {
+        return nodeList;
     };
     
     bhtree.log = function() {
@@ -238,3 +233,6 @@ var BHTree = (function() {
 
 if (typeof(exports) != "undefined")
     exports.BHTree = BHTree;
+else
+    window.BHTree = BHTree;
+

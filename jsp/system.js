@@ -1,9 +1,3 @@
-
-
-
-
-
-
 "use strict";
 
 var AU = 1.4959787e13;
@@ -39,7 +33,7 @@ var R2 = 0.5 * RJUP/RUNIT;
 var System = (function() {
     var system = {};
     
-    var com = new Float64Array(10);
+    var com = new Float64Array(NCOORDS);
     var p = [];
     var f = [];
     var f1 = [];
@@ -53,26 +47,26 @@ var System = (function() {
         var i;
         
         for (i = 0; i < N; i++)
-            p.push(new Float64Array(10));
+            p.push(new Float64Array(NCOORDS));
 
-        force = new Float64Array(10);
+        force = new Float64Array(NCOORDS);
         
         // Use M1/(M1+M2) particles for the first planet
         var N1 = (M1/(M1+M2) * N)|0;
         for (i = 0; i < N1; i++) {
-            p[i][9] = 0;
-            p[i][0] = Math.random() * R1 + x1;
-            p[i][1] = Math.random() * R1;
-            p[i][2] = Math.random() * R1;
-            p[i][6] = M1/N1;
+            p[i][BODY] = 0;
+            p[i][X] = Math.random() * R1 + x1;
+            p[i][Y] = Math.random() * R1;
+            p[i][Z] = Math.random() * R1;
+            p[i][MASS] = M1/N1;
         }
 
         
         for (i = N1; i < N; i++)
-            p[i][9] = 1;
+            p[i][BODY] = 1;
 
-        {};
-        {};
+        LOG(N1);
+        LOG(N);
     };
 
     system.particles = function() {
@@ -101,4 +95,3 @@ if (typeof(exports) !== 'undefined') {
     exports.x1 = x1;
     exports.x2 = x2;
 }
-

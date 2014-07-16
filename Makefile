@@ -1,16 +1,17 @@
 NODE=/opt/local/bin/node --trace_exception
 UGLIFYJS=uglifyjs -m -c -o
-MODE=PROD
-CPP=cpp -nostdinc -undef -D$(MODE) -P -ansi -traditional-cpp -imacros js/defines.h
+#MODE=PROD
+MODE=DEBUG
+CPP=cpp -nostdinc -undef -D$(MODE) -P -ansi -traditional-cpp -imacros jsp/defines.h
 
-tree-test: jsc/bhtree.js jsc/system.js
-	$(NODE) jsc/bhtree-test.js
+tree-test: js/bhtree_c.js js/system_c.js
+	$(NODE) js/bhtree-test.js
 
-jsc/system.js: js/system.js
-	$(CPP) js/system.js jsc/system.js
+js/system_c.js: jsp/system.js
+	$(CPP) jsp/system.js js/system_c.js
 
-jsc/bhtree.js: js/bhtree.js
-	$(CPP) js/bhtree.js jsc/bhtree.js
+js/bhtree_c.js: jsp/bhtree.js
+	$(CPP) jsp/bhtree.js js/bhtree_c.js
 
 
 

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+  <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.6.0/underscore-min.js"></script>
+  <script type="text/javascript" src="js/bhtree_c.js"></script>
+  <script type="text/javascript" src="js/draw2DTree.js"></script>
+</head>
+
+<body>
+
+  <canvas width="400" height="400" id="surface">
+  </canvas>
+  
+  <script type="text/javascript">
+   var drawer = TreeDemo2D();
+   var canvas = document.getElementById("surface");
+   
+   $(document).ready(function() {
+     drawer.init(canvas, 10);
+   });
+  </script>
+</body>
+</html>
