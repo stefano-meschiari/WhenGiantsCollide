@@ -1,3 +1,5 @@
+
+
 var BHTree = (function() {
     var nodeCache = [];
     var nodeList = [];
@@ -105,8 +107,10 @@ var BHTree = (function() {
 
         node.mass += particle[MASS];
         node.particleCount += 1;
+        
+        VMUL(node.com, node.particleCount-1);
         VADD(node.com, node.com, particle);
-        VMUL(node.com, (node.particleCount-1)/node.particleCount);
+        VMUL(node.com, 1./node.particleCount);
         
         if (node.type == NODE) {
             for (i = 0; i < node.descendants.length; i++)
@@ -123,29 +127,9 @@ var BHTree = (function() {
         
     };
     
-    bhtree.theta = function(newTheta) {
-        if (newTheta)
-            theta = newTheta;
-        return theta;
-    };
+    var treeWalker = null;
     
-    var indices;
-    var distances;
-    var treeWalker;
-    var force;
-    
-    bhtree.init = function(particles) {
-        
-        bhtree.update(particles);
-    };
-
-    bhtree.update = function(particles) {
-        if (indices == null || particles.length != indices.length) {
-            indices = new Int32Array(particles.length);
-            distances = new Float64Array(particles.length);
-            force = new Float64Array(NPHYS * particles.length);
-        }
-        
+    bhtree.update = function(particles) {        
         var i;
         for (i = 0; i < nodeList.length; i++)
             deleteNode(nodeList[i]);
@@ -174,72 +158,33 @@ var BHTree = (function() {
         for (i = 0; i < particles.length; i++) {
             addParticle(particles[i], i, tree);
         }
+
         LOG(nodeList.length);
 
-        treeWalker = new Array(nodeList.length);
+        if (treeWalker == null)
+            treeWalker = new Array(nodeList.length);
     };
 
-    
-    bhtree.neighborsWithin = function(particle, d) {
+    bhtree.walk = function(f) {
         var treeWalker_length = 1;
         treeWalker[0] = tree;
-        
-        var d2 = d*d;
-        var i;
-        var idx = 0;
-        
+
         while (treeWalker_length > 0) {
-            treeWalker_length--;
+            treeWalker_length --;
             var n = treeWalker[treeWalker_length];
-           
-            if (n.type == EMPTY) {
-                continue;
-            } else {
-                var dist2 = D2(particle, n.body);
-                if (dist2 < d2) {
-                    distances[idx] = Math.sqrt(dist2);
-                    indices[idx] = n.bodyIndex;
-                    idx++;
-                }
-                if (n.type == NODE) {
-                    for (i = 0; i < NSUB; i++) {
-                        var min = n.descendants[i].min;
-                        var w = n.descendants[i].width;
-                        if (NODEINTERSECTS(min, w, particle, d)) {
-                            treeWalker[treeWalker_length] = n.descendants[i];
-                            treeWalker_length++;
-                        }
-                    }
-                }
-            }
-        }
-
-        return [idx, indices, distances];
-    };
-
-    /*
-    bhtree.forceAndNeighbors = function(particles) {
-        
-        for (var i = 0; i < particles.length; i++) {
-            var f = force.subarray(i * NPHYS, (i+1)*NPHYS);
-
-            var treeWalker_length = 1;
-            treeWalker[0] = tree;
-
-            while (treeWalker_length > 0) {
-                treeWalker_length--;
-                var n = treeWalker[treeWalker_length];
-                var width2 = SQR(n.width);
-                var d2 = 
-                
-            }
             
+            if (n.type == EMPTY)
+                continue;
+            else {
+                var openNode = f(n);
+                if (n.type == NODE && openNode)
+                    for (i = 0; i < NSUB; i++) {
+                        treeWalker[treeWalker_length] = n.descendants[i];
+                        
+                        treeWalker_length++;
+                    }
+            }
         }
-    };
-    */
-
-    bhtree.bruteForce = function(particles) {
-        
     };
     
     bhtree.tree = function() {
@@ -267,4 +212,4 @@ var BHTree = (function() {
 if (typeof(exports) != "undefined")
     exports.BHTree = BHTree;
 else
-    window.BHTree = BHTree;
+    this.BHTree = BHTree;

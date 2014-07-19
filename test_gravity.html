@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/bootstrap-theme.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">    
+    <title></title>
+  </head>
+
+  <body>
+    <div class="container" style="width:500px">
+      <div class="page-header">
+        <h3>Barnes-Hut gravity benchmark</h3>
+        <div class="row">
+          <div class="col-sm-8">
+            <p class="text-muted" id="score"></p>
+            <div class="progress">
+              <div class="progress-bar progress-bar-success" role="progress-bar" style="width:0%" id="progress">
+              </div>
+              
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <button id="start" class="btn btn-default" style="width:100%">Start</button>
+          </div>
+        </div>
+      </div>
+
+      <div style="min-width:450px; height:400px; margin-top:20px" id="time"></div>
+      <hr>
+      <h3>Scores (lower is better)</h3>
+      <table class="table"> 
+        <thead>
+          <tr><th>Device</th><th>Interpreter</th><th>Score</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>MacBook Pro (Retina, late 2012), 10.9.4</td>
+            <td>Safari 7.0.5</td>
+            <td></td>
+        </tbody>
+      </table>
+    </div>
+
+
+    
+    <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.6.0/underscore-min.js"></script>
+    <script type="text/javascript" src="js/vendor/bootstrap.min.js"></script>
+    <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/highcharts/4.0.3/highcharts.js"></script>
+    <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/highcharts/4.0.3/themes/sand-signika.js"></script>
+    <script type="text/javascript" src="js/vendor/iframeResizer.contentWindow.min.js"></script>
+    <script type="text/javascript">
+     $(document).ready(function()  {
+       $("#time").highcharts({
+         title:{ text: 'Time needed to compute gravitational force' },
+         subtitle: { text:'(milliseconds, lower is better)' },
+         series: [
+           { name:"Brute-force", marker: {symbol:"circle"} },
+           { name:"Barnes-Hut Tree", marker: {symbol:"circle"}}
+         ],
+         xAxis: {
+           title: { text: "Number of particles" }, type:"logarithmic"
+         },
+         yAxis: {
+           title: { text: "Average time to compute force" }, type:"logarithmic"
+         }
+       });
+
+       $time = $("#time").highcharts();
+     });
+
+     $("#start").click(function() {
+       
+       $("#start").attr("disabled", "true");
+       $("#start").text("Please wait...");
+       $("#score").text("Your score is being computed...");
+       var progress = 0;
+       var worker = new Worker("js/bhtree-benchmark.js?v=2");
+       worker.onmessage = function(e) {
+         if (e.data[0] === "score") {
+           $("#start").attr("disabled", "false");
+           $("#start").text("Start");
+           $("#score").text("Your score: " + e.data[1]);
+           $("#progress").css("width", "100%");
+         } else {
+           $time.series[0].setData(_.map(e.data, function(r) { return [r[0], r[1]] }));
+           $time.series[1].setData(_.map(e.data, function(r) { return [r[0], r[2]] }));
+           $("#progress").css("width", (progress/e.data[0][3] * 100) + "%");
+           progress += 1;
+         }
+         
+       };
+       
+       worker.postMessage("");
+     });
+     
+    </script>
+  </body>
+</html>

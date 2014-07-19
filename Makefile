@@ -4,14 +4,13 @@ MODE=PROD
 #MODE=DEBUG
 CPP=cpp -nostdinc -undef -D$(MODE) -P -ansi -traditional-cpp -imacros jsp/defines.h
 
-tree-test: js/bhtree_c.js js/system_c.js
-	$(NODE) js/bhtree-test.js
+all: js/bhtree.js js/system.js
 
-js/system_c.js: jsp/system.js
-	$(CPP) jsp/system.js js/system_c.js
+js/system.js: jsp/system.js
+	$(CPP) jsp/system.js js/system.js
 
-js/bhtree_c.js: jsp/bhtree.js
-	$(CPP) jsp/bhtree.js js/bhtree_c.js
+js/bhtree.js: jsp/bhtree.js
+	$(CPP) jsp/bhtree.js js/bhtree.js
 
 clean:
-	rm -f js/*_c.js
+	rm -f js/bhtree.js js/system.js

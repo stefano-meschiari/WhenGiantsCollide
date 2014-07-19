@@ -4,19 +4,16 @@ var X = 0;
 var Y = 1;
 var Z = 2;
 
-var TreeDemo2D = (function() {
+var TreeDemo2D = (function(canv, N) {
     var treeDemo2D = {};
     var p = [];
     var tree;
     var canvas;
     var drawTree = true;
-    
-    treeDemo2D.init = function(canv, N) {
-        tree = BHTree();
-        canvas = canv;
-        treeDemo2D.addRandom(N);
-    };
 
+    tree = BHTree();
+    canvas = canv;
+    
     treeDemo2D.addRandom = function(N) {
         
         var n = 0;

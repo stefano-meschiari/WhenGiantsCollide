@@ -24,6 +24,7 @@
 
 #define VSET(y, x1) { y[X] = x1[X]; y[Y] = x1[Y]; y[Z] = x1[Z]; }
 #define VSET3(v, x, y, z) { v[X]=x; v[Y]=y; v[Z]=z; }
+#define VZERO(v) { v[X] = 0.; v[Y] = 0.; v[Z] = 0.;}
 #define VADD(y, x1, x2) { y[X] = x1[X]+x2[X]; y[Y] = x1[Y]+x2[Y]; y[Z] = x1[Z]+x2[Z]; }
 #define VMUL(y, a) { y[X] *= a; y[Y] *= a; y[Z] *= a; }
 

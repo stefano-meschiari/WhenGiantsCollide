@@ -9,7 +9,7 @@
 
   <body>
     
-    <div class="container">
+    <div class="container" style="width:500px">
       <h4>Interactive Barnes-Hut Tree</h4>
       <p class="text-muted">Click on the surface to add new points.</p>
       <button id="add" class="btn btn-default">Add random points</button>
@@ -27,17 +27,14 @@
     <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.6.0/underscore-min.js"></script>
     <script type="text/javascript" src="js/vendor/bootstrap.min.js"></script>
-    <script type="text/javascript" src="js/bhtree_c.js?v=0"></script>
+    <script type="text/javascript" src="js/bhtree.js?v=0"></script>
     <script type="text/javascript" src="js/draw2dtree.js?v=0"></script>
+    <script type="text/javascript" src="js/vendor/iframeResizer.contentWindow.min.js"></script>
 
     <script type="text/javascript">
-     var drawing = TreeDemo2D();
      var canvas = document.getElementById("surface");
+     var drawing = TreeDemo2D(canvas);
      
-     $(document).ready(function() {
-       drawing.init(canvas, 25);
-     });
-
      $(canvas).click(function(e) {
        var offset = $(this).offset();
        drawing.add(e.pageX-offset.left, e.pageY-offset.top, 0);
