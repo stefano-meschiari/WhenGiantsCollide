@@ -34,6 +34,10 @@
     <script type="text/javascript">
      var canvas = document.getElementById("surface");
      var drawing = TreeDemo2D(canvas);
+
+     $(document).ready(function(e) {
+       drawing.addRandom(10);
+     });
      
      $(canvas).click(function(e) {
        var offset = $(this).offset();

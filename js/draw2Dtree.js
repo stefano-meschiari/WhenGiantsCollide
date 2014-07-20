@@ -11,7 +11,7 @@ var TreeDemo2D = (function(canv, N) {
     var canvas;
     var drawTree = true;
 
-    tree = BHTree();
+    tree = new BHTree();
     canvas = canv;
     
     treeDemo2D.addRandom = function(N) {

@@ -12,7 +12,7 @@
       <div class="page-header">
         <h3>Barnes-Hut gravity benchmark</h3>
         <div class="row">
-          <div class="col-sm-8">
+          <div class="col-xs-8">
             <p class="text-muted" id="score"></p>
             <div class="progress">
               <div class="progress-bar progress-bar-success" role="progress-bar" style="width:0%" id="progress">
@@ -20,24 +20,60 @@
               
             </div>
           </div>
-          <div class="col-sm-4">
+          <div class="col-xs-4">
             <button id="start" class="btn btn-default" style="width:100%">Start</button>
           </div>
         </div>
+        <div id="read-more"></div>
+
       </div>
 
       <div style="min-width:450px; height:400px; margin-top:20px" id="time"></div>
       <hr>
       <h3>Scores (lower is better)</h3>
-      <table class="table"> 
+      <table class="table table-bordered"> 
         <thead>
-          <tr><th>Device</th><th>Interpreter</th><th>Score</th></tr>
+          <tr><th>Device</th><th>Running on</th><th>Score</th><th>Relative</th></tr>
         </thead>
         <tbody>
           <tr>
-            <td>MacBook Pro (Retina, late 2012), 10.9.4</td>
+            <td rowspan="4">MacBook Pro (Retina, late 2012), 10.9.4</td>
+            <td>Chrome 36</td>
+            <td>14,641</td>
+            <td>1.0x</td>
+          </tr>
+          <tr>
             <td>Safari 7.0.5</td>
-            <td></td>
+            <td>17,541</td>
+            <td>1.2x</td>
+          </tr>
+          <tr>
+            <td>Firefox 30</td>
+            <td>18,866</td>
+            <td>1.3x</td>
+          </tr>
+          <tr>
+            <td>Node 0.10.29</td>
+            <td>21,858</td>
+            <td>1.5x</td>
+          </tr>
+          <tr>
+            <td rowspan="2">iPhone 5S, 7.1.2</td>
+            <td>Safari</td>
+            <td>63,841</td>
+            <td>4.4x</td>
+          </tr>
+          <tr>
+            <td>Mercury (no JIT)</td>
+            <td>561,033</td>
+            <td>38.3x</td>
+          </tr>
+          <tr>
+            <td>iPhone 5C, 7.1.2</td>
+            <td>Safari</td>
+            <td>147,141</td>
+            <td>10.0x</td>
+          </tr>
         </tbody>
       </table>
     </div>
@@ -50,8 +86,20 @@
     <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/highcharts/4.0.3/highcharts.js"></script>
     <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/highcharts/4.0.3/themes/sand-signika.js"></script>
     <script type="text/javascript" src="js/vendor/iframeResizer.contentWindow.min.js"></script>
+
     <script type="text/javascript">
+
+     function urlparameters() {
+       return _.object(_.compact(_.map(location.search.slice(1).split('&'), function(item) {  if (item) return item.split('='); })));
+     }
+
+     
+     
      $(document).ready(function()  {
+       if (!urlparameters()['hide']) {
+         $("#read-more").html('<a href="">Read more...</a>');
+       }
+     
        $("#time").highcharts({
          title:{ text: 'Time needed to compute gravitational force' },
          subtitle: { text:'(milliseconds, lower is better)' },
@@ -70,27 +118,32 @@
        $time = $("#time").highcharts();
      });
 
+     function fix(n) {
+       return +(n.toFixed(2));
+     }
+
      $("#start").click(function() {
        
-       $("#start").attr("disabled", "true");
+       $("#start").prop("disabled", true);
        $("#start").text("Please wait...");
        $("#score").text("Your score is being computed...");
        var progress = 0;
-       var worker = new Worker("js/bhtree-benchmark.js?v=2");
-       worker.onmessage = function(e) {
+       var worker = new Worker("js/bhtree-benchmark.js?v=4");
+       
+       worker.addEventListener("message", function(e) {
          if (e.data[0] === "score") {
-           $("#start").attr("disabled", "false");
+           $("#start").prop("disabled", false);
            $("#start").text("Start");
-           $("#score").text("Your score: " + e.data[1]);
+           $("#score").html("Your score: <strong>" + e.data[1] + "</strong>");
            $("#progress").css("width", "100%");
          } else {
-           $time.series[0].setData(_.map(e.data, function(r) { return [r[0], r[1]] }));
-           $time.series[1].setData(_.map(e.data, function(r) { return [r[0], r[2]] }));
+           $time.series[0].setData(_.map(e.data, function(r) { return [r[0], fix(r[1])] }));
+           $time.series[1].setData(_.map(e.data, function(r) { return [r[0], fix(r[2])] }));
            $("#progress").css("width", (progress/e.data[0][3] * 100) + "%");
            progress += 1;
          }
-         
-       };
+
+       });
        
        worker.postMessage("");
      });
