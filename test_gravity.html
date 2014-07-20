@@ -24,7 +24,9 @@
             <button id="start" class="btn btn-default" style="width:100%">Start</button>
           </div>
         </div>
-        <div id="read-more"></div>
+        <div id="read-more">
+          (c) 2014 Stefano Meschiari - <a href="http://wp.me/p1GL6x-mT">Read more...</a>
+        </div>
 
       </div>
 
@@ -97,7 +99,7 @@
      
      $(document).ready(function()  {
        if (!urlparameters()['hide']) {
-         $("#read-more").html('<a href="http://wp.me/p1GL6x-mT">Read more...</a>');
+         $("#read-more").css("display", "none");
        }
      
        $("#time").highcharts({

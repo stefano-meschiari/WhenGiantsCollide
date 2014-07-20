@@ -1,32 +1,29 @@
-function Node() {
-    this.body = null;
-    this.bodyIndex = -1;
-    this.parent = null;
-    this.type = BHTree.EMPTY;
-    this.descendants = new Array(NSUB);
-    this.min = new Float64Array(3);
-    this.width = 0;
-    this.com =  new Float64Array(3);
-    this.mass = 0.;
-    this.particleCount = 0;
-    this.treeWalker = null;
-}
+/*
+ bhtree.js - version 0.1
+ 
+ Stores a collection of 3D vectors in an octree data structure.
+ It is used by system.js to compute both the gravitational force and
+ the nearest neighbor for each point.
+
+ */
+
 
 function BHTree() {
     this.nodeCache = [];
     this.nodeList = [];
 
-    for (var j = 0; j < CACHE_LENGTH; j++)
+    for (var j = 0; j < BHTree.CACHE_LENGTH; j++)
         this.nodeCache.push(new Node());
  
     this.bhtree = {};
     this.p2node = [];
-
+    this.treeWalker = null;
 }
 
 BHTree.EMPTY = 0;
 BHTree.PARTICLE = 1;
 BHTree.NODE = 2;
+BHTree.CACHE_LENGTH = 4096;
 
 BHTree.prototype._makeNode = function() {
     if (this.nodeCache.length == 0) {
@@ -102,12 +99,18 @@ BHTree.prototype._addParticle = function(particle, pIndex, node) {
         node.bodyIndex = -1;
     };
 
-    node.mass += particle[MASS];
+    var mass = 1.;
+    if (particle.length > MASS)
+        mass = particle[MASS];
+    
     node.particleCount += 1;
     
-    VMUL(node.com, node.particleCount-1);
-    VADD(node.com, node.com, particle);
-    VMUL(node.com, 1./node.particleCount);
+    VMUL(node.com, node.mass);
+    node.com[X] += mass*particle[X];
+    node.com[Y] += mass*particle[Y];
+    node.com[Z] += mass*particle[Z];
+    node.mass += mass;
+    VMUL(node.com, 1./node.mass);
     
     if (node.type == BHTree.NODE) {
         for (i = 0; i < node.descendants.length; i++)
@@ -194,7 +197,21 @@ BHTree.prototype.size = function() {
 BHTree.prototype.flat = function() {
     return this.nodeList;
 };
-    
+
+function Node() {
+    this.body = null;
+    this.bodyIndex = -1;
+    this.parent = null;
+    this.type = BHTree.EMPTY;
+    this.descendants = new Array(NSUB);
+    this.min = new Float64Array(3);
+    this.width = 0;
+    this.com =  new Float64Array(3);
+    this.mass = 0.;
+    this.particleCount = 0;
+}
+
+
 if (typeof(exports) != "undefined")
     exports.BHTree = BHTree;
 else

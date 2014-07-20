@@ -13,7 +13,6 @@
 
 
 #define NSUB 8
-#define CACHE_LENGTH 10000
 
 #define DOUBLEARRAY Float64Array
 

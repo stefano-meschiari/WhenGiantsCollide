@@ -16,7 +16,7 @@ for (var i = 0; i < N; i++) {
     ith[X] = Math.random();
     ith[Y] = Math.random();
     ith[Z] = Math.random();
-    ith[MASS] = 1.;
+    ith[MASS] = 0.1;
 }
 
 console.log(s.bruteForce());
