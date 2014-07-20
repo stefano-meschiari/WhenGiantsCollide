@@ -21,6 +21,11 @@ of the Smoothed Particle Hydrodynamics (SPH) algorithm (js/system.js).
 to e.g. [SPLASH][1].
 
 # bhtree.js
+See [this article](http://arborjs.org/docs/barnes-hut) for an
+explanation of octrees and the Barnes-Hut algorithm. You can see this
+algorithm in action here:
+[Interactive Barnes-Hut Tree](http://www.stefanom.org/wgc/test_tree.html),
+and benchmark it here: [Barnes-Hut gravity benchmark](http://www.stefanom.org/wgc/test_gravity.html).
 
 ## The tree object
 To create a new tree object:
@@ -42,14 +47,15 @@ To get the top node of the tree:
 ```javascript
 var top = tree.tree();
 ```
-returns the top node. 
+returns the top node (see the next section for a description of the
+node structure). 
 
 To conditionally walk down the tree:
 ```javascript
 tree.walk(function(t) {
-  // t is the current node being examined
+  // t is the current node being examined;
   // return true if t should be opened (e.g. keep walking through its
-  descendants), false otherwise
+  // descendants), false otherwise
 });
 ```
 The function passed to walk is called repeatedly until the tree has
