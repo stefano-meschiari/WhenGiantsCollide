@@ -31,6 +31,7 @@
       </div>
 
       <div style="min-width:450px; height:400px; margin-top:20px" id="time"></div>
+      <button class="btn btn-default btn-xs" id="toggle-log">Toggle logarithmic axis</button>
       <hr>
       <h3>Scores (lower is better)</h3>
       <table class="table table-bordered"> 
@@ -95,7 +96,7 @@
        return _.object(_.compact(_.map(location.search.slice(1).split('&'), function(item) {  if (item) return item.split('='); })));
      }
 
-     
+     var $time;
      
      $(document).ready(function()  {
        if (!urlparameters()['hide']) {
@@ -148,6 +149,15 @@
        });
        
        worker.postMessage("");
+     });
+
+     var log = true;
+     $("#toggle-log").click(function() {
+       if (log)
+       $time.yAxis[0].update({ type: "linear"});
+       else
+       $time.yAxis[0].update({ type: "logarithmic"});
+       log = !log;
      });
      
     </script>
