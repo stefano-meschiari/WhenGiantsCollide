@@ -1,7 +1,8 @@
 # WhenGiantsCollide
 
 A little JavaScript app simulating the collision of two giant
-planets; see http://www.stefanom.org/wgc (a work in progress).
+planets; see http://www.stefanom.org/wgc (a work in progress). It will
+be in the same vein as [Super Planet Crash](http://www.stefanom.org/spc).
 
 A sketch of what it will look like:
 ![sketch](https://raw.githubusercontent.com/stefano-meschiari/WhenGiantsCollide/master/img/sketch.png)
@@ -93,8 +94,12 @@ used to inline code.
 The .js code needs to be compiled into vanilla JavaScript through the
 C preprocessor (/usr/bin/cpp, typically) and written in the js/ folder.
 
-To compile the code, use the Makefile (i.e. cd into the folder and
-type make).
+To compile the code, use the Makefile:
+```
+cd /path/to/downloaded/package
+make
+```
+
 
 # Performance
 
