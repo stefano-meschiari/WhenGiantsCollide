@@ -4,7 +4,7 @@ A little JavaScript app simulating the collision of two giant
 planets; see http://www.stefanom.org/wgc (a work in progress).
 
 A sketch of what it will look like:
-![sketch][img/sketch.png]
+![sketch](https://raw.githubusercontent.com/stefano-meschiari/WhenGiantsCollide/master/img/sketch.png)
 
 The package also contains JavaScript code that could be useful for
 other physically-motivated simulations, including:
