@@ -1,3 +1,5 @@
+"use strict";
+
 /*
  bhtree.js - version 0.1
  

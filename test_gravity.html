@@ -99,7 +99,7 @@
      var $time;
      
      $(document).ready(function()  {
-       if (!urlparameters()['hide']) {
+       if (urlparameters()['hide']) {
          $("#read-more").css("display", "none");
        }
      
