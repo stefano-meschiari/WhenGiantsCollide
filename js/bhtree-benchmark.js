@@ -23,19 +23,8 @@ var doWork = function(self) {
         return (new Date()-d)/N;
     }
 
-    var X = 0;
-    var Y = 1;
-    var Z = 2;
-    var MASS = 6;
-
-    var NB = 12;
-
-    var NN = _.map(_.range(6, 15), _.partial(Math.pow, 2));
-    var results = [];
-    var s;
-    _.each(NN, function(N) {
-        s = new System(N);
-
+    function system(N) {
+        var s = new System(N);
         for (var i = 0; i < N; i++) {
             var ith = s.ith(i);
             ith[X] = Math.random();
@@ -43,9 +32,25 @@ var doWork = function(self) {
             ith[Z] = Math.random();
             ith[MASS] = Math.random();
         }
+        return s;
+    }
+
+    var X = 0;
+    var Y = 1;
+    var Z = 2;
+    var MASS = 6;
+
+    var NB = 12;
+
+    var NN = _.map(_.range(6, 14), _.partial(Math.pow, 2));
+    var results = [];
+    var s;
+    _.each(NN, function(N) {
+        s = system(N);
+
 
         var brute_force = benchmark(function() {
-            //s.bruteForce();
+            s.bruteForce();
         }, NB);
 
         var tree_force = benchmark(function() {
@@ -59,6 +64,8 @@ var doWork = function(self) {
             console.log(N, brute_force, tree_force);
     });
 
+    s = system(16384);
+    
     var score = (benchmark(function() {
         s.computeForce();
     }, NB, 10) * 100)|0;

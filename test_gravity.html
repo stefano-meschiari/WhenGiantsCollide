@@ -97,7 +97,7 @@
      
      $(document).ready(function()  {
        if (!urlparameters()['hide']) {
-         $("#read-more").html('<a href="">Read more...</a>');
+         $("#read-more").html('<a href="http://wp.me/p1GL6x-mT">Read more...</a>');
        }
      
        $("#time").highcharts({
@@ -128,7 +128,7 @@
        $("#start").text("Please wait...");
        $("#score").text("Your score is being computed...");
        var progress = 0;
-       var worker = new Worker("js/bhtree-benchmark.js?v=4");
+       var worker = new Worker("js/bhtree-benchmark.js?v=5");
        
        worker.addEventListener("message", function(e) {
          if (e.data[0] === "score") {
