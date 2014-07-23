@@ -56,9 +56,6 @@ System.prototype.size = function() {
     return this.p.length;
 };
 
-System.prototype._walker = function(n, p_i) {
-
-};
 
 System.prototype.computeForce = function() {
     var self = this;
@@ -98,7 +95,7 @@ System.prototype.computeForce = function() {
     
     for (var i = 0; i < N; i++) {
         var p_i = this.p[i];
-        VZERO(this.f[i]);
+        V3ZERO(this.f[i]);
         
         this.tree.walk(walker, p_i);
     };
@@ -106,6 +103,8 @@ System.prototype.computeForce = function() {
 
     this.Phi /= 2.;
 };
+
+
 
 System.prototype.bruteForce = function() {
     this.Phi = 0;
@@ -116,7 +115,7 @@ System.prototype.bruteForce = function() {
     var N = p.length;
     
     for (i = 0; i < N; i++)
-        VZERO(f[i]);
+        V3ZERO(f[i]);
 
     
     var dist = 0;

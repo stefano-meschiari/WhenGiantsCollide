@@ -39,7 +39,7 @@ BHTree.prototype._deleteNode = function(node) {
     node.type = BHTree.EMPTY;
     node.mass = 0.;
     node.particleCount = 0;
-    VSET3(node.com, 0, 0, 0);
+    V3SET3(node.com, 0, 0, 0);
     this.nodeCache.push(node);
 };
 
@@ -58,7 +58,7 @@ BHTree.prototype._divide = function(node) {
         for (var y = 0; y <= 1; y++)
             for (var z = 0; z <= 1; z++) {
                 var n = this._makeNode();
-                VSET3(n.min, mx + 0.5 * x * w, my + 0.5 * y * w, mz + 0.5 * z * w);
+                V3SET3(n.min, mx + 0.5 * x * w, my + 0.5 * y * w, mz + 0.5 * z * w);
                 n.width = 0.5*w;
                 n.parent = node;
                 n.type = BHTree.EMPTY;
@@ -107,12 +107,12 @@ BHTree.prototype._addParticle = function(particle, pIndex, node) {
     
     node.particleCount += 1;
     
-    VMUL(node.com, node.mass);
+    V3MUL(node.com, node.mass);
     node.com[X] += mass*particle[X];
     node.com[Y] += mass*particle[Y];
     node.com[Z] += mass*particle[Z];
     node.mass += mass;
-    VMUL(node.com, 1./node.mass);
+    V3MUL(node.com, 1./node.mass);
     
     if (node.type == BHTree.NODE) {
         for (i = 0; i < node.descendants.length; i++)
@@ -135,13 +135,13 @@ BHTree.prototype.update = function(particles) {
         this._deleteNode(this.nodeList[i]);
 
     var max = new Float64Array(3);
-    VSET(max, particles[0]);
+    V3SET(max, particles[0]);
     var min = new Float64Array(3);
-    VSET(min, particles[0]);
+    V3SET(min, particles[0]);
     
     for (i = 1; i < particles.length; i++) {
-        VMIN(min, min, particles[i]);
-        VMAX(max, max, particles[i]);
+        V3MIN(min, min, particles[i]);
+        V3MAX(max, max, particles[i]);
     }
     
     var tree = this._makeNode();

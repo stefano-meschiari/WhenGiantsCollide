@@ -62,9 +62,6 @@ System.prototype.size = function() {
     return this.p.length;
 };
 
-System.prototype._walker = function(n, p_i) {
-
-};
 
 System.prototype.computeForce = function() {
     var self = this;
@@ -112,6 +109,8 @@ System.prototype.computeForce = function() {
 
     this.Phi /= 2.;
 };
+
+
 
 System.prototype.bruteForce = function() {
     this.Phi = 0;
