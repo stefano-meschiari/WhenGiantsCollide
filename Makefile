@@ -2,7 +2,7 @@ NODE=/opt/local/bin/node --trace_exception
 UGLIFYJS=uglifyjs -m -c -o
 MODE=PROD
 #MODE=DEBUG
-CPP=cpp -nostdinc -undef -D$(MODE) -P -ansi -traditional-cpp -C -imacros jsp/defines.h
+CPP=/usr/local/bin/cpp -nostdinc -undef -D$(MODE) -P -std=gnu99 -C -imacros jsp/defines.h
 
 all: js/bhtree.js js/system.js js/math.js
 
@@ -16,4 +16,4 @@ js/math.js: jsp/math.js
 	$(CPP) jsp/math.js js/math.js
 
 clean:
-	rm -f js/bhtree.js js/system.js
+	rm -f js/bhtree.js js/system.js js/math.js
