@@ -35,11 +35,6 @@ var doWork = function(self) {
         return s;
     }
 
-    var X = 0;
-    var Y = 1;
-    var Z = 2;
-    var MASS = 6;
-
     var NB = 12;
 
     var NN = _.map(_.range(6, 14), _.partial(Math.pow, 2));
@@ -53,6 +48,8 @@ var doWork = function(self) {
             s.bruteForce();
         }, NB);
 
+        var Phi_brute = s.Phi;
+        
         var tree_force = benchmark(function() {
             s.computeForce();
         }, NB);
@@ -61,7 +58,7 @@ var doWork = function(self) {
         if (!isNode)
             postMessage(results);
         else
-            console.log(N, brute_force, tree_force);
+            console.log(N, brute_force, tree_force, s.Phi, Phi_brute);
     });
 
     s = system(16384);

@@ -166,7 +166,7 @@ BHTree.prototype.update = function(particles) {
     this.tree = tree;
 };
 
-BHTree.prototype.walk = function(f, ctx) {
+BHTree.prototype.walk = function(f, p1, p2, p3, p4, p5) {
     var treeWalker_length = 1;
     this.treeWalker[0] = this.tree;
 
@@ -177,9 +177,9 @@ BHTree.prototype.walk = function(f, ctx) {
         if (n.type == BHTree.EMPTY)
             continue;
         else {
-            var openNode = f(n, ctx);
+            var openNode = f(n, p1, p2, p3, p4, p5);
             if (n.type == BHTree.NODE && openNode)
-                for (i = 0; i < NSUB; i++) {
+                for (var i = 0; i < NSUB; i++) {
                     this.treeWalker[treeWalker_length] = n.descendants[i];
                     
                     treeWalker_length++;
@@ -187,7 +187,7 @@ BHTree.prototype.walk = function(f, ctx) {
         }
     }
 };
-    
+  
 BHTree.prototype.tree = function() {
     return this.tree;
 };
