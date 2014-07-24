@@ -220,6 +220,6 @@ if (typeof(exports) !== 'undefined')
     exports._m = _m;
 
 // Local Variables:
-// eval: (add-hook 'after-save-hook (lambda() (start-process-shell-command "cd ..; make " nil nil)))
+// eval: (add-hook 'after-save-hook (lambda() (start-process-shell-command "cd ..; make " nil t)))
 // End:
 
