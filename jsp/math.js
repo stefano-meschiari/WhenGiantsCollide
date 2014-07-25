@@ -4,24 +4,39 @@ if (typeof(exports) !== 'undefined')
 
 var _m = {};
 
+// Returns the minimum of the given vector (inline version: _min)
 _m.min = function(v) {
     _min(min, v);
     return min;
 };
 
+// Returns the maximum of the given vector (inline version: _max)
 _m.max = function(v) {
     _max(max, v);
     return max;
 };
 
+// Returns the dot product of two vectors (inline version: _dot)
 _m.dot = function(v1, v2) {
     _dot(dot, v1, v2);
     return dot;
 };
 
+// Returns the norm of the vector (inline version: _norm)
 _m.norm = function(v) {
     _norm(norm, v);
     return norm;
+};
+
+// Fills v with normally distributed random numbers with given mean and std. dev.
+// (default = 0 and 1)
+_m.gaussianRandom = function(v, mean, s) {
+    mean = mean || 0;
+    s = s || 1;
+    
+    _V(v) = mean + s*Math.sqrt(-2 * Math.log(Math.random())) * Math.cos(2.*Math.PI * Math.random());
+
+    return v;
 };
 
 _m.sphereRandom = function(v) {
@@ -74,7 +89,6 @@ _m.writeMatrixSync = function(file, m, fmt) {
 _m.zeros = function(N1, N2) {
     if (typeof(N2) === 'undefined' || N2 === 0) {
         var v1 = new Float64Array(N1);
-        _V(v1) = 0.;
         return(v1);
     } else {
         var v2 = new Array(N1);
@@ -89,7 +103,10 @@ _m.rk23 = function(t, y0, f, tout, ctx) {
     
     var nrows = y0.length;
     var ncols = (isMatrix ? y0[0].length : 0);
+
+    ctx = ctx || {};
     
+    f = f.bind(ctx);
     ctx.f1 = ctx.f1 || _m.zeros(nrows, ncols);
     ctx.f2 = ctx.f2 || _m.zeros(nrows, ncols);
     ctx.f3 = ctx.f3 || _m.zeros(nrows, ncols);
@@ -119,16 +136,27 @@ _m.rk23 = function(t, y0, f, tout, ctx) {
     var E = f1;
 
     var dt_new = dt;
-    var j, err, dt_trial;
+    var i, j, err, dt_trial;
     
 
     while (t < tout) {
         dt_new = dt;
         
         do {
+            if (!isMatrix) {
+                for (i = 0; i < nrows; i++)
+                    f1[i] = f2[i] = f3[i] = 0.;
+            } else {
+                
+                for (i = 0; i < nrows; i++)
+                    for (j = 0; j < ncols; j++)
+                        f1[i][j] = f2[i][j] = f3[i][j] = 0.;
+            }
             dt = dt_new;
             
             f(t, y0, f1);
+
+            
             if (!isMatrix)
                 _V(y1, y0, f1) = $1 + dt * $2;
             else
@@ -140,6 +168,7 @@ _m.rk23 = function(t, y0, f, tout, ctx) {
             else
                 _M(y1, y0, f1, f2) = $1 + 0.25 * dt * ($2+$3);
 
+            
             f(t + 0.5 * dt, y1, f3);
 
             if (!isMatrix) {
@@ -155,7 +184,6 @@ _m.rk23 = function(t, y0, f, tout, ctx) {
                 _M(D, y0) = eps_abs + eps_rel * Math.abs($1);
                 _M(E, a1, a2) = Math.abs($1-$2);                    
             }
-
             
             err = -1e20;
             if (!isMatrix)
@@ -201,7 +229,7 @@ _m.rk23 = function(t, y0, f, tout, ctx) {
 
             
         } while (dt > dt_new);
-        
+
         t += dt;
         dt = dt_new;
 
@@ -212,14 +240,16 @@ _m.rk23 = function(t, y0, f, tout, ctx) {
     };
 
     ctx.dt = dt;
-    return t;
+    return ctx;
 };
 
 
 if (typeof(exports) !== 'undefined')
     exports._m = _m;
 
-// Local Variables:
-// eval: (add-hook 'after-save-hook (lambda() (start-process-shell-command "cd ..; make " nil t)))
-// End:
 
+
+
+// Local Variables:
+// eval: (add-hook 'after-save-hook (lambda() (shell-command "cd ..; make >/dev/null" nil)) nil t)
+// End:
