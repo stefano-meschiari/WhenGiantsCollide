@@ -1,6 +1,6 @@
 NODE=/opt/local/bin/node --trace_exception
 UGLIFYJS=uglifyjs -m -c -o
-MODE=PROD
+MODE=FAST_DEBUG
 #MODE=DEBUG
 CPP=/usr/local/bin/cpp -nostdinc -undef -D$(MODE) -P -std=gnu99 -C -imacros jsp/defines.h -imacros jsp/math.h
 JSP=jsp/*.js
@@ -11,4 +11,4 @@ all: $(JSP)
   done
 
 clean:
-	rm -f js/*
+	rm -f js/*.js

@@ -10,11 +10,32 @@ if (isNode) {
     var _m = require('./math.js')._m;
 }
 
-
-var s = new System(2), i;
+// CHECK 
+var s = new System(24000), i;
 var M = 1.;
-var R = 1.;
+var a = 1.;
 var m = M/s.size();
+var rng = _m.seededRandom(123);
+
+var max_R = 10;
+var max_M = Math.pow(max_R*a, 3)/Math.pow(Math.sqrt(max_R*max_R+1) * a, 3);
+
+var Ms = _m.uniformRandom(_m.zeros(s.size()), 0, max_M*M, rng);
+var plummer_M = function(r, M_r) {
+    return M_r/M - r*r*r*Math.pow(r*r+a*a, -1.5);
+};
+
+var Rs = _m.zeros(s.size());
+_V(Rs, Ms) = _m.bisect(0, max_R * a, plummer_M, 1e-5, $1);
+var sigmas = _m.zeros(s.size());
+
+for (i = 0; i < s.size(); i++) {
+    var ctx = {};
+    _m.rk23(0, 0, )
+}
+
+console.log(_m.max(Rs));
+console.log(_m.min(Rs));
 
 var v3 = _m.zeros(3);
 var sigma = _m.zeros(1);
@@ -23,52 +44,58 @@ for (i = 0; i < s.size(); i++) {
     var p = s.ith(i);
     p[MASS] = m;
     
-    _m.sphereRandom(v3);
+    _m.sphereRandom(v3, rng);
+    var r = Rs[i];
     var norm = _m.norm(v3);
-    var r = Math.pow(Math.random() * R*R*R, 1./3.);
-    _V(p, v3) = $1 * r / norm;
+    _V(p, v3) = $1 / norm * r;
     
     // d\sigma^2 / dr = -GM(r)/r^2 = -G M_T/R_T^3 R
 
-    _m.gaussianRandom(sigma, 0., Math.sqrt(K2*M/(R*R*R) * (r*r)));
+    _m.gaussianRandom(sigma, 0., Math.sqrt(0.1*K2*M/(a*a*a) * (r*r)), rng);
 
-    _m.sphereRandom(v3);
+    _m.sphereRandom(v3, rng);
     norm = _m.norm(v3);
     _V(v3) /= norm;
     
     p[VX] = sigma[0] * v3[X];
     p[VY] = sigma[0] * v3[Y];
-    p[VZ] = sigma[0] * v3[Z];    
+    p[VZ] = sigma[0] * v3[Z];
+
 }
 
-p = s.p;
-_V(p[0]) = 0.;
-p[0][MASS] = 1;
-_V(p[1]) = 0.;
-p[1][X] = 1;
-p[1][VY] = Math.sqrt(K2);
-p[1][MASS] = 0.0001;
+s.writeSync('out_' + i + ".txt");
+stop();
 
-console.log(2*Math.PI/p[1][VY]);
+var j;
 
-s.abs_acc = s.rel_acc = 1e-13;
-s.centerOfMass();
-console.log(MASS);
+s.eps_abs = 1e-5;
+s.eps_rel = 1e-5;
+s.eps = 1e-2;
 
-s.computeForce();
+
+console.log(s.eps);
+s.bruteForce();
 var E = s.kinetic() + s.potential();
-
-for (var t = 20; t < 100; t += 20) {
-    
-    s.evolve(t);
-    var com = s.centerOfMass();
-    var v = Math.sqrt(SQR(com[X])+SQR(com[Y])+SQR(com[Z]));
-    console.log(s.t, s.dt, 2.*s.kinetic()/s.potential(), (s.kinetic() + s.potential())/E, v, com[6]);
-}
-
+console.log(E);
+console.log(s.kinetic(), s.potential());
+var Phi = s.potential();
 s.computeForce();
-console.log(s.t, s.dt, 2.*s.kinetic()/s.potential());
+console.error((Phi - s.potential())/Phi);
 
+
+
+i = 0;
+
+for (var t = 1; t < 1000; t += 5) {
+    var com = s.centerOfMass();
+    s.computeForce();
+    s.writeSync('out_' + i + ".txt");
+    var v = Math.sqrt(SQR(com[VX])+SQR(com[VY])+SQR(com[VZ]));
+    console.log(s.t, s.dt_avg, 2.*s.kinetic()/s.potential(), (s.kinetic() + s.potential()-E)/E, v, com[6], s.potential() / (3./5*K2*M/a));
+
+    s.evolve(t, s.computeForce);
+    i++;
+}
 
 // Local Variables:
 // eval: (add-hook 'after-save-hook (lambda() (shell-command "cd ..; make >/dev/null")) nil t)

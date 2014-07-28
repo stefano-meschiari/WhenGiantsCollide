@@ -9,10 +9,14 @@
 
  */
 
+if (typeof module !== 'undefined' && module.exports) {
+    var _m = require("./math.js")._m;
+}
 
 function BHTree() {
     this.nodeCache = [];
     this.nodeList = [];
+    
 
     for (var j = 0; j < BHTree.CACHE_LENGTH; j++)
         this.nodeCache.push(new Node());
@@ -38,8 +42,10 @@ BHTree.prototype._makeNode = function() {
 BHTree.prototype._deleteNode = function(node) {
     node.type = BHTree.EMPTY;
     node.mass = 0.;
+    node.bodyIndex = -1;
     node.particleCount = 0;
-    V3SET3(node.com, 0, 0, 0);
+    node.body = null;
+    V3SET3(node.com, 0., 0., 0.);
     this.nodeCache.push(node);
 };
 
@@ -73,6 +79,7 @@ BHTree.prototype._divide = function(node) {
 BHTree.prototype._addParticle = function(particle, pIndex, node) {
     var i;
     LOG("Trying to add particle ", pIndex);
+    var added = false;
     
     // Node is empty, accept a particle
     if (node.type == BHTree.EMPTY) {
@@ -146,7 +153,8 @@ BHTree.prototype.update = function(particles) {
     
     var tree = this._makeNode();
     this.nodeList = [tree];
-    var width = Math.max(max[X]-min[X], max[Y]-min[Y], max[Z]-min[Z]);
+    var SAFETY = 1+1e-4;
+    var width = SAFETY*Math.max(max[X]-min[X], max[Y]-min[Y], max[Z]-min[Z]);
 
     tree.min[X] = 0.5*(max[X]-min[X]) - 0.5*width + min[X];
     tree.min[Y] = 0.5*(max[Y]-min[Y]) - 0.5*width + min[Y];
@@ -213,6 +221,14 @@ function Node() {
     this.particleCount = 0;
 }
 
+Node.prototype.log = function() {
+    console.log('Point: ', _m.toArray(this.body));
+    console.log('Body index: ', this.bodyIndex);
+    console.log('Type: ', this.type);
+    console.log('Mass: ', this.mass);
+    console.log('COM: ', _m.toArray(this.com));
+    console.log('Min: ', _m.toArray(this.min), '\n');
+};
 
 if (typeof(exports) != "undefined")
     exports.BHTree = BHTree;

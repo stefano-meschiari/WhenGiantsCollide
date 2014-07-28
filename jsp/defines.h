@@ -37,7 +37,17 @@
 #ifdef DEBUG
 #define LOG(...) (console.log(__VA_ARGS__))
 #define ASSERT(x, ...) if (!x) { console.error(__FILE__, " ", __LINE__, ": ", __VA_ARGS__); throw (x) }
+#define DEBUG(x) { x }
+#else
+#ifdef FAST_DEBUG
+#define LOG(...) {}
+#define ASSERT(x, ...) if (!x) { console.error(__FILE__, " ", __LINE__, ": ", __VA_ARGS__); throw (x) }
+#define DEBUG(x) { x }
 #else
 #define LOG(...) {}
 #define ASSERT(x, ...) {}
+#define DEBUG(x) {}
 #endif
+#endif
+
+

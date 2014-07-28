@@ -28,32 +28,112 @@ _m.norm = function(v) {
     return norm;
 };
 
+_m.log = function(v, fmt) {
+    fmt = fmt || _m.defaultFormat;
+    var i, j;
+    var str = [];
+    
+    if (v === null)
+        console.log(null);
+    if (typeof(v) === 'number')
+        console.log(fmt(v));
+    else if (v.length == 0)
+        console.log('[0]');
+    else if (typeof(v[0]) === 'object') {
+        for (i = 0; i < v.length; i++) {
+            str.push('[' + i + ']');
+            for (j = 0; j < v[0].length; j++)
+                str.push('[' + j + '] ' + fmt(v[i][j]) + ' ');
+            if (i != v.length-1)
+                str.push('\n');
+        }
+        console.log(str.join(''));
+    } else {
+
+        for (j = 0; j < v.length; j++) {
+            str.push('[' + j + '] ' + fmt(v[j]) + ' ');
+        }
+        console.log(str.join(''));
+    }
+};
+
+// A seeded random number generator. Only use for testing!
+_m.seededRandom = function(seed) {
+    var m = Math.pow(2, 32);
+    var a = 1664525;
+    var c = 1013904223;
+    var x = seed;
+    return function() {
+        x = (a*x+c)%m;
+        return x/m;
+    };
+};
+
+_m.uniformRandom = function(v, a, b, random) {
+    a = a || 0;
+    b = b || 1;
+    v = v || _m.zeros(1);
+
+    _V(v) = a + (b-a) * random();
+    
+    return v;
+};
+
 // Fills v with normally distributed random numbers with given mean and std. dev.
 // (default = 0 and 1)
-_m.gaussianRandom = function(v, mean, s) {
+_m.gaussianRandom = function(v, mean, s, random) {
+    random = random || Math.random;
     mean = mean || 0;
     s = s || 1;
+    v = v || _m.zeros(1);
     
-    _V(v) = mean + s*Math.sqrt(-2 * Math.log(Math.random())) * Math.cos(2.*Math.PI * Math.random());
+    _V(v) = mean + s*Math.sqrt(-2 * Math.log(random())) * Math.cos(2.*Math.PI * random());
 
     return v;
 };
 
-_m.sphereRandom = function(v) {
+_m.sphereRandom = function(v, random) {
     v = v || _m.zeros(3);
-    _V(v) = Math.random() - 0.5;
+    random = random || Math.random;
+    _m.gaussianRandom(v, 0, 1, random);
     _norm(norm, v);
     _V(v) /= norm;
     return v;
 };
 
+_m.rejectionSampling = function(v, f, g, xg, random) {
+    v = v || _m.zeros(1);
+    random = random || Math.random;
+
+    var x, u, g_x;
+    for (var i = 0; i < v.length; i++) {
+        do {
+            x = xg();
+            u = random();
+        } while (u < f(x)/g(x));
+        v[i] = x;
+    }
+    return v;
+};
+
+
+
 _m.toArray = function(floatArray) {
+    if (floatArray === null) return null;
     var ret = new Array(floatArray.length);
-    _V(ret, floatArray) = $1;
+    
+    if (floatArray.length > 0 && typeof(floatArray[0]) === 'object') {
+        for (var j = 0; j < floatArray.length; j++)
+            ret[j] = _m.toArray(floatArray[j]);
+    } else {
+        _V(ret, floatArray) = $1;
+    }
     return ret;
 };
 
 _m.toFloat64Array = function(array) {
+    if (array === null) return null;
+    
     var ret = new Float64Array(floatArray.length);
     _V(ret, array) = $1;
     return ret;
@@ -64,6 +144,7 @@ _m.defaultFormat = function(n) {
 };
 
 
+
 _m.format = function(v, fmt) {
     fmt = fmt || _m.defaultFormat;
 
@@ -71,6 +152,18 @@ _m.format = function(v, fmt) {
     for (var i = 0; i < s.length; i++)
         s[i] = fmt(v[i]);
     return s;
+};
+
+_m.isNaN = function(v) {
+    var nan = false;
+
+    if (v.length > 0 && typeof(v[0]) == 'object') {
+        for (var i = 0; i < v.length; i++)
+            for (var j = 0; j < v[0].length; j++)
+                nan |= isNaN(v[i][j]);
+    } else {
+        _a(nan, v) |= isNaN($1); 
+    }
 };
 
 _m.writeVectorSync = function(file, v, fmt) {
@@ -98,6 +191,48 @@ _m.zeros = function(N1, N2) {
     }
 };
 
+_m.seq = function(a, b, N) {
+    var v = new Float64Array(N);
+    _V(v) = a + (b-a)/(N-1) * $i;
+    return(v);
+};
+
+/*
+_m.trapz = function(f, x) {
+    var q = 0;
+    for (var i = 0; i < f.length-1; i++)
+        q += (x[i+1]-x[i]) * (f[i+1]+f[i]);
+    return 0.5*q;
+};
+*/
+
+_m.bisect = function(a, b, f, eps, ctx) {
+    eps = eps || 1e-6 * Math.abs(a-b);
+    
+    var f_a = f(a, ctx);
+    var f_b = f(b, ctx);
+    
+    if (f_a * f_b > 0)
+        throw 'bisect: Function is not bracketed.';
+
+    var x = 0.5 * (a+b);
+
+    while (Math.abs(a-b) > eps) {
+        var f_x = f(x, ctx);
+        if (f_x*f_a > 0) {
+            f_a = f_x;
+            a = x;
+        } else {
+            f_b = f_x;
+            b = x;
+        }
+        x = 0.5*(a+b);
+    };
+    
+    return x;
+    
+};
+
 _m.rk23 = function(t, y0, f, tout, ctx) {
     var isMatrix = (typeof(y0[0]) === 'object');
     
@@ -115,6 +250,8 @@ _m.rk23 = function(t, y0, f, tout, ctx) {
     ctx.eps_abs = ctx.eps_abs || 1e-5;
     ctx.eps_rel = ctx.eps_rel || 1e-5;
 
+    var dt_avg = 0;
+    var steps = 0;
     
     var S = 0.9;
     var q = 2;
@@ -217,9 +354,16 @@ _m.rk23 = function(t, y0, f, tout, ctx) {
                     }
                 }
                 dt_trial = dt * S * Math.pow(err, -1./(q+1));
-            }
+            } else
+                dt_trial = dt;
 
-            
+            DEBUG((function() {
+               if (dt_trial < 0.1 * dt) {
+                   console.log(dt, dt_trial);
+                   throw '';
+               };
+            })());
+
             if (dt_trial > 5.*dt)
                 dt_trial = 5.*dt;
             else if (dt_trial < 0.2 * dt)
@@ -227,11 +371,18 @@ _m.rk23 = function(t, y0, f, tout, ctx) {
 
             dt_new = Math.min(dt_trial, tout-t);
 
-            
+            if (isNaN(dt_new)) {
+                throw 'dt_new is NaN. ' + dt_trial + " " + dt + " " + err + " " + (tout-t);
+            } else if (_m.isNaN(a2))
+                throw 'a2 is NaN.';
+                
         } while (dt > dt_new);
 
         t += dt;
+        dt_avg += dt;
+        steps++;
         dt = dt_new;
+        
 
         if (!isMatrix)
             _V(y0, a2) = $1;
@@ -240,6 +391,7 @@ _m.rk23 = function(t, y0, f, tout, ctx) {
     };
 
     ctx.dt = dt;
+    ctx.dt_avg = dt_avg/steps;
     return ctx;
 };
 

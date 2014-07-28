@@ -32,7 +32,7 @@ function System(N) {
     this.changed = false;
     this.Phi = 0.;
     this.theta = 1.;
-    this.eps = 1e-7;
+    this.eps = 1e-6;
     this.abs_acc = 1e-3;
     this.eps_acc = 1e-3;
     this.t = 0;
@@ -72,13 +72,15 @@ System.prototype.centerOfMass = function(com) {
         com[6] += p[i][MASS];
     }
     
-    _V(com) /= com[6];
+    for (i = X; i <= VZ; i++)
+        com[i] /= com[6];
     
     return com;
 };
 
-System.prototype.evolve = function(to_t) {
-    _m.rk23(this.t, this.p, this.computeForce, to_t, this);
+System.prototype.evolve = function(to_t, force) {
+    force = force || this.computeForce;
+    _m.rk23(this.t, this.p, force, to_t, this);
     this.t = to_t;
 };
 
@@ -88,7 +90,7 @@ var walker = function(n, p_i, f_i, i, self) {
     
     if (self.computeGravity) {
         d2 = D2(p_i, n.com);
-        if (n.type != BHTree.PARTICLE && SQR(n.width)/d2 > self.theta2) {
+        if (n.type != BHTree.PARTICLE && (SQR(n.width)/d2 > self.theta2 || CONTAINS(p_i, n.min, n.width))) {
             open = true;
         } else {
             if (n.bodyIndex == i)
@@ -99,13 +101,14 @@ var walker = function(n, p_i, f_i, i, self) {
             var d = Math.sqrt(d2 + self.eps2);
             var d3 = d*d*d;
             
-            f_i[VX] += -K2*m * (com[X]-p_i[X])/d3;
-            f_i[VY] += -K2*m * (com[Y]-p_i[Y])/d3;
-            f_i[VZ] += -K2*m * (com[Z]-p_i[Z])/d3;
+            f_i[VX] += K2*m * (com[X]-p_i[X])/d3;
+            f_i[VY] += K2*m * (com[Y]-p_i[Y])/d3;
+            f_i[VZ] += K2*m * (com[Z]-p_i[Z])/d3;
 
             self.Phi += -K2 * m * p_i[MASS] / d;
         };
     }
+
     return(open);
 };
 
@@ -118,8 +121,7 @@ System.prototype.computeForce = function(t, p, f) {
     this.theta2 = SQR(this.theta);
     this.eps2 = SQR(this.eps);
     
-    
-    this.tree.update(this.p);
+    this.tree.update(p);
     this.Phi = 0.;
     var N = this.p.length;
     
@@ -136,6 +138,7 @@ System.prototype.computeForce = function(t, p, f) {
     };
 
 
+    
     this.Phi /= 2.;
 };
 
@@ -165,17 +168,21 @@ System.prototype.bruteForce = function(t, p, f) {
                 continue;
             var d = Math.sqrt(D2(p[i], p[j]) + eps2);
             var d3 = d*d*d;
-            f[i][VX] += K2*p[j][MASS] * (p[i][X]-p[j][X])/d3;
-            f[i][VY] += K2*p[j][MASS] * (p[i][Y]-p[j][Y])/d3;
-            f[i][VZ] += K2*p[j][MASS] * (p[i][Z]-p[j][Z])/d3;
+            f[i][VX] += -K2*p[j][MASS] * (p[i][X]-p[j][X])/d3;
+            f[i][VY] += -K2*p[j][MASS] * (p[i][Y]-p[j][Y])/d3;
+            f[i][VZ] += -K2*p[j][MASS] * (p[i][Z]-p[j][Z])/d3;
 
-            f[j][VX] += -K2*p[i][MASS] * (p[i][X]-p[j][X])/d3;
-            f[j][VY] += -K2*p[i][MASS] * (p[i][Y]-p[j][Y])/d3;
-            f[j][VZ] += -K2*p[i][MASS] * (p[i][Z]-p[j][Z])/d3;
+            f[j][VX] += K2*p[i][MASS] * (p[i][X]-p[j][X])/d3;
+            f[j][VY] += K2*p[i][MASS] * (p[i][Y]-p[j][Y])/d3;
+            f[j][VZ] += K2*p[i][MASS] * (p[i][Z]-p[j][Z])/d3;
 
             this.Phi += -K2*p[i][MASS] * p[j][MASS]/d;
+
+            
         }
     }
+
+    DEBUG((function() { if (_m.isNaN(f)) throw 'f is NaN'; })());    
 };
 
 System.prototype.force = function() {
