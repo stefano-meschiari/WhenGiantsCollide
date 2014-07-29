@@ -32,7 +32,11 @@
 
 #define INTERSECT(ax, AX, bx, BX) ((ax) <= (BX) && (AX) >= (bx))
 #define NODEINTERSECTS(n, w, p, d) (INTERSECT(n[X], n[X]+w, p[X]-d, p[X]+d) && INTERSECT(n[Y], n[Y]+w, p[Y]-d, p[Y]+d) && INTERSECT(n[Z], n[Z]+w, p[Z]-d, p[Z]+d))
-    
+
+#define INTERP(x, xa, xb, va, vb) (va)+((vb)-(va))*((x)-(xa))/((xb)-(xa))
+
+#define IS_MATRIX(x) (x.length > 0 && typeof x[0] == "object")
+#define IS_FLOAT64ARRAY(x) (typeof x == "object" && (x.byteOffset !== undefined))
 
 #ifdef DEBUG
 #define LOG(...) (console.log(__VA_ARGS__))

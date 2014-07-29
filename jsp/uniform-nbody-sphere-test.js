@@ -3,12 +3,13 @@
 var isNode = typeof module !== 'undefined' && module.exports;
 
 if (isNode) {
-    var System = require('./system.js');
-    var K2 = System.K2;
-    System = System.System;
+    var System = require('./system.js').System;
+    var Units = require('./units.js').Units;
     var BHTree = require('./bhtree.js').BHTree;
     var _m = require('./math.js')._m;
 }
+
+var K2 = Units.K2;
 
 // CHECK 
 var s = new System(24000), i;
@@ -30,8 +31,9 @@ _V(Rs, Ms) = _m.bisect(0, max_R * a, plummer_M, 1e-5, $1);
 var sigmas = _m.zeros(s.size());
 
 for (i = 0; i < s.size(); i++) {
-    var ctx = {};
-    _m.rk23(0, 0, )
+    _m.rk23(0, 0, function(r, sigma2) {
+        return -
+    }, Rs[i]);
 }
 
 console.log(_m.max(Rs));

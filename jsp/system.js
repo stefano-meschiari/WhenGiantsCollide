@@ -2,29 +2,11 @@
 
 if (typeof module !== 'undefined' && module.exports) {
     var BHTree = require("./bhtree.js").BHTree;
+    var Units = require("./units.js").Units;
     var _m = require("./math.js")._m;
 }
 
-var AU = 1.4959787e13;
-var MSUN = 1.98892e33;
-var MJUP = 1.8986e30;
-var MEARTH = 5.97219e27;
-var RJUP = 7.1e9;
-var RSUN = 6.96e10;
-var REARTH = 6.3e8;
-
-var GGRAV = 6.67384e-8;
-var MIN_DISTANCE = 300 * RJUP/AU;
-
-var DAY = 8.64e4;
-var TWOPI = 6.2831853072e+00;
-var SQRT_TWOPI = 2.5066282746e+00;
-var K2  = ((GGRAV * MSUN * DAY * DAY) / (AU*AU*AU));
-var YEAR = 31556926.;
-
-var RUNIT = AU;
-var MUNIT = MSUN;
-var TUNIT = DAY;
+var K2 = Units.K2;
 
 function System(N) {
     this.p = [];
@@ -205,10 +187,6 @@ System.prototype.writeSync = function(file) {
 
 if (typeof(exports) !== 'undefined') {
     exports.System = System;
-    exports.K2 = K2;
-    exports.RUNIT = RUNIT;
-    exports.TUNIT = TUNIT;
-    exports.MUNIT = MUNIT;
 }
 
 // Local Variables:

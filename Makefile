@@ -6,6 +6,7 @@ CPP=/usr/local/bin/cpp -nostdinc -undef -D$(MODE) -P -std=gnu99 -C -imacros jsp/
 JSP=jsp/*.js
 
 all: $(JSP)
+	export
 	for jsp in $(JSP); do \
 		$(CPP) $$jsp js/`basename $$jsp` ; \
   done

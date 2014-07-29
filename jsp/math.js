@@ -4,6 +4,26 @@ if (typeof(exports) !== 'undefined')
 
 var _m = {};
 
+_m.vectorize = function(f) {
+    return function(v, vout) {
+        if (typeof(v) !== "object")
+            return f(+v);
+        else if (!IS_MATRIX(v)) {
+            vout = vout || _m.zeros(v.length);
+            _V(vout, v) = f($1);
+            return vout;
+        } else {
+            vout = vout || _m.zeros(v.length, v[0].length);
+            _M(vout, v) = f($1);
+            return vout;
+        }
+    };
+};
+
+_m.sort = function(v) {
+    return Array.prototype.sort.call(v);
+};
+
 // Returns the minimum of the given vector (inline version: _min)
 _m.min = function(v) {
     _min(min, v);
@@ -15,6 +35,35 @@ _m.max = function(v) {
     _max(max, v);
     return max;
 };
+
+_m.which = function(v, f) {
+    for (var i = 0; i < v.length; i++)
+        if (f(v, i)) return i;
+    return -1;
+};
+
+_m.whichMin = function(v) {
+    var min = v[0], mini = 0;
+    for (var i = 0; i < v.length; i++) {
+        if (v[i] < min) {
+            mini = i;
+            min = v[i];
+        }
+    }
+    return mini;
+};
+
+_m.whichMax = function(v) {
+    var max = v[0], maxi = 0;
+    for (var i = 0; i < v.length; i++) {
+        if (v[i] > max) {
+            maxi = i;
+            max = v[i];
+        }
+    }
+    return maxi;
+};
+
 
 // Returns the dot product of two vectors (inline version: _dot)
 _m.dot = function(v1, v2) {
@@ -116,6 +165,53 @@ _m.rejectionSampling = function(v, f, g, xg, random) {
     return v;
 };
 
+_m.I = function(x) {
+    return function() {
+        return x;
+    };
+};
+
+_m.nrow = function(m) {
+    if (!IS_MATRIX(m)) throw 'Input is not a matrix.';
+    return m.length;
+};
+
+_m.ncol = function(m) {
+    if (!IS_MATRIX(m)) throw 'Input is not a matrix.';
+    return m[0].length;
+};
+
+_m.rbind = function(a, b) {
+    if (!IS_MATRIX(a)) a = [a];
+    if (!IS_MATRIX(b)) b = [b];
+
+    var i;
+    var v = new Array(a.length + b.length);
+    for (i = 0; i < a.length; i++) 
+        v[i] = a[i];
+    for (i = 0; i < b.length; i++)
+        v[i+a.length] = b[i];
+    return v;
+};
+
+_m.cbind = function(a, b) {
+    var isMatrix_a = IS_MATRIX(a);
+    var isMatrix_b = IS_MATRIX(b);
+    var j;
+    var ret = new Array(a.length);
+    var colsa = (isMatrix_a ? a[0].length : 1);
+    var colsb = (isMatrix_b ? b[0].length : 1);
+    
+    for (var i = 0; i < ret.length; i++) {
+        var v = new Array(colsa+colsb);
+        for (j = 0; j < colsa; j++)
+            v[j] = (isMatrix_a ? a[i][j] : a[i]);
+        for (j = 0; j < colsb; j++)
+            v[j+colsa] = (isMatrix_b ? b[i][j] : b[i]);
+        ret[i] = v;
+    }
+    return ret;
+};
 
 
 _m.toArray = function(floatArray) {
@@ -137,6 +233,34 @@ _m.toFloat64Array = function(array) {
     var ret = new Float64Array(floatArray.length);
     _V(ret, array) = $1;
     return ret;
+};
+
+_m.binaryFindValue = function(x, v) {
+    var a = 0;
+    var b = v.length-1;
+    var fa = x[a];
+    var fb = x[b];
+
+    while (b > a) {
+        var t = (0.5 * (a+b))|0;
+        var ft = x[t];
+        if (ft < v) {
+            a = t;
+            fa = ft;
+        } else if (ft > v) {
+            b = t;
+            fb = ft;
+        } else
+            return t;
+    }
+    return a;
+};
+
+_m.interpFun = function(x, y) {
+    return function(xx) {
+        var i = _m.binaryFindValue(xx, x);
+        return INTERP(xx, x[i], x[i+1], y[i], y[i+1]);
+    };
 };
 
 _m.defaultFormat = function(n) {
@@ -197,14 +321,47 @@ _m.seq = function(a, b, N) {
     return(v);
 };
 
-/*
-_m.trapz = function(f, x) {
+_m.subset = function(v, a, b) {
+    var r, i;
+    
+    if (typeof(a) == "function") {
+        r = [];
+        for (i = 0; i < v.length; i++)
+            if (a(v[i], i))
+                r.push(v[i]);
+        return r;        
+    } else if (a > 0) {
+        b = (b === undefined ? a + 1 : b);
+        r = _m.zeros(b-a);
+        for (i = a; i < b; i++) 
+            r[i-a] = v[i];
+        return r;
+    } else {
+        a = -a;
+        b = (b === undefined ? a + 1 : b);
+        r = _m.zeros(v.length - (b-a));
+        for (i = 0; i < a; i++) 
+            r[i] = v[i];
+        for (i = b; i < v.length; i++)
+            r[i-b+a] = v[i];
+        
+        return r;
+    }
+};
+
+_m.trapzfun = function(x, f) {
     var q = 0;
-    for (var i = 0; i < f.length-1; i++)
-        q += (x[i+1]-x[i]) * (f[i+1]+f[i]);
+    for (var i = 0; i < x.length-1; i++)
+        q += (x[i+1]-x[i]) * (f(x[i+1])+f(x[i]));
     return 0.5*q;
 };
-*/
+
+_m.cumtrapzfun = function(x, f) {
+    var q = _m.zeros(x.length-1);
+    for (var i = 1; i < x.length-1; i++)
+        q[i] = q[i-1] + 0.5*(x[i+1]-x[i]) * (f(x[i+1])+f(x[i]));
+    return q;
+};
 
 _m.bisect = function(a, b, f, eps, ctx) {
     eps = eps || 1e-6 * Math.abs(a-b);
@@ -392,7 +549,8 @@ _m.rk23 = function(t, y0, f, tout, ctx) {
 
     ctx.dt = dt;
     ctx.dt_avg = dt_avg/steps;
-    return ctx;
+    
+    return y0;
 };
 
 
