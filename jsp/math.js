@@ -108,6 +108,7 @@ _m.log = function(v, fmt) {
 
 // A seeded random number generator. Only use for testing!
 _m.seededRandom = function(seed) {
+    ASSERT(seed, "Specify a seed.");
     var m = Math.pow(2, 32);
     var a = 1664525;
     var c = 1013904223;
@@ -122,6 +123,7 @@ _m.uniformRandom = function(v, a, b, random) {
     a = a || 0;
     b = b || 1;
     v = v || _m.zeros(1);
+    random = random || Math.random;
 
     _V(v) = a + (b-a) * random();
     
@@ -141,12 +143,12 @@ _m.gaussianRandom = function(v, mean, s, random) {
     return v;
 };
 
-_m.sphereRandom = function(v, random) {
+_m.sphereRandom = function(v, R, random) {
     v = v || _m.zeros(3);
     random = random || Math.random;
     _m.gaussianRandom(v, 0, 1, random);
     _norm(norm, v);
-    _V(v) /= norm;
+    _V(v) *= R/norm;
     return v;
 };
 
@@ -172,12 +174,12 @@ _m.I = function(x) {
 };
 
 _m.nrow = function(m) {
-    if (!IS_MATRIX(m)) throw 'Input is not a matrix.';
+    if (!IS_MATRIX(m)) throw new Error('Input is not a matrix.');
     return m.length;
 };
 
 _m.ncol = function(m) {
-    if (!IS_MATRIX(m)) throw 'Input is not a matrix.';
+    if (!IS_MATRIX(m)) throw new Error('Input is not a matrix.');
     return m[0].length;
 };
 
@@ -235,19 +237,35 @@ _m.toFloat64Array = function(array) {
     return ret;
 };
 
+_m.reverse = function(x) {
+    var v = _m.zeros(x.length);
+    for (var i = 0; i < x.length; i++)
+        v[i] = x[x.length-i-1];
+    return v;
+};
+
 _m.binaryFindValue = function(x, v) {
+    if (x < v[0] || x > v[v.length-1])
+        throw new Error('x is outside the range: ' + x);
+    
     var a = 0;
     var b = v.length-1;
-    var fa = x[a];
-    var fb = x[b];
+    if (v[0] > v[1]) {
+        a = v.length-1;
+        b = 0;
+    }
+    
+    var fa = v[a];
+    var fb = v[b];
 
-    while (b > a) {
+    while (b - a > 1) {
         var t = (0.5 * (a+b))|0;
-        var ft = x[t];
-        if (ft < v) {
+        var ft = v[t];
+        
+        if (ft < x) {
             a = t;
             fa = ft;
-        } else if (ft > v) {
+        } else if (ft > x) {
             b = t;
             fb = ft;
         } else
@@ -257,8 +275,17 @@ _m.binaryFindValue = function(x, v) {
 };
 
 _m.interpFun = function(x, y) {
+    
     return function(xx) {
+        if (xx < x[0] || xx > x[x.length-1])
+            throw new Error('Outside range: ' + xx);
         var i = _m.binaryFindValue(xx, x);
+        if (i == x.length-1) {
+            if (xx == x[x.length-1])
+                return y[y.length-1];
+            else
+                throw new Error('Outside range: ' + xx);
+        }
         return INTERP(xx, x[i], x[i+1], y[i], y[i+1]);
     };
 };
@@ -286,7 +313,7 @@ _m.isNaN = function(v) {
             for (var j = 0; j < v[0].length; j++)
                 nan |= isNaN(v[i][j]);
     } else {
-        _a(nan, v) |= isNaN($1); 
+        _A(nan, v) |= isNaN($1); 
     }
 };
 
@@ -370,7 +397,7 @@ _m.bisect = function(a, b, f, eps, ctx) {
     var f_b = f(b, ctx);
     
     if (f_a * f_b > 0)
-        throw 'bisect: Function is not bracketed.';
+        throw new Error('bisect: Function is not bracketed.');
 
     var x = 0.5 * (a+b);
 
@@ -403,7 +430,7 @@ _m.rk23 = function(t, y0, f, tout, ctx) {
     ctx.f2 = ctx.f2 || _m.zeros(nrows, ncols);
     ctx.f3 = ctx.f3 || _m.zeros(nrows, ncols);
     ctx.y1 = ctx.y1 || _m.zeros(nrows, ncols);
-    ctx.dt = ctx.dt || 0.01;
+    ctx.dt = ctx.dt || (tout-t)*0.01;
     ctx.eps_abs = ctx.eps_abs || 1e-5;
     ctx.eps_rel = ctx.eps_rel || 1e-5;
 
@@ -431,10 +458,10 @@ _m.rk23 = function(t, y0, f, tout, ctx) {
 
     var dt_new = dt;
     var i, j, err, dt_trial;
+    var direction = SIGN(tout-t);
     
-
-    while (t < tout) {
-        dt_new = dt;
+    while (Math.abs(t - tout) > 0) {
+        dt_new = Math.min(Math.abs(dt), Math.abs(tout-t)) * direction;
         
         do {
             if (!isMatrix) {
@@ -457,6 +484,7 @@ _m.rk23 = function(t, y0, f, tout, ctx) {
                 _M(y1, y0, f1) = $1 + dt * $2;
 
             f(t + dt, y1, f2);
+
             if (!isMatrix)
                 _V(y1, y0, f1, f2) = $1 + 0.25 * dt * ($2+$3);
             else
@@ -514,26 +542,22 @@ _m.rk23 = function(t, y0, f, tout, ctx) {
             } else
                 dt_trial = dt;
 
-            DEBUG((function() {
-               if (dt_trial < 0.1 * dt) {
-                   console.log(dt, dt_trial);
-                   throw '';
-               };
-            })());
-
-            if (dt_trial > 5.*dt)
+            if (Math.abs(dt_trial) > 5.*Math.abs(dt))
                 dt_trial = 5.*dt;
-            else if (dt_trial < 0.2 * dt)
+            else if (Math.abs(dt_trial) < 0.2 * Math.abs(dt))
                 dt_trial = 0.2*dt;
 
-            dt_new = Math.min(dt_trial, tout-t);
+            dt_new = Math.min(Math.abs(dt_trial), Math.abs(tout-t)) * direction;
 
+            ASSERT(SIGN(dt_new) == direction, "Sign of dt different from sign of direction", direction);
+            
             if (isNaN(dt_new)) {
-                throw 'dt_new is NaN. ' + dt_trial + " " + dt + " " + err + " " + (tout-t);
+                throw new Error('dt_new is NaN. ' + dt_trial + " " + dt + " " + err + " " + (tout-t));
             } else if (_m.isNaN(a2))
-                throw 'a2 is NaN.';
-                
-        } while (dt > dt_new);
+                throw new Error('a2 is NaN.');
+
+            
+        } while (Math.abs(dt) > Math.abs(dt_new));
 
         t += dt;
         dt_avg += dt;
@@ -545,6 +569,7 @@ _m.rk23 = function(t, y0, f, tout, ctx) {
             _V(y0, a2) = $1;
         else
             _M(y0, a2) = $1;
+
     };
 
     ctx.dt = dt;

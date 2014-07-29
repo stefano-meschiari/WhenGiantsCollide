@@ -35,17 +35,19 @@
 
 #define INTERP(x, xa, xb, va, vb) (va)+((vb)-(va))*((x)-(xa))/((xb)-(xa))
 
+#define SIGN(x) ((x) >= 0 ? 1 : -1)
+
 #define IS_MATRIX(x) (x.length > 0 && typeof x[0] == "object")
 #define IS_FLOAT64ARRAY(x) (typeof x == "object" && (x.byteOffset !== undefined))
 
 #ifdef DEBUG
 #define LOG(...) (console.log(__VA_ARGS__))
-#define ASSERT(x, ...) if (!x) { console.error(__FILE__, " ", __LINE__, ": ", __VA_ARGS__); throw (x) }
+#define ASSERT(x, ...) if (!x) { throw new Error(__VA_ARGS__) }
 #define DEBUG(x) { x }
 #else
 #ifdef FAST_DEBUG
 #define LOG(...) {}
-#define ASSERT(x, ...) if (!x) { console.error(__FILE__, " ", __LINE__, ": ", __VA_ARGS__); throw (x) }
+#define ASSERT(x, ...) if (!x) { throw new Error(__VA_ARGS__) }
 #define DEBUG(x) { x }
 #else
 #define LOG(...) {}

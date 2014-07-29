@@ -17,8 +17,8 @@ if (typeof module !== 'undefined' && module.exports) {
 function Stellar(N, rho, max_R, rng) {
     rng = rng || Math.random;
     
-    var s = new System(N);
-
+    var i;
+    
     var R = _m.seq(0, max_R, 10*N);
     var M = _m.cumtrapzfun(R, function(R) { return 4.*Math.PI*R*R*rho(R); });
     R = _m.subset(R, -(R.length-1));
@@ -26,23 +26,49 @@ function Stellar(N, rho, max_R, rng) {
 
     var R_M = _m.vectorize(_m.interpFun(M, R));
     var M_R = _m.interpFun(R, M);
-    var Ri = _m.sort(R_M(_m.uniformRandom(N, 0, max_M)));
+
+    var Ri = _m.sort(R_M(_m.uniformRandom(_m.zeros(N), 0, max_M, rng)));
 
     // d\rho sigma^2 = -GM(r)/r^2 rho
-    var sigma2 = _m.zeros(N);
+    var sigma = _m.zeros(N);
     var out = [];
     var ctx = {};
 
-    var rhosigma2 = 0;
-    var R_from = 0.;
-    for (var i = 0; i < N; i++) {
-        rhosigma2 = _m.rk23(R_from, rhosigma2, function(R, _) {
-            return -K2*M_R(R)/(R*R) * rho(R);
-        }, R[i], ctx);
-
-        console.log(R, rhosigma2/rho(R[i]));
-    }
+    var rhosigma2 = [0];
+    var R_from = Ri[Ri.length-1];
+    sigma[Ri.length-1] = 0.;
     
+    for (i = Ri.length-2; i >= 0; i--) {
+        _m.rk23(R_from, rhosigma2, function(R, y, f) {
+            if (R == R_from)
+                f[0] = 0.;
+
+            f[0] = -K2*M_R(R)/(R*R) * rho(R);
+        }, Ri[i], ctx);
+
+        sigma[i] = Math.sqrt(rhosigma2[0]/rho(Ri[i]));
+        R_from = Ri[i];
+    }
+
+    var s = new System(N);
+    var v3 = _m.zeros(NCOORDS);
+    var j;
+    
+    for (i = 0; i < s.size(); i++) {
+        var p = s.ith(i);
+
+        v3 = _m.sphereRandom(v3, 1, rng);
+        var vel = _m.gaussianRandom(vel, 0, sigma[i], rng);
+
+        for (j = X; j <= Z; j++)
+            p[j] = v3[j] * Ri[i];
+        for (j = VX; j <= VZ; j++)
+            p[j] = v3[j] * vel[0];
+        
+        p[MASS] = max_M/s.size();
+    }
+
+    return s;
 }
 
 if (typeof(exports) !== 'undefined') {
