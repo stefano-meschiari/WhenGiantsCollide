@@ -7,7 +7,7 @@ JSP=jsp/*.js
 
 all: $(JSP)
 	for jsp in $(JSP); do \
-		CPP="$(CPP)" node macro_ws.js $$jsp js/`basename $$jsp` ; \
+		CPP="$(CPP)" node macro_ws.js $$jsp js/`basename $$jsp`; \
   done
 
 clean:

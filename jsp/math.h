@@ -26,8 +26,8 @@
 #define _M1(out) for (var $j = 0; $j < out.length; $j++) _V(out[$j])
 
 
-#define _max(out, v) { var out = v[0]; _A(out, v) = Math.max(out, $1) }
-#define _min(out, v) { var out = v[0]; _A(out, v) = Math.min(out, $1) }
+#define _max(out, v) { if (!IS_MATRIX(v)) { var out = v[0]; _A(out, v) = Math.max(out, $1) } else { var out = v[0][0]; for (var $j = 0; $j < v.length; $j++) { _A(out, v[$j]) = Math.max(out, $1); } } }
+#define _min(out, v) { if (!IS_MATRIX(v)) { var out = v[0]; _A(out, v) = Math.min(out, $1) } else { var out = v[0][0]; for (var $j = 0; $j < v.length; $j++) { _A(out, v[$j]) = Math.min(out, $1); } } }
 #define _dot(out, v1, v2) { var out = 0.; for (var $i = 0; $i < v1.length; $i++) out += v1[$i]*v2[$i]; }
 
 #define _norm(out, v) { _dot(out, v, v); out = Math.sqrt(out); }

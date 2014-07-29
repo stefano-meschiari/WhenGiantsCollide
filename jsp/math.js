@@ -20,9 +20,14 @@ _m.vectorize = function(f) {
     };
 };
 
-_m.sort = function(v) {
-    return Array.prototype.sort.call(v);
+_m.sortFun = function(a, b) {
+    return a-b;
 };
+
+_m.sort = function(v, f) {
+    return Array.prototype.sort.call(v, f || _m.sortFun);
+};
+
 
 // Returns the minimum of the given vector (inline version: _min)
 _m.min = function(v) {
@@ -246,7 +251,7 @@ _m.reverse = function(x) {
 
 _m.binaryFindValue = function(x, v) {
     if (x < v[0] || x > v[v.length-1])
-        throw new Error('x is outside the range: ' + x);
+        throw new Error(x + ' is outside the range: ' + v[0] + " " + v[v.length-1]);
     
     var a = 0;
     var b = v.length-1;
@@ -278,7 +283,7 @@ _m.interpFun = function(x, y) {
     
     return function(xx) {
         if (xx < x[0] || xx > x[x.length-1])
-            throw new Error('Outside range: ' + xx);
+            throw new Error(xx + " is outside the range: " + x[0] + " " + x[x.length-1]);
         var i = _m.binaryFindValue(xx, x);
         if (i == x.length-1) {
             if (xx == x[x.length-1])
@@ -287,6 +292,14 @@ _m.interpFun = function(x, y) {
                 throw new Error('Outside range: ' + xx);
         }
         return INTERP(xx, x[i], x[i+1], y[i], y[i+1]);
+    };
+};
+
+_m.derivFun = function(f, h) {
+    h = h || 1e-3;
+
+    return function(x) {
+        return (f(x+0.5*h)-f(x-0.5*h))/h;
     };
 };
 
@@ -437,7 +450,7 @@ _m.rk23 = function(t, y0, f, tout, ctx) {
     var dt_avg = 0;
     var steps = 0;
     
-    var S = 0.9;
+    var S = 0.99;
     var q = 2;
     
     var f1 = ctx.f1;
@@ -462,6 +475,7 @@ _m.rk23 = function(t, y0, f, tout, ctx) {
     
     while (Math.abs(t - tout) > 0) {
         dt_new = Math.min(Math.abs(dt), Math.abs(tout-t)) * direction;
+        var repeat = true;
         
         do {
             if (!isMatrix) {
@@ -474,58 +488,55 @@ _m.rk23 = function(t, y0, f, tout, ctx) {
                         f1[i][j] = f2[i][j] = f3[i][j] = 0.;
             }
             dt = dt_new;
-            
+
             f(t, y0, f1);
-
             
             if (!isMatrix)
-                _V(y1, y0, f1) = $1 + dt * $2;
+                _V(y1, y0, f1) = $1 + 0.5*dt * $2;
             else
-                _M(y1, y0, f1) = $1 + dt * $2;
+                _M(y1, y0, f1) = $1 + 0.5*dt * $2;
 
-            f(t + dt, y1, f2);
+            f(t + 0.5*dt, y1, f2);
 
             if (!isMatrix)
-                _V(y1, y0, f1, f2) = $1 + 0.25 * dt * ($2+$3);
+                _V(y1, y0, f1, f2) = $1 + dt * (-$2+2.*$3);
             else
-                _M(y1, y0, f1, f2) = $1 + 0.25 * dt * ($2+$3);
+                _M(y1, y0, f1, f2) = $1 + dt * (-$2+2.*$3);
 
             
             f(t + 0.5 * dt, y1, f3);
 
             if (!isMatrix) {
-                _V(a1, y0, f1, f2) = $1 + 0.5 * dt * ($2 + $3);
-                _V(a2, y0, f1, f2, f3) = $1 + dt/6. * ($2+$3+4.*$4);
+                _V(a1, y0, f1, f2) = $1 + dt * (-$2 + 2*$3);
+                _V(a2, y0, f1, f2, f3) = $1 + dt/6. * ($2+4.*$3+$4);
 
                 _V(D, y0) = eps_abs + eps_rel * Math.abs($1);
                 _V(E, a1, a2) = Math.abs($1-$2);
             } else {
-                _M(a1, y0, f1, f2) = $1 + 0.5 * dt * ($2 + $3);
-                _M(a2, y0, f1, f2, f3) = $1 + dt/6. * ($2+$3+4.*$4);
+                _M(a1, y0, f1, f2) = $1 + dt * (-$2 + 2*$3);
+                _M(a2, y0, f1, f2, f3) = $1 + dt/6. * ($2+4.*$3+$4);
 
                 _M(D, y0) = eps_abs + eps_rel * Math.abs($1);
                 _M(E, a1, a2) = Math.abs($1-$2);                    
             }
-            
+
             err = -1e20;
             if (!isMatrix)
                 _A(err, E, D) = Math.max(err, ($1-$2)/$2);
             else
                 for (j = 0; j < nrows; j++)
                     _A(err, E[j], D[j]) = Math.max(err, ($1-$2)/$2);
+
             
             if (err > 0.1) {
                 err = 0;
                 if (!isMatrix) {
-                    _V(E, E, D) = $1/$2;
+                    _V(E, E, D) = Math.abs($1/$2);
                     _max(err, E);
                 } else {
-                    _M(E, E, D) = $1/$2;
-                    for (j = 0; j < nrows; j++) {
-                        _max(err, E[j]);
-                    }
-                }
-                
+                    _M(E, E, D) = Math.abs($1/$2);
+                    _max(err, E);
+                }                
                 dt_trial = dt * S * Math.pow(err, -1./q);
             } else if (err <= 0.) {
                 err = 0.;
@@ -534,13 +545,14 @@ _m.rk23 = function(t, y0, f, tout, ctx) {
                     _max(err, E);
                 } else {
                     _M(E, E, D) = $1/$2;
-                    for (j = 0; j < nrows; j++) {
-                        _max(err, E[j]);
-                    }
+                    _max(err, E);
                 }
                 dt_trial = dt * S * Math.pow(err, -1./(q+1));
-            } else
+                repeat = false;
+            } else {
                 dt_trial = dt;
+                repeat = false;
+            }
 
             if (Math.abs(dt_trial) > 5.*Math.abs(dt))
                 dt_trial = 5.*dt;
@@ -548,7 +560,7 @@ _m.rk23 = function(t, y0, f, tout, ctx) {
                 dt_trial = 0.2*dt;
 
             dt_new = Math.min(Math.abs(dt_trial), Math.abs(tout-t)) * direction;
-
+            
             ASSERT(SIGN(dt_new) == direction, "Sign of dt different from sign of direction", direction);
             
             if (isNaN(dt_new)) {
@@ -556,14 +568,12 @@ _m.rk23 = function(t, y0, f, tout, ctx) {
             } else if (_m.isNaN(a2))
                 throw new Error('a2 is NaN.');
 
-            
-        } while (Math.abs(dt) > Math.abs(dt_new));
+        } while (repeat);
 
         t += dt;
         dt_avg += dt;
         steps++;
         dt = dt_new;
-        
 
         if (!isMatrix)
             _V(y0, a2) = $1;
