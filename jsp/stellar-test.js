@@ -34,8 +34,11 @@ console.log(s.eps/Math.sqrt(s.kinetic()));
 var dt = 1;
 var tmax = 10;
 var i = 0;
+s.ncols = VZ+1;
 while (s.t < tmax) {
     s.computeForce();
+    console.log(s.f[0].length);
+
     var dt_h = 1e20;
     var f = s.force();
 

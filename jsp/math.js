@@ -434,11 +434,12 @@ _m.rk23 = function(t, y0, f, tout, ctx) {
     var isMatrix = (typeof(y0[0]) === 'object');
     
     var nrows = y0.length;
-    var ncols = (isMatrix ? y0[0].length : 0);
 
     ctx = ctx || {};
     
     f = f.bind(ctx);
+    var ncols = (isMatrix ? (ctx.ncols || y0[0].length) : 0);
+    
     ctx.f1 = ctx.f1 || _m.zeros(nrows, ncols);
     ctx.f2 = ctx.f2 || _m.zeros(nrows, ncols);
     ctx.f3 = ctx.f3 || _m.zeros(nrows, ncols);
@@ -492,29 +493,29 @@ _m.rk23 = function(t, y0, f, tout, ctx) {
             f(t, y0, f1);
             
             if (!isMatrix)
-                _V(y1, y0, f1) = $1 + 0.5*dt * $2;
+                _V(y1, y0, f1) = $1 + dt * $2;
             else
-                _M(y1, y0, f1) = $1 + 0.5*dt * $2;
+                _M(y1, y0, f1) = $1 + dt * $2;
 
-            f(t + 0.5*dt, y1, f2);
+            f(t + dt, y1, f2);
 
             if (!isMatrix)
-                _V(y1, y0, f1, f2) = $1 + dt * (-$2+2.*$3);
+                _V(y1, y0, f1, f2) = $1 + 0.25* dt * ($2+$3);
             else
-                _M(y1, y0, f1, f2) = $1 + dt * (-$2+2.*$3);
+                _M(y1, y0, f1, f2) = $1 + 0.25* dt * ($2+$3);
 
             
             f(t + 0.5 * dt, y1, f3);
 
             if (!isMatrix) {
-                _V(a1, y0, f1, f2) = $1 + dt * (-$2 + 2*$3);
-                _V(a2, y0, f1, f2, f3) = $1 + dt/6. * ($2+4.*$3+$4);
+                _V(a1, y0, f1, f2) = $1 + 0.5* dt * ($2 + $3);
+                _V(a2, y0, f1, f2, f3) = $1 + dt/6. * ($2+$3+4.*$4);
 
                 _V(D, y0) = eps_abs + eps_rel * Math.abs($1);
                 _V(E, a1, a2) = Math.abs($1-$2);
             } else {
-                _M(a1, y0, f1, f2) = $1 + dt * (-$2 + 2*$3);
-                _M(a2, y0, f1, f2, f3) = $1 + dt/6. * ($2+4.*$3+$4);
+                _M(a1, y0, f1, f2) = $1 + 0.5 * dt * ($2 + $3);
+                _M(a2, y0, f1, f2, f3) = $1 + dt/6. * ($2+$3+4.*$4);
 
                 _M(D, y0) = eps_abs + eps_rel * Math.abs($1);
                 _M(E, a1, a2) = Math.abs($1-$2);                    
@@ -568,6 +569,8 @@ _m.rk23 = function(t, y0, f, tout, ctx) {
             } else if (_m.isNaN(a2))
                 throw new Error('a2 is NaN.');
 
+            if (_m.logerr)
+                console.log(t, dt, dt_new, err);
         } while (repeat);
 
         t += dt;
