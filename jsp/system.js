@@ -64,7 +64,7 @@ System.prototype.centerOfMass = function(com) {
 
 System.prototype.evolve = function(to_t, force) {
     force = force || this.computeForce;
-    _m.rk23(this.t, this.p, force, to_t, this);
+    _m.rk(this.t, this.p, force, to_t, this);
     this.t = to_t;
 };
 
@@ -95,6 +95,7 @@ System.walker = function(n, p_i, f_i, i, self) {
             f_i[VZ] += m_d3 * diz;
             
             self.Phi += -m * p_i[MASS] / d;
+
         };
     }
 
@@ -106,7 +107,7 @@ System.prototype.computeForce = function(t, p, f, self) {
     p = p || this.p;
     f = f || this.f;
     self = self || this;
-    
+
     var walker = System.walker;
     this.theta2 = SQR(this.theta);
     this.eps2 = SQR(this.eps);

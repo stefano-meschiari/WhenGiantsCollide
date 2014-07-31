@@ -32,14 +32,17 @@ s.eps_abs = 1e-2;
 s.eps_rel = 1e-2;
 s.theta = 0.75;
 console.log(s.eps);
+s.countForce = true;
 s.computeForce();
+var brute = s.size()*(s.size()-1)/2;
+console.error(s.forceCounter1, s.forceCounter2, brute, s.forceCounter1/brute, s.forceCounter2/brute);
 console.log(s.kinetic(), s.potential(), 2*s.kinetic()/s.potential(), s.eps);
 
 console.log(s.eps/Math.sqrt(s.kinetic()));
 s.center();
 
 var dt = 1;
-var tmax = 1000;
+var tmax = 2;
 var i = 0;
 s.ncols = VZ+1;
 while (s.t < tmax) {

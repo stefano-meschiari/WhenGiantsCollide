@@ -435,7 +435,7 @@ _m.bisect = function(a, b, f, eps, ctx) {
     
 };
 
-_m.rk23 = function(t, y0, f, tout, ctx) {
+_m.rk = function(t, y0, f, tout, ctx) {
     var isMatrix = (typeof(y0[0]) === 'object');
     
     var nrows = y0.length;

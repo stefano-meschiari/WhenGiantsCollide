@@ -43,7 +43,7 @@ function Stellar(N, rho, max_R, rng) {
     var Drho = _m.derivFun(rho);
     
     for (i = Ri.length-2; i >= 0; i--) {
-        _m.rk23(R_from, sigma2, function(R, y, f) {
+        _m.rk(R_from, sigma2, function(R, y, f) {
             if (R == R_from)
                 f[0] = 0.;
 
