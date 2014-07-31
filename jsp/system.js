@@ -23,8 +23,8 @@ function System(N) {
 
     var i;    
     for (i = 0; i < N; i++) {
-        this.p.push(new Float64Array(NCOORDS));
-        this.f.push(new Float64Array(NPHYS*2));
+        this.p.push(new DOUBLEARRAY(NCOORDS));
+        this.f.push(new DOUBLEARRAY(NPHYS*2));
     }
 
     this.tree = new BHTree();
@@ -41,6 +41,8 @@ System.prototype.coords = function() {
 System.prototype.size = function() {
     return this.p.length;
 };
+
+
 
 System.prototype.centerOfMass = function(com) {
     var p = this.p;
@@ -66,40 +68,46 @@ System.prototype.evolve = function(to_t, force) {
     this.t = to_t;
 };
 
-var walker = function(n, p_i, f_i, i, self) {
+System.walker = function(n, p_i, f_i, i, self) {
     var open = false;
     var d2;
     
     if (self.computeGravity) {
-        d2 = D2(p_i, n.com);
+        var com = n.com;
+        var dix = com[X]-p_i[X];
+        var diy = com[Y]-p_i[Y];
+        var diz = com[Z]-p_i[Z];
+
+        d2 = SQR(dix)+SQR(diy)+SQR(diz);
+        
         if (n.type != BHTree.PARTICLE && (SQR(n.width)/d2 > self.theta2 || CONTAINS(p_i, n.min, n.width))) {
             open = true;
         } else {
             if (n.bodyIndex == i)
                 return false;
 
-            var m = n.mass;
-            var com = n.com;
+            var m = K2*n.mass;
             var d = Math.sqrt(d2 + self.eps2);
-            var d3 = d*d*d;
+            var m_d3 = m/(d*d*d);
             
-            f_i[VX] += K2*m * (com[X]-p_i[X])/d3;
-            f_i[VY] += K2*m * (com[Y]-p_i[Y])/d3;
-            f_i[VZ] += K2*m * (com[Z]-p_i[Z])/d3;
-
-            self.Phi += -K2 * m * p_i[MASS] / d;
+            f_i[VX] += m_d3 * dix;
+            f_i[VY] += m_d3 * diy;
+            f_i[VZ] += m_d3 * diz;
+            
+            self.Phi += -m * p_i[MASS] / d;
         };
     }
 
     return(open);
 };
 
-System.prototype.computeForce = function(t, p, f) {
+System.prototype.computeForce = function(t, p, f, self) {
     t = t || 0;
     p = p || this.p;
     f = f || this.f;
+    self = self || this;
     
-    var self = this;
+    var walker = System.walker;
     this.theta2 = SQR(this.theta);
     this.eps2 = SQR(this.eps);
     
@@ -111,16 +119,15 @@ System.prototype.computeForce = function(t, p, f) {
         var p_i = p[i];
         var f_i = f[i];
         
-        _V(f_i) = 0.;
         f_i[X] = p_i[VX];
         f_i[Y] = p_i[VY];
         f_i[Z] = p_i[VZ];
-        
+        f_i[VX] = 0.;
+        f_i[VY] = 0.;
+        f_i[VZ] = 0.;
         this.tree.walk(walker, p_i, f_i, i, self);
     };
 
-
-    
     this.Phi /= 2.;
 };
 
@@ -183,6 +190,27 @@ System.prototype.kinetic = function() {
 
 System.prototype.writeSync = function(file) {
     _m.writeMatrixSync(file, this.p);
+};
+
+System.prototype.center = function() {
+    var com = this.centerOfMass();
+    for (var i = 0; i < this.size(); i++)
+        for (var j = X; j <= VZ; j++)
+            this.p[i][j] -= com[j];
+};
+
+System.prototype.translate = function(v6) {
+    for (var i = 0; i < this.size(); i++)
+        for (var j = X; j <= VZ; j++)
+            this.p[i][j] += v6[j];
+};
+
+System.prototype.append = function(sys) {
+    for (var i = 0; i < sys.size(); i++) {
+        this.p.push(sys.ith(i));
+        this.f.push(new DOUBLEARRAY(NPHYS*2));
+    }
+    this.tree = new BHTree();
 };
 
 if (typeof(exports) !== 'undefined') {

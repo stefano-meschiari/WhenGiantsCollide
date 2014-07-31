@@ -4,10 +4,12 @@ var isNode = typeof module !== 'undefined' && module.exports;
 
 if (isNode) {
     var _ = require('underscore');
+    var _m = require('./math.js')._m;
+    var Units = require('./units.js').Units;
     var BHTree = require('./bhtree.js').BHTree;
     var System = require('./system.js').System;
 } else {
-    importScripts("bhtree.js?v=1", "system.js?v=1", "vendor/underscore-min.js");
+    importScripts("math.js?v=1", "units.js?v=1", "bhtree.js?v=1", "system.js?v=1", "vendor/underscore-min.js");
 }
 
 if (!(this.console && this.console.log)) {

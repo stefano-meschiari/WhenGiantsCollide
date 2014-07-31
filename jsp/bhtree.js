@@ -56,7 +56,7 @@ BHTree.prototype._divide = function(node) {
     var w = node.width;
     
     ASSERT(isFinite(mx), "A coordinate is not finite.");
-    ASSERT(isFinite(w), "A coordinate is not finite.");
+    ASSERT(isFinite(w), "Width is not finite.");
 
     var i = 0;
     
@@ -141,9 +141,9 @@ BHTree.prototype.update = function(particles) {
     for (i = 0; i < this.nodeList.length; i++)
         this._deleteNode(this.nodeList[i]);
 
-    var max = new Float64Array(3);
+    var max = new DOUBLEARRAY(3);
     V3SET(max, particles[0]);
-    var min = new Float64Array(3);
+    var min = new DOUBLEARRAY(3);
     V3SET(min, particles[0]);
     
     for (i = 1; i < particles.length; i++) {
@@ -170,28 +170,29 @@ BHTree.prototype.update = function(particles) {
     LOG(this.nodeList.length);
 
     if (this.treeWalker == null)
-        this.treeWalker = new Array(this.nodeList.length);
+        this.treeWalker = [this.tree];
     this.tree = tree;
 };
 
 BHTree.prototype.walk = function(f, p1, p2, p3, p4, p5) {
     var treeWalker_length = 1;
-    this.treeWalker[0] = this.tree;
-
+    var treeWalker = this.treeWalker;
+    treeWalker[0] = this.tree;
+    
     while (treeWalker_length > 0) {
         treeWalker_length --;
-        var n = this.treeWalker[treeWalker_length];
-        
-        if (n.type == BHTree.EMPTY)
+        var n = treeWalker[treeWalker_length];
+        var type = n.type;
+        if (type == BHTree.EMPTY)
             continue;
-        else {
+        else {            
             var openNode = f(n, p1, p2, p3, p4, p5);
-            if (n.type == BHTree.NODE && openNode)
+            if (type == BHTree.NODE && openNode) {
                 for (var i = 0; i < NSUB; i++) {
-                    this.treeWalker[treeWalker_length] = n.descendants[i];
-                    
+                    treeWalker[treeWalker_length] = n.descendants[i];
                     treeWalker_length++;
                 }
+            }
         }
     }
 };
@@ -214,9 +215,9 @@ function Node() {
     this.parent = null;
     this.type = BHTree.EMPTY;
     this.descendants = new Array(NSUB);
-    this.min = new Float64Array(3);
-    this.width = 0;
-    this.com =  new Float64Array(3);
+    this.min = new DOUBLEARRAY(3);
+    this.width = 0.;
+    this.com =  new DOUBLEARRAY(3);
     this.mass = 0.;
     this.particleCount = 0;
 }

@@ -7,10 +7,9 @@
 #define MASS 6
 #define RHO 7
 #define H 8
-#define BODY 9
+#define TAG 9
 #define NCOORDS 10
 #define NPHYS 3
-
 
 #define NSUB 8
 

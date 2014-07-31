@@ -304,7 +304,12 @@ _m.derivFun = function(f, h) {
 };
 
 _m.defaultFormat = function(n) {
-    return n.toExponential(5);
+    var v;
+    if (n == null)
+        v = typeof(n);
+    else
+        v = n.toExponential(5);
+    return ('             ' + v).slice(-13);
 };
 
 
@@ -345,18 +350,18 @@ _m.writeMatrixSync = function(file, m, fmt) {
 
 _m.zeros = function(N1, N2) {
     if (typeof(N2) === 'undefined' || N2 === 0) {
-        var v1 = new Float64Array(N1);
+        var v1 = new DOUBLEARRAY(N1);
         return(v1);
     } else {
         var v2 = new Array(N1);
         for (var i = 0; i < N1; i++)
-            v2[i] = new Float64Array(N2);
+            v2[i] = new DOUBLEARRAY(N2);
         return v2;
     }
 };
 
 _m.seq = function(a, b, N) {
-    var v = new Float64Array(N);
+    var v = new DOUBLEARRAY(N);
     _V(v) = a + (b-a)/(N-1) * $i;
     return(v);
 };
@@ -436,14 +441,16 @@ _m.rk23 = function(t, y0, f, tout, ctx) {
     var nrows = y0.length;
 
     ctx = ctx || {};
-    
     f = f.bind(ctx);
-    var ncols = (isMatrix ? (ctx.ncols || y0[0].length) : 0);
-    
+    var ncols = (isMatrix ? y0[0].length : 0);
+
     ctx.f1 = ctx.f1 || _m.zeros(nrows, ncols);
     ctx.f2 = ctx.f2 || _m.zeros(nrows, ncols);
     ctx.f3 = ctx.f3 || _m.zeros(nrows, ncols);
     ctx.y1 = ctx.y1 || _m.zeros(nrows, ncols);
+    ctx.D = ctx.D || _m.zeros(nrows, ncols);
+    ctx.E = ctx.E || _m.zeros(nrows, ncols);
+    
     ctx.dt = ctx.dt || (tout-t)*0.01;
     ctx.eps_abs = ctx.eps_abs || 1e-5;
     ctx.eps_rel = ctx.eps_rel || 1e-5;
@@ -465,13 +472,13 @@ _m.rk23 = function(t, y0, f, tout, ctx) {
     var eps_rel = ctx.eps_rel;
 
     // Reuse arrays
-    var a1 = y1;
-    var a2 = f3;
-    var D = f2;
-    var E = f1;
+    var a2 = y1;
+    var D = ctx.D;
+    var E = ctx.E;
+
+    var i, j, err, dt_trial;
 
     var dt_new = dt;
-    var i, j, err, dt_trial;
     var direction = SIGN(tout-t);
     
     while (Math.abs(t - tout) > 0) {
@@ -483,51 +490,55 @@ _m.rk23 = function(t, y0, f, tout, ctx) {
                 for (i = 0; i < nrows; i++)
                     f1[i] = f2[i] = f3[i] = 0.;
             } else {
-                
                 for (i = 0; i < nrows; i++)
-                    for (j = 0; j < ncols; j++)
+                    for (j = 0; j < ncols; j++) {
                         f1[i][j] = f2[i][j] = f3[i][j] = 0.;
+                    }
             }
             dt = dt_new;
 
             f(t, y0, f1);
-            
             if (!isMatrix)
-                _V(y1, y0, f1) = $1 + dt * $2;
+                _V(y1, y0, f1) = $1 + 0.5 * dt * $2;
             else
-                _M(y1, y0, f1) = $1 + dt * $2;
+                for (i = 0; i < nrows; i++)
+                    for (j = 0; j < ncols; j++)
+                        y1[i][j] = y0[i][j] + 0.5 * dt * f1[i][j];
 
-            f(t + dt, y1, f2);
+            f(t + 0.5*dt, y1, f2);
 
             if (!isMatrix)
-                _V(y1, y0, f1, f2) = $1 + 0.25* dt * ($2+$3);
+                _V(y1, y0, f1, f2) = $1 + dt * (-$2+2*$3);
             else
-                _M(y1, y0, f1, f2) = $1 + 0.25* dt * ($2+$3);
-
+                for (i = 0; i < nrows; i++)
+                    for (j = 0; j < ncols; j++)
+                        y1[i][j] = y0[i][j] + dt * (-f1[i][j]+2.*f2[i][j]);
             
-            f(t + 0.5 * dt, y1, f3);
+            f(t + dt, y1, f3);
 
             if (!isMatrix) {
-                _V(a1, y0, f1, f2) = $1 + 0.5* dt * ($2 + $3);
-                _V(a2, y0, f1, f2, f3) = $1 + dt/6. * ($2+$3+4.*$4);
-
+                _V(a2, y0, f1, f2, f3) = $1 + dt/6. * ($2+4.*$3+$4);
                 _V(D, y0) = eps_abs + eps_rel * Math.abs($1);
-                _V(E, a1, a2) = Math.abs($1-$2);
+                _V(E, f1, f2, f3) = Math.abs(dt*($2 - ($1+4.*$2+$3)/6.));
             } else {
-                _M(a1, y0, f1, f2) = $1 + 0.5 * dt * ($2 + $3);
-                _M(a2, y0, f1, f2, f3) = $1 + dt/6. * ($2+$3+4.*$4);
-
-                _M(D, y0) = eps_abs + eps_rel * Math.abs($1);
-                _M(E, a1, a2) = Math.abs($1-$2);                    
+                for (i = 0; i < nrows; i++)
+                    for (j = 0; j < ncols; j++) {
+                        var y0ij = y0[i][j];
+                        a2[i][j] = y0ij + dt/6. * (f1[i][j] + 4.*f2[i][j] + f3[i][j]);
+                        D[i][j] = eps_abs + eps_rel * Math.abs(y0ij);
+                        E[i][j] = Math.abs(dt*(f2[i][j] - (f1[i][j] + 4.*f2[i][j] + f3[i][j])/6));
+                    }
             }
 
             err = -1e20;
             if (!isMatrix)
                 _A(err, E, D) = Math.max(err, ($1-$2)/$2);
             else
-                for (j = 0; j < nrows; j++)
-                    _A(err, E[j], D[j]) = Math.max(err, ($1-$2)/$2);
-
+                for (i = 0; i < nrows; i++)
+                    for (j = 0; j < ncols; j++) {
+                        var diff = (E[i][j]-D[i][j])/D[i][j];
+                        err = Math.max(err, diff);
+                    }
             
             if (err > 0.1) {
                 err = 0;
@@ -535,8 +546,9 @@ _m.rk23 = function(t, y0, f, tout, ctx) {
                     _V(E, E, D) = Math.abs($1/$2);
                     _max(err, E);
                 } else {
-                    _M(E, E, D) = Math.abs($1/$2);
-                    _max(err, E);
+                    for (i = 0; i < nrows; i++)
+                        for (j = 0; j < ncols; j++)
+                            err = Math.max(err, E[i][j]/D[i][j]);
                 }                
                 dt_trial = dt * S * Math.pow(err, -1./q);
             } else if (err <= 0.) {
@@ -545,8 +557,9 @@ _m.rk23 = function(t, y0, f, tout, ctx) {
                     _V(E, E, D) = $1/$2;
                     _max(err, E);
                 } else {
-                    _M(E, E, D) = $1/$2;
-                    _max(err, E);
+                    for (i = 0; i < nrows; i++)
+                        for (j = 0; j < ncols; j++)
+                            err = Math.max(err, E[i][j]/D[i][j]);
                 }
                 dt_trial = dt * S * Math.pow(err, -1./(q+1));
                 repeat = false;
@@ -569,8 +582,6 @@ _m.rk23 = function(t, y0, f, tout, ctx) {
             } else if (_m.isNaN(a2))
                 throw new Error('a2 is NaN.');
 
-            if (_m.logerr)
-                console.log(t, dt, dt_new, err);
         } while (repeat);
 
         t += dt;
@@ -582,7 +593,6 @@ _m.rk23 = function(t, y0, f, tout, ctx) {
             _V(y0, a2) = $1;
         else
             _M(y0, a2) = $1;
-
     };
 
     ctx.dt = dt;

@@ -1,0 +1,251 @@
+Statistical profiling result from v8.log, (82461 ticks, 8 unaccounted, 0 excluded).
+
+ [Unknown]:
+   ticks  total  nonlib   name
+      8    0.0%
+
+ [Shared libraries]:
+   ticks  total  nonlib   name
+   2218    2.7%    0.0%  /opt/local/bin/node
+     71    0.1%    0.0%  /usr/lib/system/libsystem_platform.dylib
+     37    0.0%    0.0%  /usr/lib/system/libsystem_pthread.dylib
+     13    0.0%    0.0%  /usr/lib/system/libsystem_kernel.dylib
+      9    0.0%    0.0%  /usr/lib/system/libsystem_m.dylib
+      4    0.0%    0.0%  /usr/lib/system/libsystem_c.dylib
+      3    0.0%    0.0%  /usr/lib/system/libsystem_malloc.dylib
+
+ [JavaScript]:
+   ticks  total  nonlib   name
+  51345   62.3%   64.1%  LazyCompile: *walker /Users/sm52286/Projects/WhenGiantsCollide/js/system.js:71
+  19734   23.9%   24.6%  LazyCompile: *BHTree.walk /Users/sm52286/Projects/WhenGiantsCollide/js/bhtree.js:171
+   4389    5.3%    5.5%  Builtin: A builtin from the snapshot {2}
+   1932    2.3%    2.4%  LazyCompile: *BHTree._addParticle /Users/sm52286/Projects/WhenGiantsCollide/js/bhtree.js:79
+    512    0.6%    0.6%  LazyCompile: *BHTree._divide /Users/sm52286/Projects/WhenGiantsCollide/js/bhtree.js:52
+    416    0.5%    0.5%  LazyCompile: *System.computeForce /Users/sm52286/Projects/WhenGiantsCollide/js/system.js:99
+    373    0.5%    0.5%  LazyCompile: *_m.rk23 /Users/sm52286/Projects/WhenGiantsCollide/js/math.js:438
+    307    0.4%    0.4%  LazyCompile: *BHTree.update /Users/sm52286/Projects/WhenGiantsCollide/js/bhtree.js:133
+    285    0.3%    0.4%  Stub: RecordWriteStub {5}
+    180    0.2%    0.2%  Stub: RecordWriteStub {2}
+    107    0.1%    0.1%  LazyCompile: *_m.isNaN /Users/sm52286/Projects/WhenGiantsCollide/js/math.js:326
+     64    0.1%    0.1%  LazyCompile: *BHTree._makeNode /Users/sm52286/Projects/WhenGiantsCollide/js/bhtree.js:34
+     60    0.1%    0.1%  LazyCompile: BIT_OR native runtime.js:252
+     45    0.1%    0.1%  LazyCompile: NonNumberToNumber native runtime.js:538
+     44    0.1%    0.1%  Stub: CEntryStub
+     41    0.0%    0.1%  Stub: BinaryOpStub_BIT_OR_Alloc_Generic
+     26    0.0%    0.0%  LazyCompile: EQUALS native runtime.js:54
+     26    0.0%    0.0%  LazyCompile: *isNaN native v8natives.js:96
+     16    0.0%    0.0%  Stub: KeyedLoadElementStub
+     14    0.0%    0.0%  Stub: CompareStub_EQ
+     11    0.0%    0.0%  Stub: RecordWriteStub {4}
+     11    0.0%    0.0%  LazyCompile: ToNumber native runtime.js:527
+     10    0.0%    0.0%  Stub: MathPowStub
+     10    0.0%    0.0%  LazyCompile: ~_m.rk23 /Users/sm52286/Projects/WhenGiantsCollide/js/math.js:438
+     10    0.0%    0.0%  LazyCompile: DefaultNumber native runtime.js:627
+      9    0.0%    0.0%  LazyCompile: ConfigureTemplateInstance native apinatives.js:105
+      8    0.0%    0.0%  Stub: StringAddStub
+      8    0.0%    0.0%  LazyCompile: *isFinite native v8natives.js:103
+      7    0.0%    0.0%  KeyedLoadIC: A keyed load IC from the snapshot
+      6    0.0%    0.0%  Stub: RecordWriteStub {3}
+      6    0.0%    0.0%  LazyCompile: ToPrimitive native runtime.js:506
+      4    0.0%    0.0%  Stub: ToBooleanStub
+      4    0.0%    0.0%  Stub: KeyedStoreElementStub
+      4    0.0%    0.0%  Stub: KeyedLoadElementStub {1}
+      4    0.0%    0.0%  LazyCompile: IN native runtime.js:354
+      4    0.0%    0.0%  LazyCompile: *_m.format /Users/sm52286/Projects/WhenGiantsCollide/js/math.js:317
+      3    0.0%    0.0%  Stub: CompareICStub
+      3    0.0%    0.0%  LazyCompile: ~b native v8natives.js:1582
+      3    0.0%    0.0%  LazyCompile: ~BHTree /Users/sm52286/Projects/WhenGiantsCollide/js/bhtree.js:16
+      3    0.0%    0.0%  LazyCompile: InstantiateFunction native apinatives.js:65
+      3    0.0%    0.0%  LazyCompile: *valueOf native v8natives.js:243
+      3    0.0%    0.0%  LazyCompile: *Instantiate native apinatives.js:44
+      2    0.0%    0.0%  Stub: CompareStub_GT
+      2    0.0%    0.0%  LazyCompile: ~max native math.js:119
+      2    0.0%    0.0%  LazyCompile: ~_m.gaussianRandom /Users/sm52286/Projects/WhenGiantsCollide/js/math.js:140
+      2    0.0%    0.0%  LazyCompile: ToObject native runtime.js:567
+      2    0.0%    0.0%  LazyCompile: *toString native v8natives.js:1572
+      2    0.0%    0.0%  LazyCompile: *_m.binaryFindValue /Users/sm52286/Projects/WhenGiantsCollide/js/math.js:252
+      2    0.0%    0.0%  Builtin: A builtin from the snapshot {3}
+      2    0.0%    0.0%  Builtin: A builtin from the snapshot
+      1    0.0%    0.0%  Stub: UnaryOpStub_SUB_Alloc_HeapNumbers
+      1    0.0%    0.0%  Stub: StoreBufferOverflowStub
+      1    0.0%    0.0%  Stub: RecordWriteStub {6}
+      1    0.0%    0.0%  Stub: RecordWriteStub {1}
+      1    0.0%    0.0%  Stub: RecordWriteStub
+      1    0.0%    0.0%  Stub: KeyedStoreElementStub {1}
+      1    0.0%    0.0%  Stub: KeyedLoadElementStub {2}
+      1    0.0%    0.0%  Stub: JSEntryStub
+      1    0.0%    0.0%  Stub: CompareICStub {1}
+      1    0.0%    0.0%  Stub: BinaryOpStub_SUB_OverwriteRight_HeapNumbers
+      1    0.0%    0.0%  Stub: BinaryOpStub_MUL_OverwriteLeft_HeapNumbers
+      1    0.0%    0.0%  Stub: BinaryOpStub_MUL_Alloc_HeapNumbers
+      1    0.0%    0.0%  Stub: BinaryOpStub_ADD_OverwriteRight_HeapNumbers
+      1    0.0%    0.0%  Stub: ArgumentsAccessStub_NewStrict
+      1    0.0%    0.0%  LazyCompile: ~exec native regexp.js:168
+      1    0.0%    0.0%  LazyCompile: ~_m.zeros /Users/sm52286/Projects/WhenGiantsCollide/js/math.js:351
+      1    0.0%    0.0%  LazyCompile: ~_m.binaryFindValue /Users/sm52286/Projects/WhenGiantsCollide/js/math.js:252
+      1    0.0%    0.0%  LazyCompile: ~System.center /Users/sm52286/Projects/WhenGiantsCollide/js/system.js:190
+      1    0.0%    0.0%  LazyCompile: ~NativeModule.require node.js:847
+      1    0.0%    0.0%  LazyCompile: ~InsertionSort native array.js:764
+      1    0.0%    0.0%  LazyCompile: ~BHTree._divide /Users/sm52286/Projects/WhenGiantsCollide/js/bhtree.js:52
+      1    0.0%    0.0%  LazyCompile: ~<anonymous> /Users/sm52286/Projects/WhenGiantsCollide/js/math.js:8
+      1    0.0%    0.0%  LazyCompile: bind native v8natives.js:1578
+      1    0.0%    0.0%  LazyCompile: Join native array.js:119
+      1    0.0%    0.0%  LazyCompile: *toExponential native v8natives.js:1441
+      1    0.0%    0.0%  LazyCompile: *_m.seq /Users/sm52286/Projects/WhenGiantsCollide/js/math.js:363
+      1    0.0%    0.0%  LazyCompile: *IsPrimitive native runtime.js:618
+      1    0.0%    0.0%  LazyCompile: *FunctionSourceString native v8natives.js:1545
+      1    0.0%    0.0%  LazyCompile: *BHTree._deleteNode /Users/sm52286/Projects/WhenGiantsCollide/js/bhtree.js:42
+      1    0.0%    0.0%  LazyCompile: *BHTree /Users/sm52286/Projects/WhenGiantsCollide/js/bhtree.js:16
+      1    0.0%    0.0%  LazyCompile: *<anonymous> /Users/sm52286/Projects/WhenGiantsCollide/js/stellar-test.js:22
+      1    0.0%    0.0%  LazyCompile: *<anonymous> /Users/sm52286/Projects/WhenGiantsCollide/js/math.js:301
+      1    0.0%    0.0%  LazyCompile: *<anonymous> /Users/sm52286/Projects/WhenGiantsCollide/js/math.js:121
+      1    0.0%    0.0%  KeyedLoadIC: args_count: 0 {1}
+      1    0.0%    0.0%  KeyedLoadIC: args_count: 0
+      1    0.0%    0.0%  Function: ~<anonymous> /Users/sm52286/Projects/WhenGiantsCollide/js/stellar-test.js:1
+      1    0.0%    0.0%  Builtin: A builtin from the snapshot {4}
+      1    0.0%    0.0%  Builtin: A builtin from the snapshot {1}
+
+ [C++]:
+   ticks  total  nonlib   name
+
+ [GC]:
+   ticks  total  nonlib   name
+    384    0.5%
+
+ [Bottom up (heavy) profile]:
+  Note: percentage shows a share of a particular caller in the total
+  amount of its parent calls.
+  Callers occupying less than 2.0% are not shown.
+
+   ticks parent  name
+  51345   62.3%  LazyCompile: *walker /Users/sm52286/Projects/WhenGiantsCollide/js/system.js:71
+  51345  100.0%    LazyCompile: *BHTree.walk /Users/sm52286/Projects/WhenGiantsCollide/js/bhtree.js:171
+  51090   99.5%      LazyCompile: *System.computeForce /Users/sm52286/Projects/WhenGiantsCollide/js/system.js:99
+  51037   99.9%        LazyCompile: ~b native v8natives.js:1582
+  50721   99.4%          LazyCompile: *_m.rk23 /Users/sm52286/Projects/WhenGiantsCollide/js/math.js:438
+  50721  100.0%            LazyCompile: ~System.evolve /Users/sm52286/Projects/WhenGiantsCollide/js/system.js:65
+
+  19734   23.9%  LazyCompile: *BHTree.walk /Users/sm52286/Projects/WhenGiantsCollide/js/bhtree.js:171
+  19616   99.4%    LazyCompile: *System.computeForce /Users/sm52286/Projects/WhenGiantsCollide/js/system.js:99
+  19595   99.9%      LazyCompile: ~b native v8natives.js:1582
+  19483   99.4%        LazyCompile: *_m.rk23 /Users/sm52286/Projects/WhenGiantsCollide/js/math.js:438
+  19483  100.0%          LazyCompile: ~System.evolve /Users/sm52286/Projects/WhenGiantsCollide/js/system.js:65
+  19483  100.0%            Function: ~<anonymous> /Users/sm52286/Projects/WhenGiantsCollide/js/stellar-test.js:1
+
+   4389    5.3%  Builtin: A builtin from the snapshot {2}
+   3930   89.5%    LazyCompile: *BHTree.walk /Users/sm52286/Projects/WhenGiantsCollide/js/bhtree.js:171
+   3905   99.4%      LazyCompile: *System.computeForce /Users/sm52286/Projects/WhenGiantsCollide/js/system.js:99
+   3902   99.9%        LazyCompile: ~b native v8natives.js:1582
+   3871   99.2%          LazyCompile: *_m.rk23 /Users/sm52286/Projects/WhenGiantsCollide/js/math.js:438
+   3871  100.0%            LazyCompile: ~System.evolve /Users/sm52286/Projects/WhenGiantsCollide/js/system.js:65
+    453   10.3%    LazyCompile: *System.computeForce /Users/sm52286/Projects/WhenGiantsCollide/js/system.js:99
+    453  100.0%      LazyCompile: ~b native v8natives.js:1582
+    446   98.5%        LazyCompile: *_m.rk23 /Users/sm52286/Projects/WhenGiantsCollide/js/math.js:438
+    446  100.0%          LazyCompile: ~System.evolve /Users/sm52286/Projects/WhenGiantsCollide/js/system.js:65
+    446  100.0%            Function: ~<anonymous> /Users/sm52286/Projects/WhenGiantsCollide/js/stellar-test.js:1
+
+   2218    2.7%  /opt/local/bin/node
+    531   23.9%    Stub: StoreBufferOverflowStub
+    531  100.0%      LazyCompile: *BHTree.walk /Users/sm52286/Projects/WhenGiantsCollide/js/bhtree.js:171
+    528   99.4%        LazyCompile: *System.computeForce /Users/sm52286/Projects/WhenGiantsCollide/js/system.js:99
+    528  100.0%          LazyCompile: ~b native v8natives.js:1582
+    526   99.6%            LazyCompile: *_m.rk23 /Users/sm52286/Projects/WhenGiantsCollide/js/math.js:438
+    381   17.2%    Stub: StoreBufferOverflowStub {1}
+    222   58.3%      LazyCompile: *BHTree.walk /Users/sm52286/Projects/WhenGiantsCollide/js/bhtree.js:171
+    218   98.2%        LazyCompile: *System.computeForce /Users/sm52286/Projects/WhenGiantsCollide/js/system.js:99
+    218  100.0%          LazyCompile: ~b native v8natives.js:1582
+    217   99.5%            LazyCompile: *_m.rk23 /Users/sm52286/Projects/WhenGiantsCollide/js/math.js:438
+    145   38.1%      LazyCompile: *BHTree._addParticle /Users/sm52286/Projects/WhenGiantsCollide/js/bhtree.js:79
+    139   95.9%        LazyCompile: *BHTree._addParticle /Users/sm52286/Projects/WhenGiantsCollide/js/bhtree.js:79
+    122   87.8%          LazyCompile: *BHTree._addParticle /Users/sm52286/Projects/WhenGiantsCollide/js/bhtree.js:79
+    109   89.3%            LazyCompile: *BHTree._addParticle /Users/sm52286/Projects/WhenGiantsCollide/js/bhtree.js:79
+     13   10.7%            LazyCompile: *BHTree.update /Users/sm52286/Projects/WhenGiantsCollide/js/bhtree.js:133
+     17   12.2%          LazyCompile: *BHTree.update /Users/sm52286/Projects/WhenGiantsCollide/js/bhtree.js:133
+     17  100.0%            LazyCompile: *System.computeForce /Users/sm52286/Projects/WhenGiantsCollide/js/system.js:99
+      6    4.1%        LazyCompile: *BHTree.update /Users/sm52286/Projects/WhenGiantsCollide/js/bhtree.js:133
+      6  100.0%          LazyCompile: *System.computeForce /Users/sm52286/Projects/WhenGiantsCollide/js/system.js:99
+      6  100.0%            LazyCompile: ~b native v8natives.js:1582
+     13    3.4%      LazyCompile: *BHTree.update /Users/sm52286/Projects/WhenGiantsCollide/js/bhtree.js:133
+     13  100.0%        LazyCompile: *System.computeForce /Users/sm52286/Projects/WhenGiantsCollide/js/system.js:99
+     13  100.0%          LazyCompile: ~b native v8natives.js:1582
+     13  100.0%            LazyCompile: *_m.rk23 /Users/sm52286/Projects/WhenGiantsCollide/js/math.js:438
+    207    9.3%    LazyCompile: *_m.rk23 /Users/sm52286/Projects/WhenGiantsCollide/js/math.js:438
+    205   99.0%      LazyCompile: ~System.evolve /Users/sm52286/Projects/WhenGiantsCollide/js/system.js:65
+    205  100.0%        Function: ~<anonymous> /Users/sm52286/Projects/WhenGiantsCollide/js/stellar-test.js:1
+    205  100.0%          LazyCompile: ~Module._compile module.js:374
+    205  100.0%            LazyCompile: ~Module._extensions..js module.js:472
+    113    5.1%    LazyCompile: *Node /Users/sm52286/Projects/WhenGiantsCollide/js/bhtree.js:205
+     62   54.9%      LazyCompile: ~BHTree /Users/sm52286/Projects/WhenGiantsCollide/js/bhtree.js:16
+     62  100.0%        LazyCompile: ~System /Users/sm52286/Projects/WhenGiantsCollide/js/system.js:11
+     62  100.0%          LazyCompile: ~Stellar /Users/sm52286/Projects/WhenGiantsCollide/js/stellar.js:17
+     62  100.0%            Function: ~<anonymous> /Users/sm52286/Projects/WhenGiantsCollide/js/stellar-test.js:1
+     50   44.2%      LazyCompile: *BHTree._divide /Users/sm52286/Projects/WhenGiantsCollide/js/bhtree.js:52
+     50  100.0%        LazyCompile: *BHTree._addParticle /Users/sm52286/Projects/WhenGiantsCollide/js/bhtree.js:79
+     50  100.0%          LazyCompile: *BHTree._addParticle /Users/sm52286/Projects/WhenGiantsCollide/js/bhtree.js:79
+     50  100.0%            LazyCompile: *BHTree._addParticle /Users/sm52286/Projects/WhenGiantsCollide/js/bhtree.js:79
+     92    4.1%    LazyCompile: ConfigureTemplateInstance native apinatives.js:105
+     48   52.2%      LazyCompile: *Node /Users/sm52286/Projects/WhenGiantsCollide/js/bhtree.js:205
+     26   54.2%        LazyCompile: ~BHTree /Users/sm52286/Projects/WhenGiantsCollide/js/bhtree.js:16
+     26  100.0%          LazyCompile: ~System /Users/sm52286/Projects/WhenGiantsCollide/js/system.js:11
+     26  100.0%            LazyCompile: ~Stellar /Users/sm52286/Projects/WhenGiantsCollide/js/stellar.js:17
+     20   41.7%        LazyCompile: *BHTree._divide /Users/sm52286/Projects/WhenGiantsCollide/js/bhtree.js:52
+     20  100.0%          LazyCompile: *BHTree._addParticle /Users/sm52286/Projects/WhenGiantsCollide/js/bhtree.js:79
+     20  100.0%            LazyCompile: *BHTree._addParticle /Users/sm52286/Projects/WhenGiantsCollide/js/bhtree.js:79
+      2    4.2%        LazyCompile: *BHTree._makeNode /Users/sm52286/Projects/WhenGiantsCollide/js/bhtree.js:34
+      2  100.0%          LazyCompile: *BHTree._divide /Users/sm52286/Projects/WhenGiantsCollide/js/bhtree.js:52
+      2  100.0%            LazyCompile: *BHTree._addParticle /Users/sm52286/Projects/WhenGiantsCollide/js/bhtree.js:79
+     11   12.0%      LazyCompile: *BHTree /Users/sm52286/Projects/WhenGiantsCollide/js/bhtree.js:16
+     11  100.0%        LazyCompile: ~System.append /Users/sm52286/Projects/WhenGiantsCollide/js/system.js:203
+     11  100.0%          Function: ~<anonymous> /Users/sm52286/Projects/WhenGiantsCollide/js/stellar-test.js:1
+     11  100.0%            LazyCompile: ~Module._compile module.js:374
+     10   10.9%      LazyCompile: *BHTree.update /Users/sm52286/Projects/WhenGiantsCollide/js/bhtree.js:133
+     10  100.0%        LazyCompile: *System.computeForce /Users/sm52286/Projects/WhenGiantsCollide/js/system.js:99
+     10  100.0%          LazyCompile: ~b native v8natives.js:1582
+     10  100.0%            LazyCompile: *_m.rk23 /Users/sm52286/Projects/WhenGiantsCollide/js/math.js:438
+      9    9.8%      LazyCompile: ~_m.zeros /Users/sm52286/Projects/WhenGiantsCollide/js/math.js:351
+      9  100.0%        LazyCompile: ~_m.rk23 /Users/sm52286/Projects/WhenGiantsCollide/js/math.js:438
+      9  100.0%          LazyCompile: ~System.evolve /Users/sm52286/Projects/WhenGiantsCollide/js/system.js:65
+      9  100.0%            Function: ~<anonymous> /Users/sm52286/Projects/WhenGiantsCollide/js/stellar-test.js:1
+      6    6.5%      LazyCompile: ~System /Users/sm52286/Projects/WhenGiantsCollide/js/system.js:11
+      6  100.0%        LazyCompile: ~Stellar /Users/sm52286/Projects/WhenGiantsCollide/js/stellar.js:17
+      6  100.0%          Function: ~<anonymous> /Users/sm52286/Projects/WhenGiantsCollide/js/stellar-test.js:1
+      6  100.0%            LazyCompile: ~Module._compile module.js:374
+      6    6.5%      LazyCompile: *_m.zeros /Users/sm52286/Projects/WhenGiantsCollide/js/math.js:351
+      6  100.0%        LazyCompile: ~_m.rk23 /Users/sm52286/Projects/WhenGiantsCollide/js/math.js:438
+      6  100.0%          LazyCompile: ~System.evolve /Users/sm52286/Projects/WhenGiantsCollide/js/system.js:65
+      6  100.0%            Function: ~<anonymous> /Users/sm52286/Projects/WhenGiantsCollide/js/stellar-test.js:1
+      2    2.2%      LazyCompile: ~Node /Users/sm52286/Projects/WhenGiantsCollide/js/bhtree.js:205
+      2  100.0%        LazyCompile: ~BHTree /Users/sm52286/Projects/WhenGiantsCollide/js/bhtree.js:16
+      2  100.0%          LazyCompile: ~System /Users/sm52286/Projects/WhenGiantsCollide/js/system.js:11
+      2  100.0%            LazyCompile: ~Stellar /Users/sm52286/Projects/WhenGiantsCollide/js/stellar.js:17
+     66    3.0%    LazyCompile: ToNumber native runtime.js:527
+     66  100.0%      LazyCompile: EQUALS native runtime.js:54
+     58   87.9%        LazyCompile: InstantiateFunction native apinatives.js:65
+     58  100.0%          LazyCompile: *Instantiate native apinatives.js:44
+     58  100.0%            LazyCompile: ConfigureTemplateInstance native apinatives.js:105
+      8   12.1%        LazyCompile: *BHTree._divide /Users/sm52286/Projects/WhenGiantsCollide/js/bhtree.js:52
+      8  100.0%          LazyCompile: *BHTree._addParticle /Users/sm52286/Projects/WhenGiantsCollide/js/bhtree.js:79
+      8  100.0%            LazyCompile: *BHTree._addParticle /Users/sm52286/Projects/WhenGiantsCollide/js/bhtree.js:79
+
+   1932    2.3%  LazyCompile: *BHTree._addParticle /Users/sm52286/Projects/WhenGiantsCollide/js/bhtree.js:79
+   1644   85.1%    LazyCompile: *BHTree._addParticle /Users/sm52286/Projects/WhenGiantsCollide/js/bhtree.js:79
+   1459   88.7%      LazyCompile: *BHTree._addParticle /Users/sm52286/Projects/WhenGiantsCollide/js/bhtree.js:79
+   1295   88.8%        LazyCompile: *BHTree._addParticle /Users/sm52286/Projects/WhenGiantsCollide/js/bhtree.js:79
+   1108   85.6%          LazyCompile: *BHTree._addParticle /Users/sm52286/Projects/WhenGiantsCollide/js/bhtree.js:79
+    905   81.7%            LazyCompile: *BHTree._addParticle /Users/sm52286/Projects/WhenGiantsCollide/js/bhtree.js:79
+    201   18.1%            LazyCompile: *BHTree.update /Users/sm52286/Projects/WhenGiantsCollide/js/bhtree.js:133
+    187   14.4%          LazyCompile: *BHTree.update /Users/sm52286/Projects/WhenGiantsCollide/js/bhtree.js:133
+    187  100.0%            LazyCompile: *System.computeForce /Users/sm52286/Projects/WhenGiantsCollide/js/system.js:99
+    164   11.2%        LazyCompile: *BHTree.update /Users/sm52286/Projects/WhenGiantsCollide/js/bhtree.js:133
+    164  100.0%          LazyCompile: *System.computeForce /Users/sm52286/Projects/WhenGiantsCollide/js/system.js:99
+    163   99.4%            LazyCompile: ~b native v8natives.js:1582
+    185   11.3%      LazyCompile: *BHTree.update /Users/sm52286/Projects/WhenGiantsCollide/js/bhtree.js:133
+    185  100.0%        LazyCompile: *System.computeForce /Users/sm52286/Projects/WhenGiantsCollide/js/system.js:99
+    185  100.0%          LazyCompile: ~b native v8natives.js:1582
+    185  100.0%            LazyCompile: *_m.rk23 /Users/sm52286/Projects/WhenGiantsCollide/js/math.js:438
+    286   14.8%    LazyCompile: *BHTree.update /Users/sm52286/Projects/WhenGiantsCollide/js/bhtree.js:133
+    286  100.0%      LazyCompile: *System.computeForce /Users/sm52286/Projects/WhenGiantsCollide/js/system.js:99
+    285   99.7%        LazyCompile: ~b native v8natives.js:1582
+    284   99.6%          LazyCompile: *_m.rk23 /Users/sm52286/Projects/WhenGiantsCollide/js/math.js:438
+    284  100.0%            LazyCompile: ~System.evolve /Users/sm52286/Projects/WhenGiantsCollide/js/system.js:65
+

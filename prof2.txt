@@ -1,0 +1,844 @@
+[deoptimize context: 2433cdd414b1]
+**** DEOPT: _m.cumtrapzfun at bailout #7, address 0x0, frame size 144
+            ;;; Deferred code @162: number-tag-d.
+[deoptimizing: begin 0x8cd257273b9 _m.cumtrapzfun @7]
+  translating _m.cumtrapzfun => node=46, height=16
+    0x7fff5fbff2c8: [top + 64] <- 0x8cd25740a11 ; r9 0x8cd25740a11 <an Object>
+    0x7fff5fbff2c0: [top + 56] <- 0x217e9d7a401 ; r8 0x217e9d7a401 <a Float64Array>
+    0x7fff5fbff2b8: [top + 48] <- 0x217e9d7a8c1 ; rcx 0x217e9d7a8c1 <JS Function>
+    0x7fff5fbff2b0: [top + 40] <- 0x10b5e6da647f ; caller's pc
+    0x7fff5fbff2a8: [top + 32] <- 0x7fff5fbff3b8 ; caller's fp
+    0x7fff5fbff2a0: [top + 24] <- 0x8cd257409b9; context
+    0x7fff5fbff298: [top + 16] <- 0x8cd257273b9; function
+    0x7fff5fbff290: [top + 8] <- 0x217e9d7a909 ; rbx 0x217e9d7a909 <a Float64Array>
+    0x7fff5fbff288: [top + 0] <- 1 ; rax (smi)
+[deoptimizing: end 0x8cd257273b9 _m.cumtrapzfun => node=46, pc=0x10b5e6d72258, state=NO_REGISTERS, alignment=no padding, took 0.017 ms]
+[removing optimized code for: _m.cumtrapzfun]
+**** DEOPT: _m.rk23 at bailout #2, address 0x0, frame size 1936
+            ;;; Deferred code @3818: number-tag-d.
+[deoptimizing: begin 0x8cd25727449 _m.rk23 @2]
+  translating _m.rk23 => node=3, height=296
+    0x7fff5fbff2c8: [top + 368] <- 0x8cd25740a11 ; [sp + 2008] 0x8cd25740a11 <an Object>
+    0x7fff5fbff2c0: [top + 360] <- 0x217e9c7b2c9 ; [sp + 2000] 0x217e9c7b2c9 <Number: 3.42116695142217>
+    0x7fff5fbff2b8: [top + 352] <- 0x217e9c7b2a9 ; rax 0x217e9c7b2a9 <JS Array[1]>
+    0x7fff5fbff2b0: [top + 344] <- 0x217e9c7b361 ; [sp + 1984] 0x217e9c7b361 <JS Function>
+    0x7fff5fbff2a8: [top + 336] <- 0x217e9c7b3a9 ; [sp + 1976] 0x217e9c7b3a9 <Number: 2.530513118981256>
+    0x7fff5fbff2a0: [top + 328] <- 0x217e9c7b291 ; [sp + 1968] 0x217e9c7b291 <an Object>
+    0x7fff5fbff298: [top + 320] <- 0x10b5e6da6ac5 ; caller's pc
+    0x7fff5fbff290: [top + 312] <- 0x7fff5fbff3b8 ; caller's fp
+    0x7fff5fbff288: [top + 304] <- 0x8cd257409b9; context
+    0x7fff5fbff280: [top + 296] <- 0x8cd25727449; function
+    0x7fff5fbff278: [top + 288] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff270: [top + 280] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff268: [top + 272] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff260: [top + 264] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff258: [top + 256] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff250: [top + 248] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff248: [top + 240] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff240: [top + 232] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff238: [top + 224] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff230: [top + 216] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff228: [top + 208] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff220: [top + 200] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff218: [top + 192] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff210: [top + 184] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff208: [top + 176] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff200: [top + 168] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff1f8: [top + 160] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff1f0: [top + 152] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff1e8: [top + 144] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff1e0: [top + 136] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff1d8: [top + 128] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff1d0: [top + 120] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff1c8: [top + 112] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff1c0: [top + 104] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff1b8: [top + 96] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff1b0: [top + 88] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff1a8: [top + 80] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff1a0: [top + 72] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fb0.08220706914434901
+8.86916204330233 -16.45130423968801 -1.07823208592859 0.08220706914434901
+0.027603736312370186
+ff198: [top + 64] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff190: [top + 56] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff188: [top + 48] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff180: [top + 40] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff178: [top + 32] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff170: [top + 24] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff168: [top + 16] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff160: [top + 8] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff158: [top + 0] <- 0x2433cdd04121 <undefined> ; literal
+[deoptimizing: end 0x8cd25727449 _m.rk23 => node=3, pc=0x10b5e6d80c1d, state=NO_REGISTERS, alignment=no padding, took 0.104 ms]
+[removing optimized code for: _m.rk23]
+**** DEOPT: System.size at bailout #2, address 0x0, frame size 0
+            ;;; @25: gap.
+[deoptimizing: begin 0x8cd25727bb9 System.size @2]
+  translating System.size => node=3, height=0
+    0x7fff5fbff3a8: [top + 32] <- 0x8cd257b22a9 ; rax 0x8cd257b22a9 <a System>
+    0x7fff5fbff3a0: [top + 24] <- 0x10b5e6d9aabe ; caller's pc
+    0x7fff5fbff398: [top + 16] <- 0x7fff5fbff3e0 ; caller's fp
+    0x7fff5fbff390: [top + 8] <- 0x8cd2572eba9; context
+    0x7fff5fbff388: [top + 0] <- 0x8cd25727bb9; function
+[deoptimizing: end 0x8cd25727bb9 System.size => node=3, pc=0x10b5e6d8a174, state=NO_REGISTERS, alignment=no padding, took 0.012 ms]
+[removing optimized code for: System.size]
+**** DEOPT: BHTree._makeNode at bailout #2, address 0x0, frame size 8
+            ;;; Deferred code @24: tagged-to-i.
+[deoptimizing: begin 0x8cd257274b9 BHTree._makeNode @2]
+  translating BHTree._makeNode => node=3, height=0
+    0x7fff5fbff2a8: [top + 32] <- 0x304241390931 ; rax 0x304241390931 <a BHTree>
+    0x7fff5fbff2a0: [top + 24] <- 0x10b5e6dcb758 ; caller's pc
+    0x7fff5fbff298: [top + 16] <- 0x7fff5fbff2f0 ; caller's fp
+    0x7fff5fbff290: [top + 8] <- 0x8cd2572dff1; context
+    0x7fff5fbff288: [top + 0] <- 0x8cd257274b9; function
+[deoptimizing: end 0x8cd257274b9 BHTree._makeNode => node=3, pc=0x10b5e6dcc074, state=NO_REGISTERS, alignment=no padding, took 0.010 ms]
+[removing optimized code for: BHTree._makeNode]
+**** DEOPT: BHTree._addParticle at bailout #6, address 0x0, frame size 24
+            ;;; Deferred code @574: stack-check.
+[deoptimizing: begin 0x8cd25727591 BHTree._addParticle @6]
+  translating BHTree._addParticle => node=116, height=32
+    0x7fff5fbff2a8: [top + 88] <- 0x304241390931 ; rcx 0x304241390931 <a BHTree>
+    0x7fff5fbff2a0: [top + 80] <- 0x8cd257cebd9 ; [sp + 72] 0x8cd257cebd9 <a Float64Array>
+    0x7fff5fbff298: [top + 72] <- 0x100000000 ; [sp + 64] 1
+    0x7fff5fbff290: [top + 64] <- 0x217e9e6ad11 ; rax 0x217e9e6ad11 <a Node>
+    0x7fff5fbff288: [top + 56] <- 0x10b5e6dcba64 ; caller's pc
+    0x7fff5fbff280: [top + 48] <- 0x7fff5fbff2f0 ; caller's fp
+    0x7fff5fbff278: [top + 40] <- 0x8cd2572dff1; context
+    0x7fff5fbff270: [top + 32] <- 0x8cd25727591; function
+    0x7fff5fbff268: [top + 24] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff260: [top + 16] <- 0x2433cdd04181 <false> ; literal
+    0x7fff5fbff258: [top + 8] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff250: [top + 0] <- 0x200000000 ; rbx 2
+[deoptimizing: end 0x8cd25727591 BHTree._addParticle => node=116, pc=0x10b5e6dcc54f, state=TOS_REG, alignment=no padding, took 0.024 ms]
+[removing optimized code for: BHTree._addParticle]
+**** DEOPT: BHTree._divide at bailout #26, address 0x0, frame size 136
+            ;;; Deferred code @326: tagged-to-i.
+[deoptimizing: begin 0x8cd25727549 BHTree._divide @26]
+  translating BHTree._divide => node=215, height=72
+    0x7fff5fbff250: [top + 112] <- 0x304241390931 ; rax 0x304241390931 <a BHTree>
+    0x7fff5fbff248: [top + 104] <- 0x217e9e6ad11 ; r9 0x217e9e6ad11 <a Node>
+    0x7fff5fbff240: [top + 96] <- 0x10b5e6dcc564 ; caller's pc
+    0x7fff5fbff238: [top + 88] <- 0x7fff5fbff280 ; caller's fp
+    0x7fff5fbff230: [top + 80] <- 0x8cd2572dff1; context
+    0x7fff5fbff228: [top + 72] <- 0x8cd25727549; function
+    0x7fff5fbff220: [top + 64] <- -2.380252e+01 ; [sp + 48]
+    0x7fff5fbff218: [top + 56] <- -1.753192e+01 ; [sp + 40]
+    0x7fff5fbff210: [top + 48] <- -1.854756e+01 ; [sp + 32]
+    0x7fff5fbff208: [top + 40] <- 0x217e944c639 ; rbx 0x217e944c639 <Number: 43.5918417599736>
+    0x7fff5fbff200: [top + 32] <- 0x00000000 ; r14 0
+    0x7fff5fbff1f8: [top + 24] <- 0 ; rdx (smi)
+    0x7fff5fbff1f0: [top + 16] <- 0 ; rdi (smi)
+    0x7fff5fbff1e8: [top + 8] <- 0 ; r11 (smi)
+    0x7fff5fbff1e0: [top + 0] <- 0x2433cdd04121 <undefined> ; literal
+[deoptimizing: end 0x8cd25727549 BHTree._divide => node=215, pc=0x10b5e6dcdbb9, state=NO_REGISTERS, alignment=no padding, took 0.080 ms]
+Materializing a new heap number 0x217e944c769 [-2.380252e+01] in slot 0x7fff5fbff220
+Materializing a new heap number 0x217e944c779 [-1.753192e+01] in slot 0x7fff5fbff218
+Materializing a new heap number 0x217e944c789 [-1.854756e+01] in slot 0x7fff5fbff210
+[removing optimized code for: BHTree._divide]
+**** DEOPT: System.computeForce at bailout #20, address 0x0, frame size 120
+            ;;; Deferred code @306: number-tag-d.
+[deoptimizing: begin 0x8cd25727cd9 System.computeForce @20]
+  translating System.computeForce => node=145, height=64
+    0x7fff5fbff3c0: [top + 120] <- 0x8cd257b22a9 ; rbx 0x8cd257b22a9 <a System>
+    0x7fff5fbff3b8: [top + 112] <- 0x00000000 ; [sp + 104] 0
+    0x7fff5fbff3b0: [top + 104] <- 0x8cd257b2289 ; [sp + 96] 0x8cd257b2289 <JS Array[2400]>
+    0x7fff5fbff3a8: [top + 96] <- 0x8cd257c13b1 ; [sp + 88] 0x8cd257c13b1 <JS Array[2400]>
+    0x7fff5fbff3a0: [top + 88] <- 0x10b5e6d0a96e ; caller's pc
+    0x7fff5fbff398: [top + 80] <- 0x7fff5fbff3e0 ; caller's fp
+    0x7fff5fbff390: [top + 72] <- 0x8cd2572eba9; context
+    0x7fff5fbff388: [top + 64] <- 0x8cd25727cd9; function
+    0x7fff5fbff380: [top + 56] <- 0x8cd257b22a9 ; rbx 0x8cd257b22a9 <a System>
+    0x7fff5fbff378: [top + 48] <- 0x8cd25727c91 ; [sp + 112] 0x8cd25727c91 <JS Function>
+    0x7fff5fbff370: [top + 40] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff368: [top + 32] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff360: [top + 24] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff358: [top + 16] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff350: [top + 8] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff348: [top + 0] <- 0x2433cdd04121 <undefined> ; literal
+[deoptimizing: end 0x8cd25727cd9 System.computeForce => node=145, pc=0x10b5e6dcaee7, state=NO_REGISTERS, alignment=no padding, took 0.030 ms]
+[removing optimized code for: System.computeForce]
+**** DEOPT: System.walker at bailout #2, address 0x0, frame size 8
+            ;;; Deferred code @382: number-tag-d.
+[deoptimizing: begin 0x8cd25727c91 System.walker @2]
+  translating System.walker => node=3, height=48
+    0x7fff5fbff1f0: [top + 120] <- 0x2433cdd573a1 ; [sp + 80] 0x2433cdd573a1 <JS Global Object>
+    0x7fff5fbff1e8: [top + 112] <- 0x217e9e6ad11 ; [sp + 72] 0x217e9e6ad11 <a Node>
+    0x7fff5fbff1e0: [top + 104] <- 0x8cd257cebc1 ; [sp + 64] 0x8cd257cebc1 <a Float64Array>
+    0x7fff5fbff1d8: [top + 96] <- 0x8cd257d2ca1 ; [sp + 56] 0x8cd257d2ca1 <a Float64Array>
+    0x7fff5fbff1d0: [top + 88] <- 0x00000000 ; [sp + 48] 0
+    0x7fff5fbff1c8: [top + 80] <- 0x8cd257b22a9 ; rax 0x8cd257b22a9 <a System>
+    0x7fff5fbff1c0: [top + 72] <- 0x10b5e6d0a96e ; caller's pc
+    0x7fff5fbff1b8: [top + 64] <- 0x7fff5fbff210 ; caller's fp
+    0x7fff5fbff1b0: [top + 56] <- 0x8cd2572eba9; context
+    0x7fff5fbff1a8: [top + 48] <- 0x8cd25727c91; function
+    0x7fff5fbff1a0: [top + 40] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff198: [top + 32] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff190: [top + 24] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff188: [top + 16] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff180: [top + 8] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff178: [top + 0] <- 0x2433cdd04121 <undefined> ; literal
+[deoptimizing: end 0x8cd25727c91 System.walker => node=3, pc=0x10b5e6dcf65e, state=NO_REGISTERS, alignment=no padding, took 0.025 ms]
+[removing optimized code for: Syst0 -1.0726068921845078 -7.628413083231221 0.08220706914434901 undefined 1.504565732072933e-14
+em.walker]
+**** DEOPT: _m.subset at bailout #22, address 0x0, frame size 144
+            ;;; @204: deoptimize.
+[deoptimizing: begin 0x8cd25727309 _m.subset @22]
+  translating _m.subset => node=365, height=16
+    0x7fff5fbff3e8: [top + 72] <- 0x8cd25740a11 ; [sp + 200] 0x8cd25740a11 <an Object>
+    0x7fff5fbff3e0: [top + 64] <- 0x217e8893bd1 ; [sp + 192] 0x217e8893bd1 <a Float64Array>
+    0x7fff5fbff3d8: [top + 56] <- 0x300000000 ; [sp + 184] 3
+    0x7fff5fbff3d0: [top + 48] <- 0x600000000 ; rcx 6
+    0x7fff5fbff3c8: [top + 40] <- 0x10b5e6d649a5 ; caller's pc
+    0x7fff5fbff3c0: [top + 32] <- 0x7fff5fbff498 ; caller's fp
+    0x7fff5fbff3b8: [top + 24] <- 0x8cd257409b9; context
+    0x7fff5fbff3b0: [top + 16] <- 0x8cd25727309; function
+    0x7fff5fbff3a8: [top + 8] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff3a0: [top + 0] <- 0x2433cdd04121 <undefined> ; literal
+[deoptimizing: end 0x8cd25727309 _m.subset => node=365, pc=0x10b5e6d75c3f, state=NO_REGISTERS, alignment=no padding, took 0.019 ms]
+[removing optimized code for: _m.subset]
+**** DEOPT: System.center at bailout #4, address 0x0, frame size 56
+            ;;; Deferred code @130: stack-check.
+[deoptimizing: begin 0x8cd25727e89 System.center @4]
+  translating System.center => node=34, height=24
+    0x7fff5fbff3f0: [top + 56] <- 0x8cd257b22a9 ; rcx 0x8cd257b22a9 <a System>
+    0x7fff5fbff3e8: [top + 48] <- 0x10b5e6d64b04 ; caller's pc
+    0x7fff5fbff3e0: [top + 40] <- 0x7fff5fbff498 ; caller's fp
+    0x7fff5fbff3d8: [top + 32] <- 0x8cd2572eba9; context
+    0x7fff5fbff3d0: [top + 24] <- 0x8cd25727e89; function
+    0x7fff5fbff3c8: [top + 16] <- 0x217e8754f51 ; rbx 0x217e8754f51 <a Float64Array>
+    0x7fff5fbff3c0: [top + 8] <- 0 ; rax (smi)
+    0x7fff5fbff3b8: [top + 0] <- 0x2433cdd04121 <undefined> ; literal
+[deoptimizing: end 0x8cd25727e89 System.center => node=34, pc=0x10b5e6d9aaa9, state=NO_REGISTERS, alignment=no padding, took 0.013 ms]
+[removing optimized code for: System.center]
+**** DEOPT: System.size at bailout #2, address 0x0, frame size 0
+            ;;; @25: gap.
+[deoptimizing: begin 0x8cd25727bb9 System.size @2]
+  translating System.size => node=3, height=0
+    0x7fff5fbff3a8: [top + 32] <- 0x8cd257b22a9 ; rax 0x8cd257b22a9 <a System>
+    0x7fff5fbff3a0: [top + 24] <- 0x10b5e6d9aabe ; caller's pc
+    0x7fff5fbff398: [top + 16] <- 0x7fff5fbff3e0 ; caller's fp
+    0x7fff5fbff390: [top + 8] <- 0x8cd2572eba9; context
+    0x7fff5fbff388: [top + 0] <- 0x8cd25727bb9; function
+[deoptimizing: end 0x8cd25727bb9 System.size => node=3, pc=0x10b5e6d8a174, state=NO_REGISTERS, alignment=no padding, took 0.006 ms]
+[removing optimized code for: System.size]
+**** DEOPT: UseSparseVariant at bailout #3, address 0x0, frame size 8
+            ;;; @76: deoptimize.
+[deoptimizing: begin 0x2433cdd51c09 UseSparseVariant @3]
+  translating UseSparseVariant => node=19, height=8
+    0x7fff5fbff248: [top + 64] <- 0x2433cdd04121 ; [sp + 64] 0x2433cdd04121 <undefined>
+    0x7fff5fbff240: [top + 56] <- 0x217e87cc091 ; [sp + 56] 0x217e87cc091 <JS Array[2400]>
+    0x7fff5fbff238: [top + 48] <- 0x96000000000 ; rbx 2400
+    0x7fff5fbff230: [top + 40] <- 0x2433cdd04161 ; rax 0x2433cdd04161 <true>
+    0x7fff5fbff228: [top + 32] <- 0x10b5e6d3f8c2 ; caller's pc
+    0x7fff5fbff220: [top + 24] <- 0x7fff5fbff2b8 ; caller's fp
+    0x7fff5fbff218: [top + 16] <- 0x2433cdd41a29; context
+    0x7fff5fbff210: [top + 8] <- 0x2433cdd51c09; function
+    0x7fff5fbff208: [top + 0] <- 0x2433cdd04181 ; rdx 0x2433cdd04181 <false>
+[deoptimizing: end 0x2433cdd51c09 UseSparseVariant => node=19, pc=0x10b5e6d40736, state=TOS_REG, alignment=no padding, took 0.019 ms]
+[removing optimized code for: UseSparseVariant]
+**** DEOPT: _m.rk23 at bailout #11, address 0x0, frame size 2056
+            ;;; @100: deoptimize.
+[deoptimizing: begin 0x8cd25727449 _m.rk23 @11]
+  translating _m.rk23 => node=83, height=304
+    0x7fff5fbff380: [top + 376] <- 0x8cd25740a11 ; [sp + 2128] 0x8cd25740a11 <an Object>
+    0x7fff5fbff378: [top + 368] <- 0x00000000 ; [sp + 2120] 0
+    0x7fff5fbff370: [top + 360] <- 0x8cd257b2289 ; [sp + 2112] 0x8cd257b2289 <JS Array[2400]>
+    0x7fff5fbff368: [top + 352] <- 0x217e80a9781 ; [sp + 2016] 0x217e80a9781 <JS Function>
+    0x7fff5fbff360: [top + 344] <- 0x100000000 ; [sp + 2096] 1
+    0x7fff5fbff358: [top + 336] <- 0x8cd257b22a9 ; [sp + 2024] 0x8cd257b22a9 <a System>
+    0x7fff5fbff350: [top + 328] <- 0x10b5e6dde51a ; caller's pc
+    0x7fff5fbff348: [top + 320] <- 0x7fff5fbff398 ; caller's fp
+    0x7fff5fbff340: [top + 312] <- 0x8cd257409b9; context
+    0x7fff5fbff338: [top + 304] <- 0x8cd25727449; function
+    0x7fff5fbff330: [top + 296] <- 0x2433cdd04161 ; [sp + 2040] 0x2433cdd04161 <true>
+    0x7fff5fbff328: [top + 288] <- 0x96000000000 ; [sp + 2032] 2400
+    0x7fff5fbff320: [top + 280] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff318: [top + 272] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff310: [top + 264] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff308: [top + 256] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff300: [top + 248] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff2f8: [top + 240] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff2f0: [top + 232] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff2e8: [top + 224] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff2e0: [top + 216] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff2d8: [top + 208] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff2d0: [top + 200] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff2c8: [top + 192] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff2c0: [top + 184] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff2b8: [top + 176] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff2b0: [top + 168] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff2a8: [top + 160] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff2a0: [top + 152] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff298: [top + 144] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff290: [top + 136] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff288: [top + 128] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff280: [top + 120] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff278: [top + 112] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff270: [top + 104] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff268: [top + 96] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff260: [top + 88] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff258: [top + 80] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff250: [top + 72] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff248: [top + 64] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff240: [top + 56] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff238: [top + 48] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff230: [top + 40] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff228: [top + 32] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff220: [top + 24] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff218: [top + 16] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff210: [top + 8] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff208: [top + 0] <- 0x8cd257cebc1 ; rax 0x8cd257cebc1 <a Float64Array>
+[deoptimizing: end 0x8cd25727449 _m.rk23 => node=83, pc=0x10b5e6d80d11, state=TOS_REG, alignment=no padding, took 0.137 ms]
+[removing optimized code for: _m.rk23]
+**** DEOPT: System.computeForce at bailout #1, address 0x0, frame size 112
+            ;;; @19: branch.
+[deoptimizing: begin 0x8cd25727cd9 System.computeForce @1]
+  translating System.computeForce => node=3, height=64
+    0x7fff5fbfeef0: [top + 120] <- 0x8cd257b22a9 ; [sp + 168] 0x8cd257b22a9 <a System>
+    0x7fff5fbfeee8: [top + 112] <- 0x00000000 ; rax 0
+    0x7fff5fbfeee0: [top + 104] <- 0x8cd257b2289 ; [sp + 152] 0x8cd257b2289 <JS Array[2400]>
+    0x7fff5fbfeed8: [top + 96] <- 0x3d499b9fac39 ; [sp + 144] 0x3d499b9fac39 <JS Array[2400]>
+    0x7fff5fbfeed0: [top + 88] <- 0x10b5e6d245e7 ; caller's pc
+    0x7fff5fbfeec8: [top + 80] <- 0x7fff5fbfef18 ; caller's fp
+    0x7fff5fbfeec0: [top + 72] <- 0x8cd2572eba9; context
+    0x7fff5fbfeeb8: [top + 64] <- 0x8cd25727cd9; function
+    0x7fff5fbfeeb0: [top + 56] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbfeea8: [top + 48] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbfeea0: [top + 40] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbfee98: [top + 32] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbfee90: [top + 24] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbfee88: [top + 16] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbfee80: [top + 8] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbfee78: [top + 0] <- 0x2433cdd04121 <undefined> ; literal
+[deoptimizing: end 0x8cd25727cd9 System.computeForce => node=3, pc=0x10b5e6dcad80, state=NO_REGISTERS, alignment=no padding, took 0.066 ms]
+[removing optimized code for: System.computeForce]
+**** DEOPT: System.walker at bailout #2, address 0x0, frame size 56
+            ;;; Deferred code @392: number-tag-d.
+[deoptimizing: begin 0x8cd25727c91 System.walker @2]
+  translating System.walker => node=3, height=48
+    0x7fff5fbfed20: [top + 120] <- 0x2433cdd573a1 ; [sp + 128] 0x2433cdd573a1 <JS Global Object>
+    0x7fff5fbfed18: [top + 112] <- 0x284760201a9 ; [sp + 120] 0x284760201a9 <a Node>
+    0x7fff5fbfed10: [top + 104] <- 0x8cd257cebc1 ; [sp + 112] 0x8cd257cebc1 <a Float64Array>
+    0x7fff5fbfed08: [top + 96] <- 0xfe0db408c11 ; [sp + 104] 0xfe0db408c11 <a Float64Array>
+    0x7fff5fbfed00: [top + 88] <- 0x00000000 ; [sp + 96] 0
+    0x7fff5fbfecf8: [top + 80] <- 0x8cd257b22a9 ; rbx 0x8cd257b22a9 <a System>
+    0x7fff5fbfecf0: [top + 72] <- 0x10b5e6d0a96e ; caller's pc
+    0x7fff5fbfece8: [top + 64] <- 0x7fff5fbfed40 ; caller's fp
+    0x7fff5fbfece0: [top + 56] <- 0x8cd2572eba9; context
+    0x7fff5fbfecd8: [top + 48] <- 0x8cd25727c91; function
+    0x7fff5fbfecd0: [top + 40] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbfecc8: [top + 32] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbfecc0: [top + 24] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbfecb8: [top + 16] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbfecb0: [top + 8] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbfeca8: [top + 0] <- 0x2433cdd04121 <undefined> ; literal
+[deoptimizing: end 0x8cd25727c91 System.walker => node=3, pc=0x10b5e6dcf65e, state=NO_REGISTERS, alignment=no padding, took 0.028 ms]
+[removing optimized code for: System.walker]
+**** DEOPT: System.computeForce at bailout #46, address 0x0, frame size 232
+            ;;; Deferred code @342: number-tag-d.
+[deoptimizing: begin 0x8cd25727cd9 System.computeForce @46]
+  translating System.computeForce => node=193, height=64
+    0x7fff5fbfeef0: [top + 120] <- 0x8cd257b22a9 ; rax 0x8cd257b22a9 <a System>
+    0x7fff5fbfeee8: [top + 112] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbfeee0: [top + 104] <- 0x8cd257b2289 ; [sp + 64] 0x8cd257b2289 <JS Array[2400]>
+    0x7fff5fbfeed8: [top + 96] <- 0x3d499b9fac39 ; [sp + 72] 0x3d499b9fac39 <JS Array[2400]>
+    0x7fff5fbfeed0: [top + 88] <- 0x10b5e6d245e7 ; caller's pc
+    0x7fff5fbfeec8: [top + 80] <- 0x7fff5fbfef18 ; caller's fp
+    0x7fff5fbfeec0: [top + 72] <- 0x8cd2572eba9; context
+    0x7fff5fbfeeb8: [top + 64] <- 0x8cd25727cd9; function
+    0x7fff5fbfeeb0: [top + 56] <- 0x8cd257b22a9 ; [sp + 40] 0x8cd257b22a9 <a System>
+    0x7fff5fbfeea8: [top + 48] <- 0x8cd25727c91 ; [sp + 48] 0x8cd25727c91 <JS Function>
+    0x7fff5fbfeea0: [top + 40] <- 2400 ; [sp + 80] (smi)
+    0x7fff5fbfee98: [top + 32] <- 2400 ; [sp + 88] (smi)
+    0x7fff5fbfee90: [top + 24] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbfee88: [top + 16] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbfee80: [top + 8] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbfee78: [top + 0] <- 0x2433cdd04121 <undefined> ; literal
+[deoptimizing: end 0x8cd25727cd9 System.computeForce => node=193, pc=0x10b5e6dcb137, state=NO_REGISTERS, alignment=no padding, took 0.032 ms]
+[removing optimized code for: System.computeForce]
+**** DEOPT: BHTree.update at bailout #21, address 0x0, frame size 152
+            ;;; Deferred code @680: tagged-to-i.
+[deoptimizing: begin 0x8cd257275d9 BHTree.update @21]
+  translating BHTree.update => node=72, height=56
+    0x7fff5fbfee70: [top + 96] <- 0x304241390931 ; [sp + 192] 0x304241390931 <a BHTree>
+    0x7fff5fbfee68: [top + 88] <- 0xfe0db4a3401 ; rbx 0xfe0db4a3401 <JS Array[2400]>
+    0x7fff5fbfee60: [top + 80] <- 0x10b5e6dcaee3 ; caller's pc
+    0x7fff5fbfee58: [top + 72] <- 0x7fff5fbfeec8 ; caller's fp
+    0x7fff5fbfee50: [top + 64] <- 0x8cd2572dff1; context
+    0x7fff5fbfee48: [top + 56] <- 0x8cd257275d9; function
+    0x7fff5fbfee40: [top + 48] <- 9665 ; [sp + 64] (smi)
+    0x7fff5fbfee38: [top + 40] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbfee30: [top + 32] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbfee28: [top + 24] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbfee20: [top + 16] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbfee18: [top + 8] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbfee10: [top + 0] <- 0x217e9fd9369 ; rax 0x217e9fd9369 <a Float64Array>
+[deoptimizing: end 0x8cd257275d9 BHTree.update => node=72, pc=0x10b5e6dcb372, state=TOS_REG, alignment=no padding, took 0.026 ms]
+[removing optimized code for: BHTree.update]
+**** DEOPT: System.computeForce at bailout #47, address 0x0, frame size 240
+            ;;; @332: deoptimize.
+[deoptimizing: begin 0x8cd25727cd9 System.computeForce @47]
+  translating System.computeForce => node=193, height=64
+    0x7fff5fbfeef0: [top + 120] <- 0x8cd257b22a9 ; [sp + 40] 0x8cd257b22a9 <a System>
+    0x7fff5fbfeee8: [top + 112] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbfeee0: [top + 104] <- 0xfe0db4a3401 ; [sp + 72] 0xfe0db4a3401 <JS Array[2400]>
+    0x7fff5fbfeed8: [top + 96] <- 0x1095542bbe29 ; [sp + 80] 0x1095542bbe29 <JS Array[2400]>
+    0x7fff5fbfeed0: [top + 88] <- 0x10b5e6d245e7 ; caller's pc
+    0x7fff5fbfeec8: [top + 80] <- 0x7fff5fbfef18 ; caller's fp
+    0x7fff5fbfeec0: [top + 72] <- 0x8cd2572eba9; context
+    0x7fff5fbfeeb8: [top + 64] <- 0x8cd25727cd9; function
+    0x7fff5fbfeeb0: [top + 56] <- 0x8cd257b22a9 ; [sp + 48] 0x8cd257b22a9 <a System>
+    0x7fff5fbfeea8: [top + 48] <- 0x8cd25727c91 ; [sp + 56] 0x8cd25727c91 <JS Function>
+    0x7fff5fbfeea0: [top + 40] <- 2400 ; [sp + 88] (smi)
+    0x7fff5fbfee98: [top + 32] <- 2400 ; [sp + 96] (smi)
+    0x7fff5fbfee90: [top + 24] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbfee88: [top + 16] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbfee80: [top + 8] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbfee78: [top + 0] <- 0x2433cdd04121 <undefined> ; literal
+[deoptimizing: end 0x8cd25727cd9 System.computeForce => node=193, pc=0x10b5e6dcb137, state=NO_REGISTERS, alignment=no padding, took 0.029 ms]
+[removing optimized code for: System.computeForce]
+**** DEOPT: BHTree.update at bailout #21, address 0x0, frame size 80
+            ;;; Deferred code @640: tagged-to-i.
+[deoptimizing: begin 0x8cd257275d9 BHTree.update @21]
+  translating BHTree.update => node=72, height=56
+    0x7fff5fbfe4e0: [top + 96] <- 0x304241390931 ; [sp + 120] 0x304241390931 <a BHTree>
+    0x7fff5fbfe4d8: [top + 88] <- 0x8cd257b2289 ; rbx 0x8cd257b2289 <JS Array[2400]>
+    0x7fff5fbfe4d0: [top + 80] <- 0x10b5e6de6ed7 ; caller's pc
+    0x7fff5fbfe4c8: [top + 72] <- 0x7fff5fbfe5e8 ; caller's fp
+    0x7fff5fbfe4c0: [top + 64] <- 0x8cd2572dff1; context
+    0x7fff5fbfe4b8: [top + 56] <- 0x8cd257275d9; function
+    0x7fff5fbfe4b0: [top + 48] <- 9697 ; [sp + 64] (smi)
+    0x7fff5fbfe4a8: [top + 40] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbfe4a0: [top + 32] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbfe498: [top + 24] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbfe490: [top + 16] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbfe488: [top + 8] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbfe480: [top + 0] <- 0x217e9d5df69 ; rax 0x217e9d5df69 <a Float64Array>
+[deoptimizing: end 0x8cd257275d9 BHTree.update => node=72, pc=0x10b5e6dcb372, state=TOS_REG, alignment=no padding, took 0.024 ms]
+[removing optimized code for: BHTree.update]
+**** DEOPT: System.computeForce at bailout #23, address 0x0, frame size 240
+            ;;; Deferred code @340: number-tag-d.
+[deoptimizing: begin 0x8cd25727cd9 System.computeForce @23]
+  translating System.computeForce => node=196, height=64
+    0x7fff5fbfe610: [top + 120] <- 0x8cd257b22a9 ; r11 0x8cd257b22a9 <a System>
+    0x7fff5fbfe608: [top + 112] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbfe600: [top + 104] <- 0x8cd257b2289 ; r9 0x8cd257b2289 <JS Array[2400]>
+    0x7fff5fbfe5f8: [top + 96] <- 0x3d499b9fac39 ; r8 0x3d499b9fac39 <JS Array[2400]>
+    0x7fff5fbfe5f0: [top + 88] <- 0x10b5e6d245e7 ; caller's pc
+    0x7fff5fbfe5e8: [top + 80] <- 0x7fff5fbfe638 ; caller's fp
+    0x7fff5fbfe5e0: [top + 72] <- 0x8cd2572eba9; context
+    0x7fff5fbfe5d8: [top + 64] <- 0x8cd25727cd9; function
+    0x7fff5fbfe5d0: [top + 56] <- 0x8cd257b22a9 ; rcx 0x8cd257b22a9 <a System>
+    0x7fff5fbfe5c8: [top + 48] <- 0x8cd25727c91 ; rdx 0x8cd25727c91 <JS Function>
+    0x7fff5fbfe5c0: [top + 40] <- 2400 ; rbx (smi)
+    0x7fff5fbfe5b8: [top + 32] <- 0 ; rax (smi)
+    0x7fff5fbfe5b0: [top + 24] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbfe5a8: [top + 16] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbfe5a0: [top + 8] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbfe598: [top + 0] <- 0x2433cdd04121 <undefined> ; literal
+[deoptimizing: end 0x8cd25727cd9 System.computeForce => node=196, pc=0x10b5e6dcaf2d, state=NO_REGISTERS, alignment=no padding, took 0.026 ms]
+[removing optimized code for: System.computeForce]
+**** DEOPT: BHTree.update at bailout #67, address 0x0, frame size 80
+            ;;; @388: deoptimize.
+[deoptimizing: begin 0x8cd257275d9 BHTree.update @67]
+  translating BHTree.update => node=514, height=48
+    0x7fff5fbfe4e0: [top + 88] <- 0x304241390931 ; rbx 0x304241390931 <a BHTree>
+    0x7fff5fbfe4d8: [top + 80] <- 0xfe0db4a3401 ; rdx 0xfe0db4a3401 <JS Array[2400]>
+    0x7fff5fbfe4d0: [top + 72] <- 0x10b5e6df4d37 ; caller's pc
+    0x7fff5fbfe4c8: [top + 64] <- 0x7fff5fbfe5e8 ; caller's fp
+    0x7fff5fbfe4c0: [top + 56] <- 0x8cd2572dff1; context
+    0x7fff5fbfe4b8: [top + 48] <- 0x8cd257275d9; function
+    0x7fff5fbfe4b0: [top + 40] <- 2400 ; r14 (smi)
+    0x7fff5fbfe4a8: [top + 32] <- 0x217e8514909 ; r8 0x217e8514909 <a Float64Array>
+    0x7fff5fbfe4a0: [top + 24] <- 0x217e8514dc9 ; [sp + 40] 0x217e8514dc9 <a Float64Array>
+    0x7fff5fbfe498: [top + 16] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbfe490: [top + 8] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbfe488: [top + 0] <- 0x2433cdd04121 <undefined> ; literal
+  translating BHTree._makeNode => node=2, height=0
+    0x7fff5fbfe480: [top + 32] <- 0x304241390931 ; rbx 0x304241390931 <a BHTree>
+    0x7fff5fbfe478: [top + 24] <- 0x10b5e6dcb758 ; caller's pc
+    0x7fff5fbfe470: [top + 16] <- 0x7fff5fbfe4c8 ; caller's fp
+    0x7fff5fbfe468: [top + 8] <- 0x8cd2572dff1; context
+    0x7fff5fbfe460: [top + 0] <- 0x8cd257274b9; function
+[deoptimizing: end 0x8cd257274b9 BHTree._makeNode => node=2, pc=0x10b5e6dcc074, state=NO_REGISTERS, alignment=no padding, took 0.034 ms]
+[removing optimized code for: BHTree.update]
+**** DEOPT: _m.rk23 at bailout #329, address 0x0, frame size 2584
+            ;;; Deferred code @4292: number-tag-d.
+[deoptimizing: begin 0x8cd25727449 _m.rk23 @329]
+  translating _m.rk23 => node=2541, height=296
+    0x7fff5fbff380: [top + 368] <- 0x8cd25740a11 ; [sp + 1776] 0x8cd25740a11 <an Object>
+    0x7fff5fbff378: [top + 360] <- 0.000000e+00 ; [sp + 408]
+    0x7fff5fbff370: [top + 352] <- 0x8cd257b2289 ; [sp + 1784] 0x8cd257b2289 <JS Array[2400]>
+    0x7fff5fbff368: [top + 344] <- 0x3d499b9f73d9 ; [sp + 1792] 0x3d499b9f73d9 <JS Function>
+    0x7fff5fbff360: [top + 336] <- 1.000000e+00 ; [sp + 456]
+    0x7fff5fbff358: [top + 328] <- 0x8cd257b22a9 ; [sp + 1800] 0x8cd257b22a9 <a System>
+    0x7fff5fbff350: [top + 320] <- 0x10b5e6dde51a ; caller's pc
+    0x7fff5fbff348: [top + 312] <- 0x7fff5fbff398 ; caller's fp
+    0x7fff5fbff340: [top + 304] <- 0x8cd257409b9; context
+    0x7fff5fbff338: [top + 296] <- 0x8cd25727449; function
+    0x7fff5fbff330: [top + 288] <- 0x2433cdd04161 ; [sp + 1816] 0x2433cdd04161 <true>
+    0x7fff5fbff328: [top + 280] <- 0x96000000000 ; [sp + 2344] 2400
+    0x7fff5fbff320: [top + 272] <- 0xa00000000 ; [sp + 2352] 10
+    0x7fff5fbff318: [top + 264] <- 0.000000e+00 ; [sp + 472]
+    0x7fff5fbff310: [top + 256] <- 0 ; [sp + 2496] (smi)
+    0x7fff5fbff308: [top + 248] <- 0x2c107a34aa81 ; [sp + 2544] 0x2c107a34aa81 <Number: 0.99>
+    0x7fff5fbff300: [top + 240] <- 0x200000000 ; [sp + 2568] 2
+    0x7fff5fbff2f8: [top + 232] <- 0x3d499b9fac39 ; [sp + 1736] 0x3d499b9fac39 <JS Array[2400]>
+    0x7fff5fbff2f0: [top + 224] <- 0x1095542bbe29 ; [sp + 1656] 0x1095542bbe29 <JS Array[2400]>
+    0x7fff5fbff2e8: [top + 216] <- 0x1095542bbe69 ; [sp + 1760] 0x1095542bbe69 <JS Array[2400]>
+    0x7fff5fbff2e0: [top + 208] <- 0xfe0db4a3401 ; [sp + 1728] 0xfe0db4a3401 <JS Array[2400]>
+    0x7fff5fbff2d8: [top + 200] <- 5.776665e-03 ; xmm1
+    0x7fff5fbff2d0: [top + 192] <- 0x353b23e2b869 ; [sp + 1664] 0x353b23e2b869 <Number: 0.01>
+    0x7fff5fbff2c8: [top + 184] <- 0x353b23e2b899 ; [sp + 1688] 0x353b23e2b899 <Number: 0.01>
+    0x7fff5fbff2c0: [top + 176] <- 0xfe0db4a3401 ; [sp + 1704] 0xfe0db4a3401 <JS Array[2400]>
+    0x7fff5fbff2b8: [top + 168] <- 0xfe0db4a3421 ; [sp + 1712] 0xfe0db4a3421 <JS Array[2400]>
+    0x7fff5fbff2b0: [top + 160] <- 0xfe0db40eaf1 ; [sp + 1720] 0xfe0db40eaf1 <JS Array[2400]>
+    0x7fff5fbff2a8: [top + 152] <- 0 ; literal
+    0x7fff5fbff2a0: [top + 144] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff298: [top + 136] <- 0x3d1b5c4d6581 <Number: -1e+20> ; literal
+    0x7fff5fbff290: [top + 128] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff288: [top + 120] <- 5.776665e-03 ; xmm1
+    0x7fff5fbff280: [top + 112] <- 1.000000e+00 ; [sp + 416]
+    0x7fff5fbff278: [top + 104] <- 0x2433cdd04161 ; [sp + 1672] 0x2433cdd04161 <true>
+    0x7fff5fbff270: [top + 96] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff268: [top + 88] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff260: [top + 80] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff258: [top + 72] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff250: [top + 64] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff248: [top + 56] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff240: [top + 48] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff238: [top + 40] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff230: [top + 32] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff228: [top + 24] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff220: [top + 16] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff218: [top + 8] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff210: [top + 0] <- 0x2433cdd04121 <undefined> ; literal
+[deoptimizing: end 0x8cd25727449 _m.rk23 => node=2541, pc=0x10b5e6d83339, state=NO_REGISTERS, alignment=no padding, took 0.121 ms]
+Materializing a new heap number 0x0 [0.000000e+00] in slot 0x7fff5fbff378
+Materializing a new heap number 0x100000000 [1.000000e+00] in slot 0x7fff5fbff360
+Materializing a new heap number 0x0 [0.000000e+00] in slot 0x7fff5fbff318
+Materializing a new heap number 0x217e9a73821 [5.776665e-03] in slot 0x7fff5fbff2d8
+Materializing a new heap number 0x217e9a73831 [5.776665e-03] in slot 0x7fff5fbff288
+Materializing a new heap number 0x100000000 [1.000000e+00] in slot 0x7fff5fbff280
+[removing optimized code for: _m.rk23]
+**** DEOPT: _m.rk23 at bailout #329, address 0x0, frame size 2288
+            ;;; Deferred code @4334: number-tag-d.
+[deoptimizing: begin 0x8cd25727449 _m.rk23 @329]
+  translating _m.rk23 => node=2541, height=296
+    0x7fff5fbff380: [top + 368] <- 0x8cd25740a11 ; [sp + 1616] 0x8cd25740a11 <an Object>
+    0x7fff5fbff378: [top + 360] <- 5.776665e-03 ; [sp + 312]
+    0x7fff5fbff370: [top + 352] <- 0x8cd257b2289 ; [sp + 1624] 0x8cd257b2289 <JS Array[2400]>
+    0x7fff5fbff368: [top + 344] <- 0x3d499b9f73d9 ; [sp + 1632] 0x3d499b9f73d9 <JS Function>
+    0x7fff5fbff360: [top + 336] <- 0x100000000 ; [sp + 2120] 1
+    0x7fff5fbff358: [top + 328] <- 0x8cd257b22a9 ; [sp + 2128] 0x8cd257b22a9 <a System>
+    0x7fff5fbff350: [top + 320] <- 0x10b5e6dde51a ; caller's pc
+    0x7fff5fbff348: [top + 312] <- 0x7fff5fbff398 ; caller's fp
+    0x7fff5fbff340: [top + 304] <- 0x8cd257409b9; context
+    0x7fff5fbff338: [top + 296] <- 0x8cd25727449; function
+    0x7fff5fbff330: [top + 288] <- 0x2433cdd04161 ; [sp + 2184] 0x2433cdd04161 <true>
+    0x7fff5fbff328: [top + 280] <- 2400 ; [sp + 2200] (smi)
+    0x7fff5fbff320: [top + 272] <- 10 ; [sp + 2272] (smi)
+    0x7fff5fbff318: [top + 264] <- 5.776665e-03 ; [sp + 400]
+    0x7fff5fbff310: [top + 256] <- 1 ; [sp + 1544] (smi)
+    0x7fff5fbff308: [top + 248] <- 9.900000e-01 ; [sp + 432]
+    0x7fff5fbff300: [top + 240] <- 2 ; [sp + 1496] (smi)
+    0x7fff5fbff2f8: [top + 232] <- 0x3d499b9fac39 ; [sp + 1472] 0x3d499b9fac39 <JS Array[2400]>
+    0x7fff5fbff2f0: [top + 224] <- 0x1095542bbe29 ; [sp + 1480] 0x1095542bbe29 <JS Array[2400]>
+    0x7fff5fbff2e8: [top + 216] <- 0x1095542bbe69 ; [sp + 1488] 0x1095542bbe69 <JS Array[2400]>
+    0x7fff5fbff2e0: [top + 208] <- 0xfe0db4a3401 ; [sp + 1560] 0xfe0db4a3401 <JS Array[2400]>
+    0x7fff5fbff2d8: [top + 200] <- 6.211522e-03 ; xmm1
+    0x7fff5fbff2d0: [top + 192] <- 1.000000e-02 ; [sp + 440]
+    0x7fff5fbff2c8: [top + 184] <- 1.000000e-02 ; [sp + 448]
+    0x7fff5fbff2c0: [top + 176] <- 0xfe0db4a3401 ; [sp + 1512] 0xfe0db4a3401 <JS Array[2400]>
+    0x7fff5fbff2b8: [top + 168] <- 0xfe0db4a3421 ; [sp + 1536] 0xfe0db4a3421 <JS Array[2400]>
+    0x7fff5fbff2b0: [top + 160] <- 0xfe0db40eaf1 ; [sp + 1552] 0xfe0db40eaf1 <JS Array[2400]>
+    0x7fff5fbff2a8: [top + 152] <- 0 ; literal
+    0x7fff5fbff2a0: [top + 144] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff298: [top + 136] <- 0x3d1b5c4f9579 <Number: -1e+20> ; literal
+    0x7fff5fbff290: [top + 128] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff288: [top + 120] <- 6.211522e-03 ; xmm1
+    0x7fff5fbff280: [top + 112] <- 1 ; [sp + 1576] (smi)
+    0x7fff5fbff278: [top + 104] <- 0x2433cdd04161 ; [sp + 1520] 0x2433cdd04161 <true>
+    0x7fff5fbff270: [top + 96] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff268: [top + 88] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff260: [top + 80] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff258: [top + 72] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff250: [top + 64] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff248: [top + 56] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff240: [top + 48] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff238: [top + 40] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff230: [top + 32] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff228: [top + 24] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff220: [top + 16] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff218: [top + 8] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff210: [top + 0] <- 0x2433cdd04121 <undefined> ; literal
+[deoptimizing: end 0x8cd25727449 _m.rk23 => node=2541, pc=0x10b5e6d83339, state=NO_REGISTERS, alignment=no padding, took 0.126 ms]
+Materializing a new heap number 0x217e9421b01 [5.776665e-03] in slot 0x7fff5fbff378
+Materializing a new heap number 0x217e9421b11 [5.776665e-03] in slot 0x7fff5fbff318
+Materializing a new heap number 0x217e9421b21 [9.900000e-01] in slot 0x7fff5fbff308
+Materializing a new heap number 0x217e9421b31 [6.211522e-03] in slot 0x7fff5fbff2d8
+Materializing a new heap number 0x217e9421b41 [1.000000e-02] in slot 0x7fff5fbff2d0
+Materializing a new heap number 0x217e9421b51 [1.000000e-02] in slot 0x7fff5fbff2c8
+Materializing a new heap number 0x217e9421b61 [6.211522e-03] in slot 0x7fff5fbff288
+[removing optimized code for: _m.rk23]
+**** DEOPT: System.computeForce at bailout #9, address 0x0, frame size 240
+            ;;; Deferred code @340: number-tag-d.
+[deoptimizing: begin 0x8cd25727cd9 System.computeForce @9]
+  translating System.computeForce => node=44, height=72
+    0x7fff5fbff3c0: [top + 128] <- 0x8cd257b22a9 ; rdx 0x8cd257b22a9 <a System>
+    0x7fff5fbff3b8: [top + 120] <- 0x00000000 ;1 -0.9529255491356151 -7.6936327149728 0.08220706914434901 0.011363636363636364 0.002230497740374061
+ [sp + 120] 0
+    0x7fff5fbff3b0: [top + 112] <- 0x8cd257b2289 ; [sp + 112] 0x8cd257b2289 <JS Array[2400]>
+    0x7fff5fbff3a8: [top + 104] <- 0x2433cdd04121 ; [sp + 272] 0x2433cdd04121 <undefined>
+    0x7fff5fbff3a0: [top + 96] <- 0x10b5e6d0a96e ; caller's pc
+    0x7fff5fbff398: [top + 88] <- 0x7fff5fbff3e0 ; caller's fp
+    0x7fff5fbff390: [top + 80] <- 0x8cd2572eba9; context
+    0x7fff5fbff388: [top + 72] <- 0x8cd25727cd9; function
+    0x7fff5fbff380: [top + 64] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff378: [top + 56] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff370: [top + 48] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff368: [top + 40] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff360: [top + 32] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff358: [top + 24] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff350: [top + 16] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff348: [top + 8] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff340: [top + 0] <- 0x8cd257c13b1 ; rax 0x8cd257c13b1 <JS Array[2400]>
+[deoptimizing: end 0x8cd25727cd9 System.computeForce => node=44, pc=0x10b5e6dcae15, state=TOS_REG, alignment=no padding, took 0.071 ms]
+[removing optimized code for: System.computeForce]
+**** DEOPT: System.walker at bailout #2, address 0x0, frame size 8
+            ;;; Deferred code @382: number-tag-d.
+[deoptimizing: begin 0x8cd25727c91 System.walker @2]
+  translating System.walker => node=3, height=48
+    0x7fff5fbff1f0: [top + 120] <- 0x2433cdd573a1 ; [sp + 80] 0x2433cdd573a1 <JS Global Object>
+    0x7fff5fbff1e8: [top + 112] <- 0x32e3be34b491 ; [sp + 72] 0x32e3be34b491 <a Node>
+    0x7fff5fbff1e0: [top + 104] <- 0x8cd257cebc1 ; [sp + 64] 0x8cd257cebc1 <a Float64Array>
+    0x7fff5fbff1d8: [top + 96] <- 0x8cd257d2ca1 ; [sp + 56] 0x8cd257d2ca1 <a Float64Array>
+    0x7fff5fbff1d0: [top + 88] <- 0x00000000 ; [sp + 48] 0
+    0x7fff5fbff1c8: [top + 80] <- 0x8cd257b22a9 ; rax 0x8cd257b22a9 <a System>
+    0x7fff5fbff1c0: [top + 72] <- 0x10b5e6d0a96e ; caller's pc
+    0x7fff5fbff1b8: [top + 64] <- 0x7fff5fbff210 ; caller's fp
+    0x7fff5fbff1b0: [top + 56] <- 0x8cd2572eba9; context
+    0x7fff5fbff1a8: [top + 48] <- 0x8cd25727c91; function
+    0x7fff5fbff1a0: [top + 40] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff198: [top + 32] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff190: [top + 24] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff188: [top + 16] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff180: [top + 8] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff178: [top + 0] <- 0x2433cdd04121 <undefined> ; literal
+[deoptimizing: end 0x8cd25727c91 System.walker => node=3, pc=0x10b5e6dcf65e, state=NO_REGISTERS, alignment=no padding, took 0.029 ms]
+[removing optimized code for: System.walker]
+**** DEOPT: System.kinetic at bailout #1, address 0x0, frame size 40
+            ;;; @12: deoptimize.
+[deoptimizing: begin 0x8cd25727df9 System.kinetic @1]
+  translating System.kinetic => node=3, height=40
+    0x7fff5fbff3d8: [top + 72] <- 0x8cd257b22a9 ; [sp + 72] 0x8cd257b22a9 <a System>
+    0x7fff5fbff3d0: [top + 64] <- 0x10b5e6d64a04 ; caller's pc
+    0x7fff5fbff3c8: [top + 56] <- 0x7fff5fbff498 ; caller's fp
+    0x7fff5fbff3c0: [top + 48] <- 0x8cd2572eba9; context
+    0x7fff5fbff3b8: [top + 40] <- 0x8cd25727df9; function
+    0x7fff5fbff3b0: [top + 32] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff3a8: [top + 24] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff3a0: [top + 16] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff398: [top + 8] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff390: [top + 0] <- 0x2433cdd04121 <undefined> ; literal
+[deoptimizing: end 0x8cd25727df9 System.kinetic => node=3, pc=0x10b5e6d97c9d, state=NO_REGISTERS, alignment=no padding, took 0.027 ms]
+[removing optimized code for: System.kinetic]
+**** DEOPT: System.size at bailout #2, address 0x0, frame size 0
+            ;;; @25: gap.
+[deoptimizing: begin 0x8cd25727bb9 System.size @2]
+  translating System.size => node=3, height=0
+    0x7fff5fbff380: [top + 32] <- 0x8cd257b22a9 ; rax 0x8cd257b22a9 <a System>
+    0x7fff5fbff378: [top + 24] <- 0x10b5e6dd97ac ; caller's pc
+    0x7fff5fbff370: [top + 16] <- 0x7fff5fbff3e0 ; caller's fp
+    0x7fff5fbff368: [top + 8] <- 0x8cd2572eba9; context
+    0x7fff5fbff360: [top + 0] <- 0x8cd25727bb9; function
+[deoptimizing: end 0x8cd25727bb9 System.size => node=3, pc=0x10b5e6d8a174, state=NO_REGISTERS, alignment=no padding, took 0.035 ms]
+[removing optimized code for: System.size]
+**** DEOPT: System.center at bailout #6, address 0x0, frame size 72
+            ;;; Deferred code @122: stack-check.
+[deoptimizing: begin 0x8cd25727e89 System.center @6]
+  translating System.center => node=70, height=24
+    0x7fff5fbff3f0: [top + 56] <- 0x8cd257b22a9 ; rbx 0x8cd257b22a9 <a System>
+    0x7fff5fbff3e8: [top + 48] <- 0x10b5e6d64b04 ; caller's pc
+    0x7fff5fbff3e0: [top + 40] <- 0x7fff5fbff498 ; caller's fp
+    0x7fff5fbff3d8: [top + 32] <- 0x8cd2572eba9; context
+    0x7fff5fbff3d0: [top + 24] <- 0x8cd25727e89; function
+    0x7fff5fbff3c8: [top + 16] <- 0x217e8e22e09 ; [sp + 16] 0x217e8e22e09 <a Float64Array>
+    0x7fff5fbff3c0: [top + 8] <- 0 ; rax (smi)
+    0x7fff5fbff3b8: [top + 0] <- 0 ; literal
+[deoptimizing: end 0x8cd25727e89 System.center => node=70, pc=0x10b5e6d9aa11, state=NO_REGISTERS, alignment=no padding, took 0.011 ms]
+[removing optimized code for: System.center]
+**** DEOPT: _m.rk23 at bailout #79, address 0x0, frame size 2240
+            ;;; Deferred code @4436: number-tag-d.
+[deoptimizing: begin 0x8cd25727449 _m.rk23 @79]
+  translating _m.rk23 => node=354, height=312
+    0x7fff5fbff380: [top + 384] <- 0x8cd25740a11 ; [sp + 2312] 0x8cd25740a11 <an Object>
+    0x7fff5fbff378: [top + 376] <- 0x100000000 ; [sp + 2304] 1
+    0x7fff5fbff370: [top + 368] <- 0x8cd257b2289 ; [sp + 2296] 0x8cd257b2289 <JS Array[2400]>
+    0x7fff5fbff368: [top + 360] <- 0x217e87a8701 ; [sp + 1848] 0x217e87a8701 <JS Function>
+    0x7fff5fbff360: [top + 352] <- 0x200000000 ; [sp + 2280] 2
+    0x7fff5fbff358: [top + 344] <- 0x8cd257b22a9 ; rbx 0x8cd257b22a9 <a System>
+    0x7fff5fbff350: [top + 336] <- 0x10b5e6dde51a ; caller's pc
+    0x7fff5fbff348: [top + 328] <- 0x7fff5fbff398 ; caller's fp
+    0x7fff5fbff340: [top + 320] <- 0x8cd257409b9; context
+    0x7fff5fbff338: [top + 312] <- 0x8cd25727449; function
+    0x7fff5fbff330: [top + 304] <- 0x2433cdd04161 ; [sp + 1872] 0x2433cdd04161 <true>
+    0x7fff5fbff328: [top + 296] <- 0x96000000000 ; [sp + 1864] 2400
+    0x7fff5fbff320: [top + 288] <- 0xa00000000 ; [sp + 1840] 10
+    0x7fff5fbff318: [top + 280] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff310: [top + 272] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff308: [top + 264] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff300: [top + 256] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff2f8: [top + 248] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff2f0: [top + 240] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff2e8: [top + 232] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff2e0: [top + 224] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff2d8: [top + 216] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff2d0: [top + 208] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff2c8: [top + 200] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff2c0: [top + 192] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff2b8: [top + 184] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff2b0: [top + 176] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff2a8: [top + 168] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff2a0: [top + 160] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff298: [top + 152] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff290: [top + 144] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff288: [top + 136] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff280: [top + 128] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff278: [top + 120] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff270: [top + 112] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff268: [top + 104] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff260: [top + 96] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff258: [top + 88] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff250: [top + 80] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff248: [top + 72] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff240: [top + 64] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff238: [top + 56] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff230: [top + 48] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff228: [top + 40] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff220: [top + 32] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff218: [top + 24] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff210: [top + 16] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff208: [top + 8] <- 0x8cd257b22a9 ; rbx 0x8cd257b22a9 <a System>
+    0x7fff5fbff200: [top + 0] <- 0x353b23e2b869 ; rax 0x353b23e2b869 <Number: 0.01>
+[deoptimizing: end 0x8cd25727449 _m.rk23 => node=354, pc=0x10b5e6d80fff, state=TOS_REG, alignment=no padding, took 0.101 ms]
+[removing optimized code for: _m.rk23]
+**** DEOPT: _m.rk23 at bailout #321, address 0x0, frame size 2296
+            ;;; Deferred code @4318: number-tag-d.
+[deoptimizing: begin 0x8cd25727449 _m.rk23 @321]
+  translating _m.rk23 => node=2541, height=296
+    0x7fff5fbff380: [top + 368] <- 0x8cd25740a11 ; [sp + 1592] 0x8cd25740a11 <an Object>
+    0x7fff5fbff378: [top + 360] <- 1.001785e+00 ; [sp + 312]
+    0x7fff5fbff370: [top + 352] <- 0x8cd257b2289 ; [sp + 1600] 0x8cd257b2289 <JS Array[2400]>
+    0x7fff5fbff368: [top + 344] <- 0x10e47689f689 ; [sp + 1608] 0x10e47689f689 <JS Function>
+    0x7fff5fbff360: [top + 336] <- 0x200000000 ; [sp + 1616] 2
+    0x7fff5fbff358: [top + 328] <- 0x8cd257b22a9 ; [sp + 1912] 0x8cd257b22a9 <a System>
+    0x7fff5fbff350: [top + 320] <- 0x10b5e6dde51a ; caller's pc
+    0x7fff5fbff348: [top + 312] <- 0x7fff5fbff398 ; caller's fp
+    0x7fff5fbff340: [top + 304] <- 0x8cd257409b9; context
+    0x7fff5fbff338: [top + 296] <- 0x8cd25727449; function
+    0x7fff5fbff330: [top + 288] <- 0x2433cdd04161 ; [sp + 2136] 0x2433cdd04161 <true>
+    0x7fff5fbff328: [top + 280] <- 2400 ; [sp + 2144] (smi)
+    0x7fff5fbff320: [top + 272] <- 10 ; [sp + 2192] (smi)
+    0x7fff5fbff318: [top + 264] <- 1.784936e-03 ; [sp + 400]
+    0x7fff5fbff310: [top + 256] <- 1 ; [sp + 1544] (smi)
+    0x7fff5fbff308: [top + 248] <- 9.900000e-01 ; [sp + 432]
+    0x7fff5fbff300: [top + 240] <- 2 ; [sp + 1488] (smi)
+    0x7fff5fbff2f8: [top + 232] <- 0x3d499b9fac39 ; [sp + 1560] 0x3d499b9fac39 <JS Array[2400]>
+    0x7fff5fbff2f0: [top + 224] <- 0x1095542bbe29 ; [sp + 1472] 0x1095542bbe29 <JS Array[2400]>
+    0x7fff5fbff2e8: [top + 216] <- 0x1095542bbe69 ; [sp + 1480] 0x1095542bbe69 <JS Array[2400]>
+    0x7fff5fbff2e0: [top + 208] <- 0xfe0db4a3401 ; [sp + 1504] 0xfe0db4a3401 <JS Array[2400]>
+    0x7fff5fbff2d8: [top + 200] <- 5.223178e-03 ; xmm1
+    0x7fff5fbff2d0: [top + 192] <- 1.000000e-02 ; [sp + 440]
+    0x7fff5fbff2c8: [top + 184] <- 1.000000e-02 ; [sp + 448]
+    0x7fff5fbff2c0: [top + 176] <- 0xfe0db4a3401 ; [sp + 1512] 0xfe0db4a3401 <JS Array[2400]>
+    0x7fff5fbff2b8: [top + 168] <- 0xfe0db4a3421 ; [sp + 1536] 0xfe0db4a3421 <JS Array[2400]>
+    0x7fff5fbff2b0: [top + 160] <- 0xfe0db40eaf1 ; [sp + 1552] 0xfe0db40eaf1 <JS Array[2400]>
+    0x7fff5fbff2a8: [top + 152] <- 0 ; literal
+    0x7fff5fbff2a0: [top + 144] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff298: [top + 136] <- 0x2fe179954861 <Number: -1e+20> ; literal
+    0x7fff5fbff290: [top + 128] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff288: [top + 120] <- 5.223178e-03 ; xmm1
+    0x7fff5fbff280: [top + 112] <- 1 ; [sp + 1576] (smi)
+    0x7fff5fbff278: [top + 104] <- 0x2433cdd04161 ; [sp + 1520] 0x2433cdd04161 <true>
+    0x7fff5fbff270: [top + 96] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff268: [top + 88] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff260: [top + 80] <- 0x2433cdd042 -0.9328308313106406 -7.7503665372054735 0.08220706914434901 0.010869565217391302 0.000532854992964965
+121 <undefined> ; literal
+    0x7fff5fbff258: [top + 72] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff250: [top + 64] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff248: [top + 56] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff240: [top + 48] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff238: [top + 40] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff230: [top + 32] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff228: [top + 24] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff220: [top + 16] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff218: [top + 8] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff210: [top + 0] <- 0x2433cdd04121 <undefined> ; literal
+[deoptimizing: end 0x8cd25727449 _m.rk23 => node=2541, pc=0x10b5e6d83339, state=NO_REGISTERS, alignment=no padding, took 0.114 ms]
+Materializing a new heap number 0x217e98b6b31 [1.001785e+00] in slot 0x7fff5fbff378
+Materializing a new heap number 0x217e98b6b41 [1.784936e-03] in slot 0x7fff5fbff318
+Materializing a new heap number 0x217e98b6b51 [9.900000e-01] in slot 0x7fff5fbff308
+Materializing a new heap number 0x217e98b6b61 [5.223178e-03] in slot 0x7fff5fbff2d8
+Materializing a new heap number 0x217e98b6b71 [1.000000e-02] in slot 0x7fff5fbff2d0
+Materializing a new heap number 0x217e98b6b81 [1.000000e-02] in slot 0x7fff5fbff2c8
+Materializing a new heap number 0x217e98b6b91 [5.223178e-03] in slot 0x7fff5fbff288
+[removing optimized code for: _m.rk23]
+**** DEOPT: _m.rk23 at bailout #97, address 0x0, frame size 2248
+            ;;; Deferred code @4420: number-tag-d.
+[deoptimizing: begin 0x8cd25727449 _m.rk23 @97]
+  translating _m.rk23 => node=632, height=296
+    0x7fff5fbff380: [top + 368] <- 0x8cd25740a11 ; [sp + 1544] 0x8cd25740a11 <an Object>
+    0x7fff5fbff378: [top + 360] <- 2.000000e+00 ; xmm6
+    0x7fff5fbff370: [top + 352] <- 0x8cd257b2289 ; [sp + 1552] 0x8cd257b2289 <JS Array[2400]>
+    0x7fff5fbff368: [top + 344] <- 0x217e88a8541 ; rax 0x217e88a8541 <JS Function>
+    0x7fff5fbff360: [top + 336] <- 0x300000000 ; rbx 3
+    0x7fff5fbff358: [top + 328] <- 0x8cd257b22a9 ; [sp + 1864] 0x8cd257b22a9 <a System>
+    0x7fff5fbff350: [top + 320] <- 0x10b5e6dde51a ; caller's pc
+    0x7fff5fbff348: [top + 312] <- 0x7fff5fbff398 ; caller's fp
+    0x7fff5fbff340: [top + 304] <- 0x8cd257409b9; context
+    0x7fff5fbff338: [top + 296] <- 0x8cd25727449; function
+    0x7fff5fbff330: [top + 288] <- 0x2433cdd04161 ; [sp + 2088] 0x2433cdd04161 <true>
+    0x7fff5fbff328: [top + 280] <- 2400 ; [sp + 2096] (smi)
+    0x7fff5fbff320: [top + 272] <- 10 ; [sp + 2144] (smi)
+    0x7fff5fbff318: [top + 264] <- 0.000000e+00 ; xmm5
+    0x7fff5fbff310: [top + 256] <- 0 ; rdi (smi)
+    0x7fff5fbff308: [top + 248] <- 9.900000e-01 ; xmm3
+    0x7fff5fbff300: [top + 240] <- 2 ; r15 (smi)
+    0x7fff5fbff2f8: [top + 232] <- 0x3d499b9fac39 ; r14 0x3d499b9fac39 <JS Array[2400]>
+    0x7fff5fbff2f0: [top + 224] <- 0x1095542bbe29 ; r11 0x1095542bbe29 <JS Array[2400]>
+    0x7fff5fbff2e8: [top + 216] <- 0x1095542bbe69 ; r9 0x1095542bbe69 <JS Array[2400]>
+    0x7fff5fbff2e0: [top + 208] <- 0xfe0db4a3401 ; r8 0xfe0db4a3401 <JS Array[2400]>
+    0x7fff5fbff2d8: [top + 200] <- 2.805719e-03 ; xmm4
+    0x7fff5fbff2d0: [top + 192] <- 1.000000e-02 ; xmm2
+    0x7fff5fbff2c8: [top + 184] <- 1.000000e-02 ; xmm1
+    0x7fff5fbff2c0: [top + 176] <- 0xfe0db4a3401 ; rcx 0xfe0db4a3401 <JS Array[2400]>
+    0x7fff5fbff2b8: [top + 168] <- 0xfe0db4a3421 ; [sp + 1528] 0xfe0db4a3421 <JS Array[2400]>
+    0x7fff5fbff2b0: [top + 160] <- 0xfe0db40eaf1 ; [sp + 1536] 0xfe0db40eaf1 <JS Array[2400]>
+    0x7fff5fbff2a8: [top + 152] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff2a0: [top + 144] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff298: [top + 136] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff290: [top + 128] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff288: [top + 120] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff280: [top + 112] <- 1 ; [sp + 1520] (smi)
+    0x7fff5fbff278: [top + 104] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff270: [top + 96] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff268: [top + 88] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff260: [top + 80] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff258: [top + 72] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff250: [top + 64] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff248: [top + 56] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff240: [top + 48] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff238: [top + 40] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff230: [top + 32] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff228: [top + 24] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff220: [top + 16] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff218: [top + 8] <- 0x2433cdd04121 <undefined> ; literal
+    0x7fff5fbff210: [top + 0] <- 0x2433cdd04121 <undefined> ; literal
+[deoptimizing: end 0x8cd25727449 _m.rk23 => node=632, pc=0x10b5e6d8507e, state=NO_REGISTERS, alignment=no padding, took 0.103 ms]
+Materializing a new heap number 0x200000000 [2.000000e+00] in slot 0x7fff5fbff378
+Materializing a new heap number 0x0 [0.000000e+00] in slot 0x7fff5fbff318
+Materializing a new heap number 0x217e88a8651 [9.900000e-01] in slot 0x7fff5fbff308
+Materializing a new heap number 0x217e88a8661 [2.805719e-03] in slot 0x7fff5fbff2d8
+Materializing a new heap number 0x217e88a8671 [1.000000e-02] in slot 0x7fff5fbff2d0
+Materializing a new heap number 0x217e88a8681 [1.000000e-02] in slot 0x7fff5fbff2c8
+[removing optimized code for: _m.rk23]
