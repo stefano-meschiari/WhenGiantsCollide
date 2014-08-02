@@ -4,3 +4,4 @@ scratch/*
 tests
 prof*
 v8.log
+out_*

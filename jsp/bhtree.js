@@ -135,7 +135,7 @@ BHTree.prototype._addParticle = function(particle, pIndex, node) {
     }
     
 };
-    
+
 BHTree.prototype.update = function(particles) {        
     var i;
     for (i = 0; i < this.nodeList.length; i++)
