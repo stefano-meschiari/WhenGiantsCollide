@@ -95,7 +95,7 @@ System.walker = function(n, p_i, f_i, i, self) {
             f_i[VZ] += m_d3 * diz;
             
             self.Phi += -m * p_i[MASS] / d;
-
+            self.timeStep_control = Math.min(self.timeStep_control, 1./(m_d3));
         };
     }
 
@@ -111,7 +111,7 @@ System.prototype.computeForce = function(t, p, f, self) {
     var walker = System.walker;
     this.theta2 = SQR(this.theta);
     this.eps2 = SQR(this.eps);
-    
+    this.timeStep_control = 1e20;
     this.tree.update(p);
     this.Phi = 0.;
     var N = this.p.length;
@@ -130,6 +130,7 @@ System.prototype.computeForce = function(t, p, f, self) {
     };
 
     this.Phi /= 2.;
+    this.timeStep_control = 0.1*Math.sqrt(this.timeStep_control);
 };
 
 
@@ -167,7 +168,6 @@ System.prototype.bruteForce = function(t, p, f) {
             f[j][VZ] += K2*p[i][MASS] * (p[i][Z]-p[j][Z])/d3;
 
             this.Phi += -K2*p[i][MASS] * p[j][MASS]/d;
-
             
         }
     }
@@ -187,6 +187,10 @@ System.prototype.kinetic = function() {
     var K = 0;
     _A(K, this.p) += (SQR($1[VX])+SQR($1[VY])+SQR($1[VZ])) * $1[MASS];
     return 0.5*K;
+};
+
+System.prototype.energy = function() {
+    return this.kinetic() + this.potential();
 };
 
 System.prototype.writeSync = function(file) {

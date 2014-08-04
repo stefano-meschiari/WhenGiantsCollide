@@ -480,6 +480,10 @@ _m.rk = function(t, y0, f, tout, ctx) {
 
     var dt_new = dt;
     var direction = SIGN(tout-t);
+    var tscf = false;    
+    if (ctx.useTimeStep_control) {
+        tscf = true;
+    }
     
     while (Math.abs(t - tout) > 0) {
         dt_new = Math.min(Math.abs(dt), Math.abs(tout-t)) * direction;
@@ -498,6 +502,9 @@ _m.rk = function(t, y0, f, tout, ctx) {
             dt = dt_new;
 
             f(t, y0, f1);
+            if (tscf)
+                var dt_control = ctx.timeStep_control;
+            
             if (!isMatrix)
                 _V(y1, y0, f1) = $1 + 0.5 * dt * $2;
             else
@@ -568,6 +575,9 @@ _m.rk = function(t, y0, f, tout, ctx) {
                 repeat = false;
             }
 
+            if (tscf) {
+                dt_trial = Math.min(Math.abs(dt_trial), Math.abs(dt_control)) * direction;
+            }
             if (Math.abs(dt_trial) > 5.*Math.abs(dt))
                 dt_trial = 5.*dt;
             else if (Math.abs(dt_trial) < 0.2 * Math.abs(dt))
