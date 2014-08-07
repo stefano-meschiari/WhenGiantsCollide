@@ -41,12 +41,12 @@
 
 #ifdef DEBUG
 #define LOG(...) (console.log(__VA_ARGS__))
-#define ASSERT(x, ...) if (!x) { throw new Error(__VA_ARGS__) }
+#define ASSERT(x, ...) if (!(x)) { throw new Error(__VA_ARGS__) }
 #define DEBUG(x) { x }
 #else
 #ifdef FAST_DEBUG
 #define LOG(...) {}
-#define ASSERT(x, ...) if (!x) { throw new Error(__VA_ARGS__) }
+#define ASSERT(x, ...) if (!(x)) { throw new Error(__VA_ARGS__) }
 #define DEBUG(x) { x }
 #else
 #define LOG(...) {}

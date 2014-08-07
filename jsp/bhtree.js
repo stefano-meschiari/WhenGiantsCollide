@@ -13,6 +13,8 @@ if (typeof module !== 'undefined' && module.exports) {
     var _m = require("./math.js")._m;
 }
 
+ASSERT(_m);
+
 function BHTree() {
     this.nodeCache = [];
     this.nodeList = [];
@@ -189,8 +191,10 @@ BHTree.prototype.walk = function(f, p1, p2, p3, p4, p5) {
             var openNode = f(n, p1, p2, p3, p4, p5);
             if (type == BHTree.NODE && openNode) {
                 for (var i = 0; i < NSUB; i++) {
-                    treeWalker[treeWalker_length] = n.descendants[i];
-                    treeWalker_length++;
+                    if (n.descendants[i].type != BHTree.EMPTY) {
+                        treeWalker[treeWalker_length] = n.descendants[i];
+                        treeWalker_length++;
+                    }
                 }
             }
         }
@@ -233,5 +237,3 @@ Node.prototype.log = function() {
 
 if (typeof(exports) != "undefined")
     exports.BHTree = BHTree;
-else
-    this.BHTree = BHTree;

@@ -10,9 +10,14 @@
 if (typeof module !== 'undefined' && module.exports) {
     var _m = require("./math.js")._m;
     var System = require("./system.js").System;
-    var Units = require("./units.js").Units;
-    var K2 = Units.K2;
+    var Units = require("./units.js").Units;    
 }
+
+ASSERT(BHTree);
+ASSERT(Units);
+ASSERT(_m);
+
+var K2 = Units.K2;
 
 function Stellar(N, rho, max_R, rng) {
     rng = rng || Math.random;
@@ -29,9 +34,6 @@ function Stellar(N, rho, max_R, rng) {
 
     var Ri = _m.sort(R_M(_m.uniformRandom(_m.zeros(N), 0, max_M, rng)));
 
-    // d\rho sigma^2 = -GM(r)/r^2 rho
-    // d\rho/dr sigma^2 + d sigma^2/dr rho = -GM(r)/r^2 rho
-    // d sigma^2/dr = -g - sigma^2/rho drho/dr
     var sigma = _m.zeros(N);
     var out = [];
     var ctx = {};
@@ -69,6 +71,7 @@ function Stellar(N, rho, max_R, rng) {
         _m.gaussianRandom(vel, 0, sigma[i], rng);
         for (j = VX; j <= VZ; j++)
             p[j] = vel[j-VX];
+        
         p[MASS] = max_M/s.size();
     }
 

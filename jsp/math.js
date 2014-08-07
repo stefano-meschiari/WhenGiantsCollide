@@ -69,6 +69,15 @@ _m.whichMax = function(v) {
     return maxi;
 };
 
+_m.percentiles = function(v, perc, out, sorted) {
+    out = out || _m.zeros(perc.length);
+    sorted = (sorted === undefined ? false : sorted);
+    if (!sorted)
+        _m.sort(v);
+    for (var i = 0; i < perc.length; i++) {
+        out[i] = v[Math.round((perc[i]*(v.length-1)))];
+    }
+};
 
 // Returns the dot product of two vectors (inline version: _dot)
 _m.dot = function(v1, v2) {
@@ -134,6 +143,17 @@ _m.uniformRandom = function(v, a, b, random) {
     
     return v;
 };
+
+_m.integerRandom = function(v, a, b, random) {
+    a = a || 0;
+    b = b || 10;
+    v = v || _m.zeros(1);
+    random = random || Math.random;
+    _V(v) = Math.floor(random() * (b-a))+a;
+
+    return v;
+};
+
 
 // Fills v with normally distributed random numbers with given mean and std. dev.
 // (default = 0 and 1)

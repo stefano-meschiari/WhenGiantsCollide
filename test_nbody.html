@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/bootstrap-theme.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">    
+    <title></title>
+  </head>
+
+  <body>
+    <div class="container" style="width:500px">
+      <div class="page-header">
+        <h3>N-body spheres collision</h3>
+        <div class="row">
+          <div class="col-xs-7">
+            <p class="text-muted" id="buffering-info"></p>
+            <div class="progress">
+              <div class="progress-bar progress-bar-success" role="progress-bar" style="width:0%" id="progress">
+              </div>
+              
+            </div>
+          </div>
+          <div class="col-xs-5">
+            <button id="start" class="btn btn-default btn-sm" style=""><i class="glyphicon glyphicon-play"></i> Start</button>
+            <button id="stop" class="btn btn-default btn-sm" style="display:none"><i class="glyphicon glyphicon-stop"></i> Stop</button>
+            <button id="start" class="btn btn-default btn-sm" style=""><i class="glyphicon glyphicon-repeat"></i> Replay</button>
+          </div>
+        </div>
+        <div id="read-more" class="row">
+          <div class="col-md-12">
+            (c) 2014 Stefano Meschiari - <a href="http://wp.me/p1GL6x-mT">Read more...</a>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-10">
+          <canvas id="surface" width="400" height="400">
+          </canvas>
+        </div>
+        <div class="col-md-2">
+          <div class="btn-group-vertical">
+            <button class="btn btn-default btn-sm" id="zoom-in"><span class="glyphicon glyphicon-zoom-in"></span></button>
+            <button class="btn btn-default btn-sm" id="zoom-out"><span class="glyphicon glyphicon-zoom-out"></span></button>
+          </div>
+        </div>
+      </div>
+      <div class="well">
+        <div class="row">
+          <div class="col-md-6">
+            <label for="distance" data-units=" Rjup">Distance: []</label>
+            <input type="range" min="0" max="20" value="9" id="distance">
+          </div>
+          <div class="col-md-6">
+            <label for="speed" data-units=" Rjup/day">Initial speed: []</label>
+            <input type="range" min="0" max="100" value="22" id="speed">
+          </div>        
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <label for="impact" data-units=" Rjup">Impact parameter: []</label>
+            <input type="range" min="0" max="20" value="6" id="impact">
+          </div>
+          <div class="col-md-6">
+            <label for="pnum" data-units="" data-log="true">Number of particles: []</label>
+            <input type="range" min="20" max="35" value="22" id="pnum">
+          </div>        
+        </div>
+      </div>
+    </div>
+    
+    
+
+
+    
+    <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.6.0/underscore-min.js"></script>
+    <script type="text/javascript" src="js/vendor/bootstrap.min.js"></script>
+      <script type="text/javascript" src="js/vendor/iframeResizer.contentWindow.min.js"></script>
+      <script type="text/javascript" src="js/defines.js?v=1"></script>
+      <script type="text/javascript" src="js/math.js?v=1"></script>
+      <script type="text/javascript" src="js/drawsystem.js?v=1"></script>
+      <script type="text/javascript" src="js/bhtree.js?v=1"></script>
+      <script type="text/javascript" src="js/units.js?v=1"></script>            
+      <script type="text/javascript" src="js/system.js?v=1"></script>
+      <script type="text/javascript" src="js/stellar.js?v=1"></script>
+      
+      <script type="text/javascript">
+       "use strict";
+
+
+       
+       function urlparameters() {
+         return _.object(_.compact(_.map(location.search.slice(1).split('&'), function(item) {  if (item) return item.split('='); })));
+       }
+
+
+       var what = [X, Y, Z, TAG];
+       var frameRate = 20;
+       
+       var draws = new DrawSystem(document.getElementById("surface"));
+       var worker = null;
+
+       var system;
+
+       
+       function init() {
+         stopWorker();
+         resetUI();
+         
+         var N = Math.pow(10, (+$("#pnum").val())/10) | 0;
+         var x1 = +$("#distance").val();
+         var y1 = +$("#impact").val();
+         var v1 = -$("#speed").val();
+         
+         var M = 1;
+         var a = 1;
+         var PI = Math.PI;
+         
+         function plummer(R) {
+           if (R < a)
+             return (M/(4./3.*PI*a*a*a));
+           else
+             return 0;
+//           return (3*M/(4*PI*a*a*a) * Math.pow(1+R*R/(a*a), -5./2.));
+         };
+         
+         var rng = Math.random;
+         var max_R = 10*a;
+         var s = Stellar(Math.floor(N/2), plummer, max_R, rng);
+         var s2 = Stellar(N-s.size(), plummer, max_R, rng);
+         
+         s2.tag(1)
+         s2.translate([x1, y1, 0, v1, 0, 0]);
+         s.append(s2);
+
+         s.eps_abs = 7.5e-2;
+         s.eps_rel = 7.5e-2;
+         s.theta = 0.9;
+         s.eps = Math.pow(4./3. * Math.PI * a * a * a / s.size(), 1./3.);
+         
+         s.shuffle();
+         s.center();
+
+         
+         var what = [X, Y, Z, TAG];
+         var buf = new Float64Array(what.length * s.size());
+         s.toArray(buf, what);
+
+         draws.clearArrows();
+         var com2 = _m.zeros(7);
+         s.centerOfMass(com2, 1);
+         draws.addArrow([com2[X], com2[Y], com2[X]+v1*0.5, com2[Y]]);
+         s.centerOfMass(com2, 0);
+         
+         draws.addArrow([com2[X], com2[Y], com2[X]-v1*0.5, com2[Y]]);
+         
+         draws.update(buf);
+         system = s;
+       }
+
+       function update(a) {
+         draws.clearArrows();
+         draws.update(a);
+       };
+
+       function initWorker() {
+         worker = new Worker("js/stellar-test.js");
+         worker.buffer = [];
+         worker.onmessage = function(event) {
+           event = event.data;
+           if (event.type === "buffering") {
+             var msReal = (event.millisToRealTime/1000)|0;
+             var msLeft = (event.millisLeft/1000)|0;
+             var perc = (event.percentage*100)|0;
+             
+             $("#buffering-info").text(msReal + " seconds left...");
+             $("#progress").css('width', perc +"%");
+           } else if (event.type === "streaming") {
+             worker.buffer = worker.buffer.concat(event.buffer);
+             if (worker.timer === undefined)
+               worker.timer = window.setInterval(function() {
+               if (worker.buffer.length > 0) {
+                 var buf = worker.buffer.shift();
+                 update(buf);
+               } else
+               console.log("Waiting on worker...");
+             }, 1000/(0.9*frameRate));
+           } else if (event.type == "done") {
+             stopWorker();
+             resetUI();
+           }
+         };
+         worker.postMessage({ system:system, tmax:10, dt:0.01, frameRate:frameRate });
+       }
+
+       function stopWorker() {
+         if (worker == null)
+           return;
+         if (worker.timer !== undefined)
+           clearInterval(worker.timer);
+         
+         worker.terminate();
+         worker = null;
+       }
+
+       
+       function initUI() {
+         _.each($("input[type=range]"), function(range) {
+           var $label = $("label[for=" + range.id + "]");
+           var updateLabel = function() {
+             var val = +range.value;
+             if ($label.data("log") == true)
+               val = Math.floor(Math.pow(10., val/10));
+             $label.text($label.text().replace(/\[[^\]]*\]/, "[" + val + $label.data("units") + "]"));
+           }
+           var onChange = function() {
+             updateLabel();
+             init();
+           };
+           $(range).on("change", onChange);
+           $(range).on("input", onChange);
+           updateLabel();
+         });
+
+         $("#zoom-in").on("click", draws.zoomIn.bind(draws));
+         $("#zoom-out").on("click", draws.zoomOut.bind(draws));
+         $("#start").on("click", function() {
+           initWorker();
+           $("#start").hide();
+           $("#stop").show();
+         });
+         $("#stop").on("click", function() {
+           stopWorker();
+           init();
+         });
+       }
+
+       function resetUI() {
+         $("#start").show();
+         $("#stop").hide();
+         $("#buffering-info").text("");
+         $("#progress").css('width', "0%");
+       }
+       
+       $(document).ready(function()  {
+         if (urlparameters()['hide']) {
+           $("#read-more").css("display", "none");
+         }
+         init();
+         initUI();
+       });
+       
+      </script>
+  </body>
+</html>

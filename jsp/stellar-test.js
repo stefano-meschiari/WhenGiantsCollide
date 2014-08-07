@@ -8,48 +8,67 @@ if (isNode) {
     var BHTree = require('./bhtree.js').BHTree;
     var Stellar = require('./stellar.js').Stellar;
     var _m = require('./math.js')._m;
+    var Pool = require('./pool.js').Pool;
+    var StreamController = require('./streamcontroller').StreamController;
+} else {
+    importScripts("vendor/underscore-min.js", "math.js?v=worker", "units.js?v=worker", "bhtree.js?v=worker", "system.js?v=worker", "pool.js?v=worker",
+                 "streamcontroller.js?v=worker");
 }
 
-var K2 = Units.K2;
-var PI = Math.PI;
 
-var M = 1;
-var a = 1;
-var max_R = 30*a;
-
-var rng = _m.seededRandom(1234);
-
-var s = Stellar(200, function(R) {
-    return (3*M/(4*PI*a*a*a) * Math.pow(1+R*R/(a*a), -5./2.));
-}, max_R, rng);
-var m = s.ith(0)[MASS];
-
-s.eps = Math.pow(4./3. * Math.PI * a * a * a / s.size(), 1./3.);
-s.eps_abs = 3e-2;
-s.eps_rel = 3e-2;
-s.theta = 0.75;
-console.log(s.eps);
-s.countForce = true;
-s.computeForce();
-var brute = s.size()*(s.size()-1)/2;
-console.error(s.forceCounter1, s.forceCounter2, brute, s.forceCounter1/brute, s.forceCounter2/brute);
-console.log(s.kinetic(), s.potential(), 2*s.kinetic()/s.potential(), s.eps);
-
-console.log(s.eps/Math.sqrt(s.kinetic()));
-s.center();
-
-var dt = 0.1;
-var tmax = 2;
-var i = 0;
-s.ncols = VZ+1;
-s.useTimeStep_control = true;
-while (s.t < tmax) {
-    s.computeForce();
-    var com = _m.norm(_m.subset(s.centerOfMass(), VX, VZ+1));
-    console.log(s.t, 2.*s.kinetic()/s.potential(), s.potential() + s.kinetic(), s.eps, s.dt_avg, com);
-    s.center();
-    s.writeSync("out_" + i + ".txt");
+var onmessage = function(event) {
+    var system, pool, streamer;
+    var data = event.data;
+    var tmax = data.tmax;
+    var frameRate = data.frameRate;
+    var dt = data.dt;
     
-    s.evolve(s.t+dt);
-    i++;
-}
+    system = System.unserialize(data.system);
+
+    pool = new Pool(function() {
+        return new Float64Array((NPHYS+1)*system.size());
+    });
+
+    streamer = new StreamController(function(buffer) {
+        postMessage({
+            type:'streaming',
+            buffer:buffer
+        });
+
+        for (var i = 0; i < buffer.length; i++)
+            pool.destroy(buffer[i]);
+        
+        buffer.length = 0;
+    }, tmax, frameRate);
+
+    system.useTimeStep_control = true;
+
+    var coords = [X, Y, Z, TAG];
+    
+    while (system.t < tmax) {
+        system.center();
+
+        var xyz = pool.pop();
+        system.toArray(xyz, coords);
+        streamer.push(xyz, system.t);
+        system.evolve(system.t + dt);
+        
+        system.center();
+        
+        if (!streamer.isRealTime())
+            postMessage({
+                type:'buffering',
+                millisToRealTime:streamer.millisToRealTime(),
+                millisLeft:streamer.millisLeft(),
+                percentage:streamer.bufferPercentage()
+            });
+
+    }
+
+    streamer.done();
+    
+    postMessage({
+        type:'done'
+    });
+};
+

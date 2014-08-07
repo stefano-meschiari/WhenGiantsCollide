@@ -17,11 +17,15 @@ Units.TWOPI = 6.2831853072e+00;
 Units.SQRT_TWOPI = 2.5066282746e+00;
 Units.YEAR = 31556926.;
 
-Units.RUNIT = Units.AU;
-Units.MUNIT = Units.MSUN;
-Units.TUNIT = Units.YEAR;
+Units.RUNIT = Units.RJUP;
+Units.MUNIT = Units.MJUP;
+Units.TUNIT = Units.DAY;
 
 Units.K2  = ((Units.GGRAV * Units.MUNIT * Units.TUNIT * Units.TUNIT) / (Units.RUNIT*Units.RUNIT*Units.RUNIT));
+
+Units.update = function() {
+    Units.K2  = ((Units.GGRAV * Units.MUNIT * Units.TUNIT * Units.TUNIT) / (Units.RUNIT*Units.RUNIT*Units.RUNIT));
+};
 
 if (typeof(exports) !== 'undefined') {
     exports.Units = Units;

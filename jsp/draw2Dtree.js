@@ -1,9 +1,5 @@
 "use strict";
 
-var X = 0;
-var Y = 1;
-var Z = 2;
-
 var TreeDemo2D = (function(canv, N) {
     var treeDemo2D = {};
     var p = [];
@@ -79,4 +75,3 @@ var TreeDemo2D = (function(canv, N) {
     return(treeDemo2D);
 });
 
-window.TreeDemo2D = TreeDemo2D;

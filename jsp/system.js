@@ -4,9 +4,13 @@ if (typeof module !== 'undefined' && module.exports) {
     var BHTree = require("./bhtree.js").BHTree;
     var Units = require("./units.js").Units;
     var _m = require("./math.js")._m;
+    var _ = require('underscore');    
 }
 
-var K2 = Units.K2;
+ASSERT(BHTree);
+ASSERT(Units);
+ASSERT(_m);
+ASSERT(_);
 
 function System(N) {
     this.p = [];
@@ -15,8 +19,8 @@ function System(N) {
     this.Phi = 0.;
     this.theta = 1.;
     this.eps = 1e-6;
-    this.abs_acc = 1e-3;
-    this.eps_acc = 1e-3;
+    this.eps_abs = 1e-3;
+    this.eps_rel = 1e-3;
     this.t = 0;
     
     this.computeGravity = true;
@@ -29,6 +33,15 @@ function System(N) {
 
     this.tree = new BHTree();
 }
+
+System.unserialize = function(data) {
+    var s = new System(1);
+    var props = ['p', 'f', 'Phi', 'theta', 'eps', 'eps_abs', 'eps_rel', 't', 'theta', 'computeGravity'];
+    
+    for (var i = 0; i < props.length; i++)
+        s[props[i]] = data[props[i]];
+    return s;
+};
 
 System.prototype.ith = function(i) {
     return this.p[i];
@@ -44,12 +57,14 @@ System.prototype.size = function() {
 
 
 
-System.prototype.centerOfMass = function(com) {
+System.prototype.centerOfMass = function(com, tag) {
+    tag = (tag === undefined ? -1 : tag);
     var p = this.p;
     com = com || _m.zeros(7);
     _V(com) = 0.;
     
     for (var i = 0; i < p.length; i++) {
+        if (tag >= 0 && p[i][TAG] != tag) continue;
         for (var j = X; j <= VZ; j++) {
             com[j] += p[i][j]*p[i][MASS];
         }
@@ -86,7 +101,7 @@ System.walker = function(n, p_i, f_i, i, self) {
             if (n.bodyIndex == i)
                 return false;
 
-            var m = K2*n.mass;
+            var m = Units.K2*n.mass;
             var d = Math.sqrt(d2 + self.eps2);
             var m_d3 = m/(d*d*d);
             
@@ -130,7 +145,7 @@ System.prototype.computeForce = function(t, p, f, self) {
     };
 
     this.Phi /= 2.;
-    this.timeStep_control = 0.1*Math.sqrt(this.timeStep_control);
+    this.timeStep_control = 0.25*Math.sqrt(this.timeStep_control);
 };
 
 
@@ -138,6 +153,7 @@ System.prototype.computeForce = function(t, p, f, self) {
 System.prototype.bruteForce = function(t, p, f) {
     this.Phi = 0;
     var eps2 = SQR(this.eps);
+    var K2 = Units.K2;
     var i, j;
     t = t || 0;
     f = f || this.f;
@@ -216,6 +232,24 @@ System.prototype.append = function(sys) {
         this.f.push(new DOUBLEARRAY(NPHYS*2));
     }
     this.tree = new BHTree();
+};
+
+System.prototype.tag = function(tag) {
+    for (var i = 0; i < this.size(); i++) {
+        this.ith(i)[TAG] = tag;
+    };
+};
+
+System.prototype.shuffle = function() {
+    this.p = _.shuffle(this.p);
+};
+
+System.prototype.toArray = function(arr, what) {
+    var n = what.length;
+    for (var i = 0; i < this.p.length; i++) {
+        for (var j = 0; j < what.length; j++)
+            arr[i*n+j] = this.p[i][what[j]];
+    }
 };
 
 if (typeof(exports) !== 'undefined') {
