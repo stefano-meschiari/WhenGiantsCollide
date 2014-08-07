@@ -21,6 +21,7 @@ function System(N) {
     this.eps = 1e-6;
     this.eps_abs = 1e-3;
     this.eps_rel = 1e-3;
+    this.eps_control = 0.25;
     this.t = 0;
     
     this.computeGravity = true;
@@ -145,7 +146,7 @@ System.prototype.computeForce = function(t, p, f, self) {
     };
 
     this.Phi /= 2.;
-    this.timeStep_control = 0.25*Math.sqrt(this.timeStep_control);
+    this.timeStep_control = this.eps_control*Math.sqrt(this.timeStep_control);
 };
 
 
@@ -242,6 +243,10 @@ System.prototype.tag = function(tag) {
 
 System.prototype.shuffle = function() {
     this.p = _.shuffle(this.p);
+};
+
+System.prototype.sortBy = function(coord) {
+    this.p.sort(function(pi, pj) { return pi[coord]-pj[coord]; });
 };
 
 System.prototype.toArray = function(arr, what) {

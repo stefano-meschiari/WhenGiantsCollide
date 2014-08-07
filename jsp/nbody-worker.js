@@ -42,20 +42,37 @@ var onmessage = function(event) {
     }, tmax, frameRate);
 
     system.useTimeStep_control = true;
+    system.sortBy(Z);
 
     var coords = [X, Y, Z, TAG];
+    var last = null;
     
     while (system.t < tmax) {
         system.center();
 
         var xyz = pool.pop();
         system.toArray(xyz, coords);
+
+        if (last != null) {
+            var xyz_12 = pool.pop();
+            for (var i = 0; i < xyz.length; i += coords.length) {
+                xyz_12[i+X] = 0.5*(last[i+X]+xyz[i+X]);
+                xyz_12[i+Y] = 0.5*(last[i+Y]+xyz[i+Y]);
+                xyz_12[i+Z] = 0.5*(last[i+Z]+xyz[i+Z]);
+                xyz_12[i+Z+1] = xyz[i+Z+1];
+            }
+            streamer.push(xyz_12, system.t-0.5*dt);
+        }
+        
         streamer.push(xyz, system.t);
+
         system.evolve(system.t + dt);
         
         system.center();
         
-        if (!streamer.isRealTime())
+        last = xyz;
+        
+        if (!streamer.isRealTime() )
             postMessage({
                 type:'buffering',
                 millisToRealTime:streamer.millisToRealTime(),

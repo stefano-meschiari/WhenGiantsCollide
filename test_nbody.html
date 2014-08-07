@@ -46,17 +46,17 @@
       <div class="well">
         <div class="row">
           <div class="col-md-6">
-            <label for="distance" data-units=" Rjup">Distance: []</label>
-            <input type="range" min="0" max="20" value="9" id="distance">
+            <label for="distance" data-units=" R<sub>jup</sub>">Distance: []</label>
+            <input type="range" min="0" max="20" value="7" id="distance">
           </div>
           <div class="col-md-6">
-            <label for="speed" data-units=" Rjup/day">Initial speed: []</label>
-            <input type="range" min="0" max="100" value="22" id="speed">
+            <label for="speed" data-units=" R<sub>jup</sub>/day">Initial speed: []</label>
+            <input type="range" min="0" max="100" value="18" id="speed">
           </div>        
         </div>
         <div class="row">
           <div class="col-md-6">
-            <label for="impact" data-units=" Rjup">Impact parameter: []</label>
+            <label for="impact" data-units=" R<sub>jup</sub>">Impact parameter: []</label>
             <input type="range" min="0" max="20" value="6" id="impact">
           </div>
           <div class="col-md-6">
@@ -91,7 +91,6 @@
        function urlparameters() {
          return _.object(_.compact(_.map(location.search.slice(1).split('&'), function(item) {  if (item) return item.split('='); })));
        }
-
 
        var what = [X, Y, Z, TAG];
        var frameRate = 20;
@@ -162,6 +161,7 @@
          draws.update(a);
        };
 
+
        function initWorker() {
          worker = new Worker("js/nbody-worker.js");
          worker.buffer = [];
@@ -178,6 +178,8 @@
              $("#buffering-info").text("Buffering, " + msReal + " seconds left...");
              $("#progress").css('width', perc +"%");
            } else if (event.type === "streaming") {
+
+             
              worker.buffer = worker.buffer.concat(event.buffer);
              worker.streaming = true;
              $("#progress").css('width', '100%');
@@ -217,7 +219,7 @@
              var val = +range.value;
              if ($label.data("log") == true)
                val = Math.floor(Math.pow(10., val/10));
-             $label.text($label.text().replace(/\[[^\]]*\]/, "[" + val + $label.data("units") + "]"));
+             $label.html($label.html().replace(/\[[^\]]*\]/, "[" + val + $label.data("units") + "]"));
            }
            var onChange = function() {
              updateLabel();
