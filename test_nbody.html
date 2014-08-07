@@ -12,7 +12,7 @@
       <div class="page-header">
         <h3>N-body spheres collision</h3>
         <div class="row">
-          <div class="col-xs-7">
+          <div class="col-xs-8">
             <p class="text-muted" id="buffering-info"></p>
             <div class="progress">
               <div class="progress-bar progress-bar-success" role="progress-bar" style="width:0%" id="progress">
@@ -20,10 +20,9 @@
               
             </div>
           </div>
-          <div class="col-xs-5">
-            <button id="start" class="btn btn-default btn-sm" style=""><i class="glyphicon glyphicon-play"></i> Start</button>
-            <button id="stop" class="btn btn-default btn-sm" style="display:none"><i class="glyphicon glyphicon-stop"></i> Stop</button>
-            <button id="start" class="btn btn-default btn-sm" style=""><i class="glyphicon glyphicon-repeat"></i> Replay</button>
+          <div class="col-xs-4">
+            <button id="start" class="btn btn-primary" style="width:100%"><i class="glyphicon glyphicon-play"></i> Start</button>
+            <button id="stop" class="btn btn-danger" style="display:none; width:100%"><i class="glyphicon glyphicon-stop"></i> Stop</button>
           </div>
         </div>
         <div id="read-more" class="row">
@@ -62,7 +61,7 @@
           </div>
           <div class="col-md-6">
             <label for="pnum" data-units="" data-log="true">Number of particles: []</label>
-            <input type="range" min="20" max="35" value="22" id="pnum">
+            <input type="range" min="20" max="35" value="24" id="pnum">
           </div>        
         </div>
       </div>
@@ -164,19 +163,26 @@
        };
 
        function initWorker() {
-         worker = new Worker("js/stellar-test.js");
+         worker = new Worker("js/nbody-worker.js");
          worker.buffer = [];
+         worker.streaming = false;
+         $("#buffering-info").text("Estimating time left...");
+         
          worker.onmessage = function(event) {
            event = event.data;
-           if (event.type === "buffering") {
+           if (event.type === "buffering" && !worker.streaming) {
              var msReal = (event.millisToRealTime/1000)|0;
              var msLeft = (event.millisLeft/1000)|0;
              var perc = (event.percentage*100)|0;
              
-             $("#buffering-info").text(msReal + " seconds left...");
+             $("#buffering-info").text("Buffering, " + msReal + " seconds left...");
              $("#progress").css('width', perc +"%");
            } else if (event.type === "streaming") {
              worker.buffer = worker.buffer.concat(event.buffer);
+             worker.streaming = true;
+             $("#progress").css('width', '100%');
+             $("#buffering-info").text("Streaming...");
+             
              if (worker.timer === undefined)
                worker.timer = window.setInterval(function() {
                if (worker.buffer.length > 0) {

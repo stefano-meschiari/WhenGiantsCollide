@@ -9,11 +9,9 @@ function DrawSystem(canvas) {
     this.type = DrawSystem.NBODY;
     this.ncoords = NPHYS+1;
 
-    this.background = this.ctx.createLinearGradient(0, 0, 0, canvas.height);
-    this.background.addColorStop(0, 'black');
-    this.background.addColorStop(1, 'rgb(50, 50, 50)');
-    
-    this.colors = ['rgba(255, 0, 0, 0.6)', 'rgba(0, 0, 255, 0.6)', 'rgba(0, 255, 0, 0.6)'];
+    this.background = '#28211C';
+
+    this.colors = ['rgba(172, 65, 66, 0.6)', 'rgba(244, 191, 117, 0.6)'];
     this.dotSize = 6;
     
     this.buffer = null;
@@ -24,7 +22,7 @@ function DrawSystem(canvas) {
     this.zoom = 1;
     this.arrows = [];
     
-    this.setView([-20, 20]);
+    this.setView([-10, 10]);
 }
 
 DrawSystem.prototype.update = function(buffer) {
@@ -37,9 +35,11 @@ DrawSystem.prototype.update = function(buffer) {
     var z = 1/this.zoom;
     var A = this.A;
     var dotSize = this.dotSize;
-    
+
     ctx.fillStyle = this.background;
     ctx.fillRect(0, 0, this.width, this.height);
+
+    ctx.save();
 
     if (buffer == null)
         return;
@@ -61,6 +61,7 @@ DrawSystem.prototype.update = function(buffer) {
         this.drawArrow();
     this.drawCross();
     this.buffer = buffer;
+    ctx.restore();
 };
 
 DrawSystem.prototype.drawCross = function() {

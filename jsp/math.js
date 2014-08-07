@@ -631,6 +631,183 @@ _m.rk = function(t, y0, f, tout, ctx) {
     return y0;
 };
 
+// WIP
+_m.leapkdk = function(t, y0, f, tout, ctx) {
+    
+    var nrows = y0.length;
+    var ncols = y0[0].length;
+
+    ctx = ctx || {};
+    f = f.bind(ctx);
+    
+    ctx.f1 = ctx.f1 || _m.zeros(nrows, ncols);
+    ctx.f2 = ctx.f2 || _m.zeros(nrows, ncols);
+    ctx.f3 = ctx.f3 || _m.zeros(nrows, ncols);
+    ctx.y1 = ctx.y1 || _m.zeros(nrows, ncols);
+    
+    ctx.D = ctx.D || _m.zeros(nrows, ncols);
+    ctx.E = ctx.E || _m.zeros(nrows, ncols);
+    
+    ctx.dt = ctx.dt || (tout-t)*0.01;
+    ctx.eps_abs = ctx.eps_abs || 1e-3;
+    ctx.eps_rel = ctx.eps_rel || 1e-3;
+
+    var dt_avg = 0;
+    var steps = 0;
+    
+    var S = 0.99;
+    var q = 2;
+    
+    var f1 = ctx.f1;
+    var f2 = ctx.f2;
+    var f3 = ctx.f3;
+    var y1 = ctx.y1;
+    var dt = ctx.dt;
+    
+    // Absolute and relative precision
+    var eps_abs = ctx.eps_abs;
+    var eps_rel = ctx.eps_rel;
+
+    // Reuse arrays
+    var a2 = y1;
+    var D = ctx.D;
+    var E = ctx.E;
+
+    var i, j, err, dt_trial;
+
+    var dt_new = dt;
+    var direction = SIGN(tout-t);
+    var tscf = false;    
+    if (ctx.useTimeStep_control) {
+        tscf = true;
+    }
+    
+    while (Math.abs(t - tout) > 0) {
+        dt_new = Math.min(Math.abs(dt), Math.abs(tout-t)) * direction;
+        var repeat = true;
+        
+        do {
+            if (!isMatrix) {
+                for (i = 0; i < nrows; i++)
+                    f1[i] = f2[i] = f3[i] = 0.;
+            } else {
+                for (i = 0; i < nrows; i++)
+                    for (j = 0; j < ncols; j++) {
+                        f1[i][j] = f2[i][j] = f3[i][j] = 0.;
+                    }
+            }
+            dt = dt_new;
+
+            f(t, y0, f1);
+            if (tscf)
+                var dt_control = ctx.timeStep_control;
+            
+            if (!isMatrix)
+                _V(y1, y0, f1) = $1 + 0.5 * dt * $2;
+            else
+                for (i = 0; i < nrows; i++)
+                    for (j = 0; j < ncols; j++)
+                        y1[i][j] = y0[i][j] + 0.5 * dt * f1[i][j];
+
+            f(t + 0.5*dt, y1, f2);
+
+            if (!isMatrix)
+                _V(y1, y0, f1, f2) = $1 + dt * (-$2+2*$3);
+            else
+                for (i = 0; i < nrows; i++)
+                    for (j = 0; j < ncols; j++)
+                        y1[i][j] = y0[i][j] + dt * (-f1[i][j]+2.*f2[i][j]);
+            
+            f(t + dt, y1, f3);
+
+            if (!isMatrix) {
+                _V(a2, y0, f1, f2, f3) = $1 + dt/6. * ($2+4.*$3+$4);
+                _V(D, y0) = eps_abs + eps_rel * Math.abs($1);
+                _V(E, f1, f2, f3) = Math.abs(dt*($2 - ($1+4.*$2+$3)/6.));
+            } else {
+                for (i = 0; i < nrows; i++)
+                    for (j = 0; j < ncols; j++) {
+                        var y0ij = y0[i][j];
+                        a2[i][j] = y0ij + dt/6. * (f1[i][j] + 4.*f2[i][j] + f3[i][j]);
+                        D[i][j] = eps_abs + eps_rel * Math.abs(y0ij);
+                        E[i][j] = Math.abs(dt*(f2[i][j] - (f1[i][j] + 4.*f2[i][j] + f3[i][j])/6));
+                    }
+            }
+
+            err = -1e20;
+            if (!isMatrix)
+                _A(err, E, D) = Math.max(err, ($1-$2)/$2);
+            else
+                for (i = 0; i < nrows; i++)
+                    for (j = 0; j < ncols; j++) {
+                        var diff = (E[i][j]-D[i][j])/D[i][j];
+                        err = Math.max(err, diff);
+                    }
+            
+            if (err > 0.1) {
+                err = 0;
+                if (!isMatrix) {
+                    _V(E, E, D) = Math.abs($1/$2);
+                    _max(err, E);
+                } else {
+                    for (i = 0; i < nrows; i++)
+                        for (j = 0; j < ncols; j++)
+                            err = Math.max(err, E[i][j]/D[i][j]);
+                }                
+                dt_trial = dt * S * Math.pow(err, -1./q);
+            } else if (err <= 0.) {
+                err = 0.;
+                if (!isMatrix) { 
+                    _V(E, E, D) = $1/$2;
+                    _max(err, E);
+                } else {
+                    for (i = 0; i < nrows; i++)
+                        for (j = 0; j < ncols; j++)
+                            err = Math.max(err, E[i][j]/D[i][j]);
+                }
+                dt_trial = dt * S * Math.pow(err, -1./(q+1));
+                repeat = false;
+            } else {
+                dt_trial = dt;
+                repeat = false;
+            }
+
+            if (tscf) {
+                dt_trial = Math.min(Math.abs(dt_trial), Math.abs(dt_control)) * direction;
+            }
+            if (Math.abs(dt_trial) > 5.*Math.abs(dt))
+                dt_trial = 5.*dt;
+            else if (Math.abs(dt_trial) < 0.2 * Math.abs(dt))
+                dt_trial = 0.2*dt;
+
+            dt_new = Math.min(Math.abs(dt_trial), Math.abs(tout-t)) * direction;
+            
+            ASSERT(SIGN(dt_new) == direction, "Sign of dt different from sign of direction", direction);
+            
+            if (isNaN(dt_new)) {
+                throw new Error('dt_new is NaN. ' + dt_trial + " " + dt + " " + err + " " + (tout-t));
+            } else if (_m.isNaN(a2))
+                throw new Error('a2 is NaN.');
+
+        } while (repeat);
+
+        t += dt;
+        dt_avg += dt;
+        steps++;
+        dt = dt_new;
+
+        if (!isMatrix)
+            _V(y0, a2) = $1;
+        else
+            _M(y0, a2) = $1;
+    };
+
+    ctx.dt = dt;
+    ctx.dt_avg = dt_avg/steps;
+    
+    return y0;
+};
+
 
 if (typeof(exports) !== 'undefined')
     exports._m = _m;
