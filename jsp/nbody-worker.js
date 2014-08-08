@@ -46,6 +46,7 @@ var onmessage = function(event) {
 
     var coords = [X, Y, Z, TAG];
     var last = null;
+    var interpolatedFrames = 4;
     
     while (system.t < tmax) {
         system.center();
@@ -53,15 +54,17 @@ var onmessage = function(event) {
         var xyz = pool.pop();
         system.toArray(xyz, coords);
 
-        if (last != null) {
-            var xyz_12 = pool.pop();
-            for (var i = 0; i < xyz.length; i += coords.length) {
-                xyz_12[i+X] = 0.5*(last[i+X]+xyz[i+X]);
-                xyz_12[i+Y] = 0.5*(last[i+Y]+xyz[i+Y]);
-                xyz_12[i+Z] = 0.5*(last[i+Z]+xyz[i+Z]);
-                xyz_12[i+Z+1] = xyz[i+Z+1];
+        if (last != null && interpolatedFrames > 0) {
+            var i_n = 0;
+            for (var i = 0; i < interpolatedFrames-1; i++) {
+                var xyz_i = pool.pop();
+                i_n += 1./interpolatedFrames;
+                for (var j = 0; j < xyz.length; j+=coords.length) {
+                    for (var k = 0; k < coords.length; k++)
+                        xyz_i[j+k] = i_n * (xyz[j+k]-last[j+k]) + last[j+k];
+                }
+                streamer.push(xyz_i, system.t - (1.-i_n) * dt);
             }
-            streamer.push(xyz_12, system.t-0.5*dt);
         }
         
         streamer.push(xyz, system.t);

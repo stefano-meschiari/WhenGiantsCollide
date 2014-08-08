@@ -69,6 +69,9 @@ function Stellar(N, rho, max_R, rng) {
             p[j] = v3[j];
         
         _m.gaussianRandom(vel, 0, sigma[i], rng);
+        while (_m.norm(vel) > 2.*Math.sqrt(K2*M_R(Ri[i])/Ri[i]))
+            _m.gaussianRandom(vel, 0, sigma[i], rng);
+            
         for (j = VX; j <= VZ; j++)
             p[j] = vel[j-VX];
         

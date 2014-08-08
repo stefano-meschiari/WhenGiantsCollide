@@ -86,6 +86,8 @@ Each node has the following fields:
 * bodyIndex is the index of body (as it were in the array used to
   build the tree via tree.update).
 
+
+
 # Compiling
 
 Some of the JavaScript code (in the jsp/ folder) contains C macros,

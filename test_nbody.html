@@ -10,7 +10,7 @@
   <body>
     <div class="container" style="width:500px">
       <div class="page-header">
-        <h3>N-body spheres collision</h3>
+        <h3><i>N</i>-Body spheres collision</h3>
         <div class="row">
           <div class="col-xs-8">
             <p class="text-muted" id="buffering-info"></p>
@@ -27,16 +27,16 @@
         </div>
         <div id="read-more" class="row">
           <div class="col-md-12">
-            (c) 2014 Stefano Meschiari - <a href="http://wp.me/p1GL6x-mT">Read more...</a>
+            (c) 2014 Stefano Meschiari - <a href="http://wp.me/p1GL6x-nA">Read more...</a>
           </div>
         </div>
       </div>
       <div class="row">
-        <div class="col-md-10">
+        <div class="col-xs-10">
           <canvas id="surface" width="400" height="400">
           </canvas>
         </div>
-        <div class="col-md-2">
+        <div class="col-xs-2">
           <div class="btn-group-vertical">
             <button class="btn btn-default btn-sm" id="zoom-in"><span class="glyphicon glyphicon-zoom-in"></span></button>
             <button class="btn btn-default btn-sm" id="zoom-out"><span class="glyphicon glyphicon-zoom-out"></span></button>
@@ -45,21 +45,21 @@
       </div>
       <div class="well">
         <div class="row">
-          <div class="col-md-6">
+          <div class="col-xs-6">
             <label for="distance" data-units=" R<sub>jup</sub>">Distance: []</label>
             <input type="range" min="0" max="20" value="7" id="distance">
           </div>
-          <div class="col-md-6">
+          <div class="col-xs-6">
             <label for="speed" data-units=" R<sub>jup</sub>/day">Initial speed: []</label>
             <input type="range" min="0" max="100" value="18" id="speed">
           </div>        
         </div>
         <div class="row">
-          <div class="col-md-6">
+          <div class="col-xs-6">
             <label for="impact" data-units=" R<sub>jup</sub>">Impact parameter: []</label>
             <input type="range" min="0" max="20" value="6" id="impact">
           </div>
-          <div class="col-md-6">
+          <div class="col-xs-6">
             <label for="pnum" data-units="" data-log="true">Number of particles: []</label>
             <input type="range" min="20" max="35" value="24" id="pnum">
           </div>        
@@ -74,7 +74,7 @@
     <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.6.0/underscore-min.js"></script>
     <script type="text/javascript" src="js/vendor/bootstrap.min.js"></script>
-      <script type="text/javascript" src="js/vendor/iframeResizer.contentWindow.min.js"></script>
+    <script type="text/javascript" src="js/vendor/iframeResizer.contentWindow.min.js"></script>
       <script type="text/javascript" src="js/defines.js?v=1"></script>
       <script type="text/javascript" src="js/math.js?v=1"></script>
       <script type="text/javascript" src="js/drawsystem.js?v=1"></script>
@@ -93,7 +93,7 @@
        }
 
        var what = [X, Y, Z, TAG];
-       var frameRate = 20;
+       var frameRate = 30;
        
        var draws = new DrawSystem(document.getElementById("surface"));
        var worker = null;

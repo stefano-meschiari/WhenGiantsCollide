@@ -15,7 +15,7 @@ function Pool(constructor, size) {
 
 Pool.prototype.pop = function() {
     if (this.pool.length == 0) {
-        console.log("Increasing size, total size = " + this.totalSize);
+//        console.log("Increasing size, total size = " + this.totalSize);
         this.totalSize += this.sizeIncrease;
         for (var i = 0; i < this.sizeIncrease; i++)
             this.pool.push(this.constructor());
